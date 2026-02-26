@@ -191,7 +191,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [notificationHistory, setNotificationHistory] = useState([]);
     const [selectedWeatherView, setSelectedWeatherView] = useState("Current");
     const [weatherSearchQuery, setWeatherSearchQuery] = useState("");
-    const [osVersion, setOsVersion] = useState('1.1');
+    const [osVersion, setOsVersion] = useState('1.2');
     const [latestVersion, setLatestVersion] = useState(null);
     const [updateChecking, setUpdateChecking] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
@@ -219,6 +219,11 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         }
         return 0;
     };
+    const FEATURES = {
+        missionControlDelete: '1.3',
+        clickToFront: '1.3',
+    };
+    const enabled = (key) => compareVersion(osVersion, FEATURES[key] || '0.0.0') >= 0;
     const bringToFront = (id) => {
         try {
             const el = document.getElementById(id);
@@ -1546,7 +1551,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
                 <div className={styles.Apps} id="AllApps">
                     <Draggable nodeRef={lumiNexRef} handle={`.${styles.top}`}>
-                        <div id="LumiNexplorer" ref={lumiNexRef} className={styles.App} onMouseDown={() => bringToFront("LumiNexplorer")}>
+                        <div id="LumiNexplorer" ref={lumiNexRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("LumiNexplorer") : undefined}>
                             <div id="top" className={styles.top}>
                                 <div id="title" className={styles.title}>LumiNexplorer</div>
                                 <div onClick={() => { showApp("LumiNexplorer") }} id="close" className={styles.close}></div>
@@ -1621,7 +1626,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </Draggable>
                 </div>
                 <Draggable nodeRef={clockRef} handle={`.${styles.top}`}>
-                    <div id="Clock" ref={clockRef} className={styles.App} onMouseDown={() => bringToFront("Clock")}>
+                    <div id="Clock" ref={clockRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("Clock") : undefined}>
                         <div id="top" className={styles.top}>
                             <div id="title" className={styles.title}>Clock</div>
                             <div onClick={() => { showApp("Clock") }} id="close" className={styles.close}></div>
@@ -1675,7 +1680,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={browserRef} handle={`.${styles.BroTop}`}>
-                    <div id="Browser" ref={browserRef} className={styles.App} onMouseDown={() => bringToFront("Browser")}>
+                    <div id="Browser" ref={browserRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("Browser") : undefined}>
                         <div id="Browsertop" className={styles.BroTop}>
                             <div id="title" className={styles.title}>Vertice</div>
                             <div onClick={() => { showApp("Browser") }} id="close" className={styles.close}></div>
@@ -1697,7 +1702,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={whatsappRef} handle={`.${styles.BroTop}`}>
-                    <div id="WhatsApp" ref={whatsappRef} className={styles.App} onMouseDown={() => bringToFront("WhatsApp")}>
+                    <div id="WhatsApp" ref={whatsappRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("WhatsApp") : undefined}>
                         <div id="WhatsApptop" className={styles.BroTop}>
                             <div id="title" className={styles.title}>Vertice</div>
                             <div onClick={() => { showApp("WhatsApp") }} id="close" className={styles.close}></div>
@@ -1718,7 +1723,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={calcRef} handle={`.${styles.top}`}>
-                    <div id="Calculator" ref={calcRef} className={styles.App} onMouseDown={() => bringToFront("Calculator")}>
+                    <div id="Calculator" ref={calcRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("Calculator") : undefined}>
                         <div id="Calctop" className={styles.top}>
                             <div id="title" className={styles.title}>Calculator</div>
                             <div onClick={() => { showApp("Calculator"); calc('C') }} id="close" className={styles.close}></div>
@@ -1753,7 +1758,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={storeRef} handle={`.${styles.top}`}>
-                    <div id="Store" ref={storeRef} className={styles.App} onMouseDown={() => bringToFront("Store")}>
+                    <div id="Store" ref={storeRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("Store") : undefined}>
                         <div id="Storetop" className={styles.top}>
                             <div id="title" className={styles.title}>Sparking Store</div>
                             <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
@@ -1790,7 +1795,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={settingsRef} handle={`.${styles.top}`}>
-                    <div id="Settings" ref={settingsRef} className={styles.App} onMouseDown={() => bringToFront("Settings")}>
+                    <div id="Settings" ref={settingsRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("Settings") : undefined}>
                         <div id="Settingstop" className={styles.top}>
                             <div id="title" className={styles.title}>Settings</div>
                             <div onClick={() => { showApp("Settings"); }} id="close" className={styles.close}></div>
@@ -2045,7 +2050,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={chatRef} handle={`.${styles.top}`}>
-                    <div id="Chat" ref={chatRef} className={styles.App} onMouseDown={() => bringToFront("Chat")}>
+                    <div id="Chat" ref={chatRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("Chat") : undefined}>
                         <div id="Chattop" className={styles.top}>
                             <div id="title" className={styles.title}>ChatExpress</div>
                             <div onClick={() => { showApp("Chat") }} id="close" className={styles.close}></div>
@@ -2060,7 +2065,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={weatherRef} handle={`.${styles.top}`}>
-                    <div id="Weather" ref={weatherRef} className={styles.App} onMouseDown={() => bringToFront("Weather")}>
+                    <div id="Weather" ref={weatherRef} className={styles.App} onMouseDown={enabled('clickToFront') ? () => bringToFront("Weather") : undefined}>
                         <div id="WeatherTop" className={styles.top}>
                             <div id="title" className={styles.title}>Weather</div>
                             <div onClick={() => { showApp("Weather") }} id="close" className={styles.close}></div>
@@ -2319,7 +2324,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} className={`${styles.DesktopCard} ${currentDesktop === desk.id ? styles.DesktopCardActive : ''}`} style={{ position: 'relative' }}>
                                     <h2 style={{ color: 'white' }}>{desk.name}</h2>
                                     <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && document.getElementById(app) && document.getElementById(app).style.height !== "0vh").length} Apps Open</span>
-                                    <button className={styles.DeleteDesktopBtn} onClick={(e) => {
+                                    {enabled('missionControlDelete') && <button className={styles.DeleteDesktopBtn} onClick={(e) => {
                                         e.stopPropagation();
                                         const remaining = desktops.filter(d => d.id !== desk.id);
                                         if (remaining.length === 0) return;
@@ -2327,7 +2332,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                         if (currentDesktop === desk.id) {
                                             setCurrentDesktop(remaining[0].id);
                                         }
-                                    }}>×</button>
+                                    }}>×</button>}
                                 </div>
                             ))}
                             <div onClick={() => setDesktops([...desktops, { id: desktops.length + 1, name: `Desktop ${desktops.length + 1}` }])} className={styles.AddDesktopCard}>
