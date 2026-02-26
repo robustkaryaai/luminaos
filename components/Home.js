@@ -1408,6 +1408,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             </div>
                         </div>
                     </Draggable>
+                    </div>
                     <Draggable nodeRef={clockRef} handle={`.${styles.top}`}>
                         <div id="Clock" ref={clockRef} className={styles.App}>
                             <div id="top" className={styles.top}>
@@ -1678,6 +1679,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
+                        </Draggable>
                         <Draggable nodeRef={chatRef} handle={`.${styles.top}`}>
                             <div id="Chat" ref={chatRef} className={styles.App}>
                                 <div id="Chattop" className={styles.top}>
@@ -1823,7 +1825,6 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </Draggable>
                     {dropdown && (
                         <div className={styles.Dropdown}>
@@ -2031,8 +2032,6 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
             </main>
         </div>
-            </Draggable >
-        </>
     );
 };
 
