@@ -122,6 +122,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [aiEnabled, setAiEnabled] = useState(true);
     const [userInstalledApps, setUserInstalledApps] = useState([]);
     const [installingApps, setInstallingApps] = useState([]);
+    const [desktops, setDesktops] = useState([{ id: 1, name: "Desktop 1" }]);
+    const [currentDesktop, setCurrentDesktop] = useState(1);
+    const [appToDesktopMap, setAppToDesktopMap] = useState({});
     const [searchPlaceholder, setSearchPlaceholder] = useState("Type here to search...");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [year, month] = [selectedDate.getFullYear(), selectedDate.getMonth()];
@@ -187,6 +190,25 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [notificationHistory, setNotificationHistory] = useState([]);
     const [selectedWeatherView, setSelectedWeatherView] = useState("Current");
     const [weatherSearchQuery, setWeatherSearchQuery] = useState("");
+
+    useEffect(() => {
+        // Multi-Desktop window visibility manager
+        const allAppIds = ["LumiNexplorer", "Clock", "Calculator", "Browser", "Store", "Weather", "Chat", "Chat1", "WhatsApp", "Settings", "PDFViewer"];
+        allAppIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                // If it has a desktop assigned, and it's not the current one, hide it.
+                if (appToDesktopMap[id] && appToDesktopMap[id] !== currentDesktop) {
+                    el.style.display = "none";
+                } else if (el.style.display === "none" && appToDesktopMap[id] === currentDesktop) {
+                    // Restore it if it was open
+                    if (activeApp === id || activeApps.includes(id)) {
+                        el.style.display = "flex";
+                    }
+                }
+            }
+        });
+    }, [currentDesktop, appToDesktopMap, activeApps, activeApp]);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -961,6 +983,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     };
 
     const showApp = (id) => {
+        setAppToDesktopMap(prev => ({ ...prev, [id]: prev[id] || currentDesktop }));
         try {
             let app = document.getElementById(id);
             if (app.style.height == "0vh") {
@@ -1547,7 +1570,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
                 <Draggable nodeRef={storeRef} handle={`.${styles.top}`}>
                     <div className={styles.DragFix}>
-                        <div id="Store" ref={storeRef} className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
+                        <div id="Store" ref={storeRef} className={styles.App} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
                             <div
                                 id="Storetop"
                                 className={styles.top}
@@ -1600,7 +1623,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div id="SettingsSidebar" className={styles.sidebar}>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Profile')}>Profile</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Appearance</div>
+                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Themes</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('HelpSupport')}>Help & Support</div>
                             </div>
@@ -1629,27 +1652,54 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 {selectedSettingsSection === 'Profile' && (
                                     <div className={styles.SettingHomeProfile}>
                                         <h3>Arkis User Profile</h3>
-                                        <div className={styles.Profile}>
-                                            <div className={styles.settingOption}>Username: {name || 'Guest'}</div>
-                                            <div className={styles.settingOption}>Email: user@arkis.ai</div>
-                                            <div className={styles.settingOption}>Account Status: Active</div>
-                                            <div className={styles.settingOption}>Subscription: Pro Tier</div>
-                                            <div className={styles.settingOption}>Device Privilege: Admin</div>
+                                        <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
+                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Display Name:</label>
+                                                <input value={name} onChange={(e) => setName(e.target.value)} className={styles.input} type="text" style={{ padding: '1vh', borderRadius: '0.5vh', border: '1px solid rgba(255, 255, 255, 0.2)', background: 'rgba(0,0,0,0.5)', color: 'white', width: '50%' }} />
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Email Address:</label>
+                                                <input defaultValue="user@arkis.ai" disabled className={styles.input} type="email" style={{ padding: '1vh', borderRadius: '0.5vh', border: '1px solid rgba(255, 255, 255, 0.1)', background: 'rgba(0,0,0,0.2)', color: 'rgba(255,255,255,0.5)', width: '50%' }} />
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Subscription Plan:</label>
+                                                <button style={{ padding: '1vh 2vh', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', color: 'white', border: 'none', borderRadius: '0.5vh', fontWeight: 'bold' }}>RK AI Pro Tier</button>
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Device Privilege:</label>
+                                                <span style={{ color: '#10b981', fontWeight: 'bold' }}>Root / Admin</span>
+                                            </div>
                                         </div>
                                     </div>
                                 )}
                                 {selectedSettingsSection === 'Appearance' && (
-                                    <div className={styles.SettingHome}>
-                                        <h3>Appearance Settings</h3>
-                                        <div className={styles.settingOption}>
-                                            <label>Theme:</label>
-                                            <select className={styles.select}>
-                                                <option className={styles.option}>Dark</option>
-                                                <option className={styles.option}>More option coming soon...</option>
-                                            </select>
+                                    <div className={styles.SettingHomeProfile}>
+                                        <h3>Themes & Personalization</h3>
+                                        <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh', marginBottom: '4vh' }}>
+                                            <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold' }}>System Theme</label>
+                                            <div style={{ display: 'flex', gap: '2vh' }}>
+                                                <div onClick={() => {
+                                                    document.documentElement.style.setProperty('--bg-color', '#06091a');
+                                                    document.documentElement.style.setProperty('--text-color', '#f8fafc');
+                                                }} style={{ flex: 1, padding: '3vh', background: '#06091a', border: '2px solid rgba(255,255,255,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#f8fafc' }}>
+                                                    <h4>Dark Mode</h4>
+                                                </div>
+                                                <div onClick={() => {
+                                                    document.documentElement.style.setProperty('--bg-color', '#f1f5f9');
+                                                    document.documentElement.style.setProperty('--text-color', '#1e293b');
+                                                }} style={{ flex: 1, padding: '3vh', background: '#f1f5f9', border: '2px solid rgba(0,0,0,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#1e293b' }}>
+                                                    <h4>Light Mode</h4>
+                                                </div>
+                                                <div onClick={() => {
+                                                    document.documentElement.style.setProperty('--bg-color', '#000000');
+                                                    document.documentElement.style.setProperty('--text-color', '#ffffff');
+                                                }} style={{ flex: 1, padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.4)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
+                                                    <h4>OLED Pitch Black</h4>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className={styles.settingOption}>
-                                            <label>Background</label>
+                                        <div className={styles.settingOption} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                                            <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold', marginBottom: '2vh' }}>Desktop Wallpapers</label>
                                             <div className={styles.allWallpaper}>
                                                 <img onClick={() => { setNum(8); localStorage.setItem("WallpaperNumber", 8) }} className={styles.settingWallpaper} src={`Wallpapers/8.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/8.jpg`; }} alt={"selected wallpaper"} />
                                                 <img onClick={() => { setNum(1); localStorage.setItem("WallpaperNumber", 1) }} className={styles.settingWallpaper} src={`Wallpapers/1.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/1.jpg`; }} alt={"selected wallpaper"} />
@@ -1963,6 +2013,23 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 {AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to search apps and more...</button>}
                             </div>
                         </div>
+                    </div>
+                )}
+                {showTaskView && (
+                    <div className={styles.TaskViewOverlay} style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)', zIndex: 99999, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '5vh' }}>
+                        <h1 style={{ color: 'white', fontWeight: 'bold', fontSize: '4vh', marginBottom: '5vh' }}>Mission Control</h1>
+                        <div style={{ display: 'flex', gap: '3vh', flexWrap: 'wrap', justifyContent: 'center', width: '80%' }}>
+                            {desktops.map(desk => (
+                                <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} style={{ width: '30vh', height: '20vh', background: currentDesktop === desk.id ? 'rgba(0, 106, 255, 0.4)' : 'rgba(255,255,255,0.1)', border: currentDesktop === desk.id ? '2px solid #006aff' : '2px solid rgba(255,255,255,0.2)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s', flexDirection: 'column', gap: '1vh' }}>
+                                    <h2 style={{ color: 'white' }}>{desk.name}</h2>
+                                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && activeApps.includes(app)).length} Apps Open</span>
+                                </div>
+                            ))}
+                            <div onClick={() => setDesktops([...desktops, { id: desktops.length + 1, name: `Desktop ${desktops.length + 1}` }])} style={{ width: '30vh', height: '20vh', background: 'rgba(255,255,255,0.05)', border: '2px dashed rgba(255,255,255,0.3)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s' }}>
+                                <h1 style={{ color: 'white', fontSize: '6vh' }}>+</h1>
+                            </div>
+                        </div>
+                        <button onClick={() => setShowTaskView(false)} style={{ marginTop: 'auto', marginBottom: '10vh', padding: '2vh 4vh', background: '#e11d48', color: 'white', border: 'none', borderRadius: '1vh', fontSize: '2vh', cursor: 'pointer' }}>Close Task View</button>
                     </div>
                 )}
                 <div className={styles.TaskDock}>
