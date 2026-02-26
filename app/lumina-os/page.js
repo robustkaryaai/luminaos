@@ -158,13 +158,19 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     loading.style.margin = "5vh 0vh";
                                     loading.style.borderRadius = "1.5vh";
                                 }, 4000);
-                                const response = databases.listDocuments(
+                                const response = await databases.listDocuments(
                                     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
                                     process.env.NEXT_PUBLIC_APPWRITE_LOGINPAGE_COLLECTION_ID,
                                     [Query.equal('Email', email)]
                                 );
                                 setAccounts(response.documents);
-                                if (accounts.length > 0 && accounts[0].SCode.length !== 0) {
+                                if (response.documents && response.documents.length > 0) {
+                                    const doc = response.documents[0];
+                                    if (doc.Name) localStorage.setItem('Name', doc.Name);
+                                    if (doc.Theme) localStorage.setItem('Theme', doc.Theme);
+                                    if (doc.city) localStorage.setItem('WallpaperNumber', localStorage.getItem('WallpaperNumber') || 8);
+                                }
+                                if (response.documents && response.documents.length > 0 && response.documents[0].SCode && response.documents[0].SCode.length !== 0) {
                                     localStorage.setItem('OSActivated', 'true');
                                 }
                                 setTimeout(() => {

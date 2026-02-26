@@ -82,6 +82,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [wifiStrength, setWifiStrength] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
     const [isCharging, setIsCharging] = useState(false);
+    const [batterySupported, setBatterySupported] = useState(true);
     const [url, setUrl] = useState("https://en.wikipedia.org");
     const [num, setNum] = useState(8);
     const iframeRef = useRef(null);
@@ -915,13 +916,45 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     }, []);
 
     useEffect(() => {
-        function getBattery() {
-            navigator.getBattery().then((battery) => {
-                setBatteryLevel(battery.level * 100);
-                setIsCharging(battery.charging)
-            });
+        let interval;
+        let batteryRef;
+        const update = () => {
+            if (!batteryRef) return;
+            const lvl = batteryRef.level != null ? Math.round(batteryRef.level * 100) : null;
+            setBatteryLevel(lvl);
+            setIsCharging(!!batteryRef.charging);
         };
-        setInterval(getBattery, 1000);
+        const init = async () => {
+            try {
+                if (typeof navigator !== 'undefined' && typeof navigator.getBattery === 'function') {
+                    batteryRef = await navigator.getBattery();
+                    update();
+                    batteryRef.addEventListener?.('levelchange', update);
+                    batteryRef.addEventListener?.('chargingchange', update);
+                } else if (navigator && (navigator.battery || navigator.webkitBattery || navigator.mozBattery)) {
+                    batteryRef = navigator.battery || navigator.webkitBattery || navigator.mozBattery;
+                    update();
+                    if ('onlevelchange' in batteryRef) batteryRef.onlevelchange = update;
+                    if ('onchargingchange' in batteryRef) batteryRef.onchargingchange = update;
+                } else {
+                    setBatterySupported(false);
+                    return;
+                }
+                if (!batteryRef.addEventListener && !('onlevelchange' in batteryRef)) {
+                    interval = setInterval(update, 30000);
+                }
+            } catch (e) {
+                setBatterySupported(false);
+            }
+        };
+        init();
+        return () => {
+            try {
+                batteryRef?.removeEventListener?.('levelchange', update);
+                batteryRef?.removeEventListener?.('chargingchange', update);
+            } catch {}
+            if (interval) clearInterval(interval);
+        };
     }, []);
 
     useEffect(() => {
@@ -1816,21 +1849,15 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                 </button>
                                             </div>
                                             {isUpdating && (
-                                                <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh' }}>
+                                                <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', width: '80%' }}>
                                                     <label style={{ color: 'white' }}>Progress</label>
-                                                    <div style={{ width: '100%', height: '1.5vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
+                                                    <div style={{ width: '100%', height: '2.5vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
                                                         <div style={{ width: `${updateProgress}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }} />
                                                     </div>
                                                     <span style={{ color: '#94a3b8' }}>{updateProgress}%</span>
                                                 </div>
                                             )}
                                             <div style={{ color: '#94a3b8' }}>{updateStatus}</div>
-                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', flexDirection: 'column', gap: '1vh' }}>
-                                                <label style={{ color: 'white' }}>Offline Bundle Snapshot:</label>
-                                                <code style={{ color: '#cbd5e1', fontSize: '1.6vh', maxHeight: '18vh', overflow: 'auto' }}>
-                                                    {offlineBundle ? JSON.stringify(offlineBundle, null, 2) : 'Not created yet'}
-                                                </code>
-                                            </div>
                                         </div>
                                     </div>
                                 )}
@@ -1862,7 +1889,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                         <h3>Themes & Personalization</h3>
                                         <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh', marginBottom: '4vh' }}>
                                             <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold' }}>System Theme</label>
-                                            <div style={{ display: 'flex', gap: '2vh' }}>
+                                            <div style={{ display: 'flex', gap: '2vh', flexWrap: 'wrap' }}>
                                                 <div onClick={() => {
                                                     setThemeVars({
                                                         '--bg-color': '#06091a',
@@ -1871,7 +1898,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                         '--panel-bg': 'rgba(255,255,255,0.03)',
                                                         '--border-color': 'rgba(255,255,255,0.08)'
                                                     }, 'Dark');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#06091a', border: '2px solid rgba(255,255,255,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#f8fafc' }}>
+                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#06091a', border: '2px solid rgba(255,255,255,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#f8fafc' }}>
                                                     <h4>Dark Mode</h4>
                                                 </div>
                                                 <div onClick={() => {
@@ -1882,7 +1909,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                         '--panel-bg': 'rgba(0,0,0,0.03)',
                                                         '--border-color': 'rgba(0,0,0,0.12)'
                                                     }, 'Light');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#f1f5f9', border: '2px solid rgba(0,0,0,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#1e293b' }}>
+                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#f1f5f9', border: '2px solid rgba(0,0,0,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#1e293b' }}>
                                                     <h4>Light Mode</h4>
                                                 </div>
                                                 <div onClick={() => {
@@ -1893,7 +1920,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                         '--panel-bg': 'rgba(255,255,255,0.06)',
                                                         '--border-color': 'rgba(255,255,255,0.25)'
                                                     }, 'OLED');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.4)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
+                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.4)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
                                                     <h4>OLED Pitch Black</h4>
                                                 </div>
                                                 <div onClick={() => {
@@ -1904,7 +1931,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                         '--panel-bg': 'rgba(155,89,245,0.08)',
                                                         '--border-color': 'rgba(155,89,245,0.3)'
                                                     }, 'Midnight');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#0b0b17', border: '2px solid rgba(155,89,245,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#e9d5ff' }}>
+                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#0b0b17', border: '2px solid rgba(155,89,245,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#e9d5ff' }}>
                                                     <h4>Midnight Purple</h4>
                                                 </div>
                                                 <div onClick={() => {
@@ -1915,7 +1942,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                         '--panel-bg': 'rgba(34,211,238,0.08)',
                                                         '--border-color': 'rgba(34,211,238,0.3)'
                                                     }, 'Ocean');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#071924', border: '2px solid rgba(34,211,238,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#d1f4ff' }}>
+                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#071924', border: '2px solid rgba(34,211,238,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#d1f4ff' }}>
                                                     <h4>Ocean Blue</h4>
                                                 </div>
                                                 <div onClick={() => {
@@ -1926,7 +1953,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                         '--panel-bg': 'rgba(147,161,161,0.08)',
                                                         '--border-color': 'rgba(147,161,161,0.25)'
                                                     }, 'Solarized');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#002b36', border: '2px solid rgba(147,161,161,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#93a1a1' }}>
+                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#002b36', border: '2px solid rgba(147,161,161,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#93a1a1' }}>
                                                     <h4>Solarized Dark</h4>
                                                 </div>
                                                 <div onClick={() => {
@@ -1937,7 +1964,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                         '--panel-bg': 'rgba(255,255,255,0.12)',
                                                         '--border-color': 'rgba(255,255,255,0.45)'
                                                     }, 'HighContrast');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.6)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
+                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.6)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
                                                     <h4>High Contrast</h4>
                                                 </div>
                                             </div>
@@ -2312,38 +2339,42 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     ) : (
                         <BsWifiOff className={styles.TaskList} />
                     )}
-                    {isCharging ? (
-                        batteryLevel > 90 ? (
-                            <MdBatteryChargingFull className={styles.TaskList} />
-                        ) : batteryLevel > 80 ? (
-                            <MdBatteryCharging90 className={styles.TaskList} />
-                        ) : batteryLevel > 60 ? (
-                            <MdBatteryCharging80 className={styles.TaskList} />
-                        ) : batteryLevel > 50 ? (
-                            <MdBatteryCharging60 className={styles.TaskList} />
-                        ) : batteryLevel > 30 ? (
-                            <MdBatteryCharging50 className={styles.TaskList} />
-                        ) : batteryLevel > 20 ? (
-                            <MdBatteryCharging30 className={styles.TaskList} />
+                    {batterySupported ? (
+                        isCharging ? (
+                            batteryLevel > 90 ? (
+                                <MdBatteryChargingFull className={styles.TaskList} />
+                            ) : batteryLevel > 80 ? (
+                                <MdBatteryCharging90 className={styles.TaskList} />
+                            ) : batteryLevel > 60 ? (
+                                <MdBatteryCharging80 className={styles.TaskList} />
+                            ) : batteryLevel > 50 ? (
+                                <MdBatteryCharging60 className={styles.TaskList} />
+                            ) : batteryLevel > 30 ? (
+                                <MdBatteryCharging50 className={styles.TaskList} />
+                            ) : batteryLevel > 20 ? (
+                                <MdBatteryCharging30 className={styles.TaskList} />
+                            ) : (
+                                <MdBatteryAlert className={styles.TaskList} />
+                            )
                         ) : (
-                            <MdBatteryAlert className={styles.TaskList} />
+                            batteryLevel > 90 ? (
+                                <MdBatteryFull className={styles.TaskList} />
+                            ) : batteryLevel > 80 ? (
+                                <MdBattery90 className={styles.TaskList} />
+                            ) : batteryLevel > 60 ? (
+                                <MdBattery80 className={styles.TaskList} />
+                            ) : batteryLevel > 50 ? (
+                                <MdBattery60 className={styles.TaskList} />
+                            ) : batteryLevel > 30 ? (
+                                <MdBattery50 className={styles.TaskList} />
+                            ) : batteryLevel > 20 ? (
+                                <MdBattery30 className={styles.TaskList} />
+                            ) : (
+                                <MdBattery20 className={styles.TaskList} />
+                            )
                         )
                     ) : (
-                        batteryLevel > 90 ? (
-                            <MdBatteryFull className={styles.TaskList} />
-                        ) : batteryLevel > 80 ? (
-                            <MdBattery90 className={styles.TaskList} />
-                        ) : batteryLevel > 60 ? (
-                            <MdBattery80 className={styles.TaskList} />
-                        ) : batteryLevel > 50 ? (
-                            <MdBattery60 className={styles.TaskList} />
-                        ) : batteryLevel > 30 ? (
-                            <MdBattery50 className={styles.TaskList} />
-                        ) : batteryLevel > 20 ? (
-                            <MdBattery30 className={styles.TaskList} />
-                        ) : (
-                            <MdBattery20 className={styles.TaskList} />
-                        )
+                        <MdBatteryAlert className={styles.TaskList} />
                     )}
                     {isMuted ? (
                         <BiVolumeMute className={styles.TaskList} />

@@ -119,9 +119,9 @@
     margin: 5vh 0vh;
     position: absolute;
     border-radius: 1.5vh;
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--panel-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
     transition: all 1.5s ease-in-out;
 }
 
@@ -136,9 +136,9 @@
     margin: 5vh 0vh;
     position: absolute;
     border-radius: 1.5vh;
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--panel-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,9 +153,9 @@
     margin: 5vh 0vh;
     position: absolute;
     border-radius: 1.5vh;
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--panel-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -350,12 +350,12 @@
     outline: none;
     border-radius: 1vh;
     padding: 1vh 2vh;
-    width: 5%;
+    width: 3%;
     margin-left: 2vh;
-    height: 7vh;
+    height: 5vh;
     margin-bottom: 2vh;
     position: absolute;
-    color: #fff;
+    color: var(--text-color);
     bottom: 2vh;
     right: 1vh;
 }
@@ -366,12 +366,12 @@
     outline: none;
     border-radius: 1vh;
     padding: 1vh 2vh;
-    width: 5%;
+    width: 3%;
     margin-left: 2vh;
-    height: 7vh;
+    height: 5vh;
     margin-bottom: 2vh;
     position: absolute;
-    color: #fff;
+    color: var(--text-color);
     bottom: 2vh;
     right: 1vh;
     visibility: hidden;
@@ -396,9 +396,9 @@
     position: absolute;
     margin: 47vh 0vh;
     border-radius: 1.5vh;
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--panel-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -409,7 +409,7 @@
     width: 5vh;
     height: 5vh;
     border: 4px solid transparent;
-    border-top: 5px solid #fff;
+    border-top: 5px solid var(--text-color);
     border-radius: 100%;
     animation: spin 2s linear infinite;
     transition: all 1.5s ease-in-out;
@@ -419,7 +419,7 @@
     width: 15vh;
     height: 15vh;
     border: 4px solid transparent;
-    border-top: 5px solid #fff;
+    border-top: 5px solid var(--text-color);
     border-radius: 100%;
     animation: spin 2s linear;
     transition: all 1.5s ease-in-out;
@@ -490,7 +490,7 @@
     height: 4vh;
     width: 3.5vh;
     margin: 0.5vh 1vh;
-    color: rgb(255, 255, 255);
+    color: var(--text-color);
     transition: all 0.3s;
     left: 0;
     position: absolute;
@@ -518,7 +518,7 @@
 }
 
 .start:hover {
-    color: rgb(0, 119, 255);
+    color: var(--accent-color);
 }
 
 .start:active {
@@ -526,8 +526,8 @@
 }
 
 .input {
-    background: rgb(0 0 0 / 39%);
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
     outline: none;
     cursor: none;
     border-radius: 0.7vh;
@@ -535,8 +535,7 @@
     width: 44vh;
     margin-top: 0.7vh;
     font-size: 2vh;
-    border: none;
-    outline: none;
+    color: var(--text-color);
 }
 
 .result {
@@ -545,7 +544,7 @@
     position: absolute;
     top: 8vh;
     text-align: center;
-    background: rgb(0 0 0 / 69%);
+    background: var(--panel-bg);
     border-radius: 2vh;
     font-family: 'Inter', sans-serif;
     padding: 0;
@@ -570,15 +569,13 @@
     gap: 1.2vh;
     padding: 0vh 1.5vh;
     border-radius: 1.5vh;
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    border: 1px solid var(--border-color);
 }
-
 .WeatherDiv:hover{
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
 }
-
 .WeatherDiv:active{
-    background: rgb(0 0 0 / 75%);
+    background: var(--panel-bg);
 }
 
 .WeatherDiv p {
@@ -590,9 +587,9 @@
 }
 
 .notificationBox {
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     border-radius: 1vh;
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    border: 1px solid var(--border-color);
     height: 15%;
     margin: 2vh 1vh;
     display: flex;
@@ -623,9 +620,9 @@
 }
 
 .AllNotifications {
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     border-radius: 1vh;
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    border: 1px solid var(--border-color);
     position: absolute;
     left: 55%;
     width: 22%;    
@@ -646,7 +643,7 @@
     position: absolute;
     bottom: 0;
     overflow: hidden;
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     max-width: auto;
     min-width: 80%;
     max-width: 99.5%;
@@ -659,18 +656,19 @@
     flex-direction: row;
     gap: 2vh;
     margin-bottom: 0.9vh;
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    border: 1px solid var(--border-color);
     outline: none;
 }
 
 .SearchBarInputCSS {
     border-radius: 0.5vh;
-    background: rgb(0 0 0 / 65%);
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
     outline: none;
     font-size: 2.5vh;
     padding: 0.5vh 1.5vh;
     width: 90%;
+    color: var(--text-color);
 }
 
 .SearchBarCSS {
@@ -678,14 +676,14 @@
 }
 
 .StartMenu {
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    border: 1px solid var(--border-color);
     outline: none;
     height: 61%;
     width: 40%;
     position: absolute;
     bottom: 10.5%;
     left: 1.2%;
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     border-radius: 0.5vh;
     transition: all 2s ease-in-out;
 }
@@ -708,7 +706,7 @@
 .Bottom {
     position: absolute;
     bottom: 0;
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     width: 100%;
     height: 10%;
 }
@@ -727,11 +725,11 @@
 
 .Toggles div {
     width: 5vh;
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     display: flex;
     justify-content: center;
     padding: 0.5vh 1vh;
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+    border: 1px solid var(--border-color);
     outline: none;
     border-radius: 0.5vh;
 }
@@ -818,7 +816,7 @@
     align-items: flex-start;
     margin-left: 2vh;
     gap: 1vh;
-    border-top: 1px solid white;
+    border-top: 1px solid var(--border-color);
     width: 94%;
 }
 
@@ -839,7 +837,7 @@
     border-radius: 1.5vh;
     font-size: 1.5vh;
     padding: 1vh 2vh;
-    color: #fff;
+    color: var(--text-color);
 }
 
 .calendarHeader {
