@@ -238,7 +238,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#f1f5f9',
                 '--text-color': '#1e293b',
                 '--accent-color': '#4f46e5',
-                '--panel-bg': 'rgba(0,0,0,0.03)',
+                '--panel-bg': 'rgba(255,255,255,0.85)',
                 '--border-color': 'rgba(0,0,0,0.12)'
             };
         }
@@ -247,7 +247,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#000000',
                 '--text-color': '#ffffff',
                 '--accent-color': '#10b981',
-                '--panel-bg': 'rgba(255,255,255,0.06)',
+                '--panel-bg': 'rgba(255,255,255,0.12)',
                 '--border-color': 'rgba(255,255,255,0.25)'
             };
         }
@@ -256,7 +256,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#0b0b17',
                 '--text-color': '#e9d5ff',
                 '--accent-color': '#9b59f5',
-                '--panel-bg': 'rgba(155,89,245,0.08)',
+                '--panel-bg': 'rgba(155,89,245,0.15)',
                 '--border-color': 'rgba(155,89,245,0.3)'
             };
         }
@@ -265,7 +265,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#071924',
                 '--text-color': '#d1f4ff',
                 '--accent-color': '#22d3ee',
-                '--panel-bg': 'rgba(34,211,238,0.08)',
+                '--panel-bg': 'rgba(34,211,238,0.15)',
                 '--border-color': 'rgba(34,211,238,0.3)'
             };
         }
@@ -274,7 +274,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#002b36',
                 '--text-color': '#93a1a1',
                 '--accent-color': '#b58900',
-                '--panel-bg': 'rgba(147,161,161,0.08)',
+                '--panel-bg': 'rgba(147,161,161,0.15)',
                 '--border-color': 'rgba(147,161,161,0.25)'
             };
         }
@@ -283,7 +283,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#000000',
                 '--text-color': '#ffffff',
                 '--accent-color': '#ffcc00',
-                '--panel-bg': 'rgba(255,255,255,0.12)',
+                '--panel-bg': 'rgba(255,255,255,0.22)',
                 '--border-color': 'rgba(255,255,255,0.45)'
             };
         }
@@ -291,7 +291,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             '--bg-color': '#06091a',
             '--text-color': '#f8fafc',
             '--accent-color': '#9b59f5',
-            '--panel-bg': 'rgba(255,255,255,0.03)',
+            '--panel-bg': 'rgba(0,0,0,0.65)',
             '--border-color': 'rgba(255,255,255,0.08)'
         };
     };
