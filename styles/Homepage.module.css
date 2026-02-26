@@ -1176,16 +1176,16 @@
     height: 6vh;
     width: 6.5vh;
     transition: all 0.2s;
-    color: rgb(255, 255, 255);
+    color: var(--text-color);
 }
 
 
 .TaskList:hover {
-    color: rgb(0, 200, 255);
+    color: var(--accent-color);
 }
 
 .TaskList:active {
-    color: rgb(0, 119, 255);
+    color: var(--accent-color);
 }
 
 .App {
