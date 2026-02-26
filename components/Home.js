@@ -1172,8 +1172,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         // Update DOM elements for the taskbar weather widget
                         const temp = document.getElementById("temp");
                         const feels = document.getElementById("feels");
-                        if (temp) temp.innerHTML = data.temp;
-                        if (feels) feels.innerHTML = data.feels_like;
+
                     }
                 } catch (err) {
                     console.error('Weather fetch error:', err);
@@ -1561,14 +1560,22 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     <div key={index} className={styles.application}>
                                         {app.icon}
                                         <span>{app.name}</span>
-                                        <button onClick={() => {
+                                        <button onClick={(e) => {
                                                 if (!userInstalledApps.find(a => a.name === app.name)) {
-                                                    setUserInstalledApps([...userInstalledApps, app]);
-                                                    alert(`${app.name} installed to dock!`);
+                                                    const btn = e.currentTarget;
+                                                    btn.innerHTML = "Installing...";
+                                                    btn.style.opacity = "0.7";
+                                                    setTimeout(() => {
+                                                        setUserInstalledApps([...userInstalledApps, app]);
+                                                        alert(`${app.name} installed! You can launch it from your Desktop Dock.`);
+                                                        btn.innerHTML = "Installed";
+                                                    }, 3000);
                                                 } else {
                                                     alert(`${app.name} is already installed.`);
                                                 }
-                                            }} className={styles.appDownload}><AiOutlineDownload /></button>
+                                            }} className={styles.appDownload}>
+                                                {userInstalledApps.find(a => a.name === app.name) ? "Installed" : <AiOutlineDownload />}
+                                            </button>
                                     </div>
                                 ))}
                             </div>

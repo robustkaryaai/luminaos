@@ -549,7 +549,7 @@
     border-radius: 2vh;
     font-family: 'Inter', sans-serif;
     padding: 0;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
 }
 
 .result h1 {
@@ -1100,7 +1100,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
     top: 14vh;
     left: 60vh;
 }
@@ -1111,7 +1111,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
     top: 14vh;
     left: 60vh;
 }
@@ -1126,7 +1126,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: row-reverse;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
 }
 
 .BroTop {
@@ -1139,7 +1139,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row-reverse;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
     padding-top: 1vh;
 }
 
@@ -1206,7 +1206,7 @@
     border-bottom-right-radius: 1.5vh;
     position: absolute;
     top: 4.1vh;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
 }
 
 .BrowserFiles {
@@ -1217,7 +1217,7 @@
     border-bottom-right-radius: 1.5vh;
     position: absolute;
     top: 9.1vh;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
 }
 
 .sidebar {
@@ -1595,7 +1595,7 @@
     border-radius: 1.2vh;
     top: 15%;
     left: 11%;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
 }
 
 .AddFileWindowClose {
