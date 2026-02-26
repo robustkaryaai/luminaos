@@ -113,7 +113,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
         }
     }, [selectedWindow, lockscreen]);
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (selectedWindow == "Login") {
             try {
                 if (password.length > 10) {
