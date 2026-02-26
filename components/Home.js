@@ -190,6 +190,13 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [notificationHistory, setNotificationHistory] = useState([]);
     const [selectedWeatherView, setSelectedWeatherView] = useState("Current");
     const [weatherSearchQuery, setWeatherSearchQuery] = useState("");
+    const [osVersion, setOsVersion] = useState('1.1');
+    const [latestVersion, setLatestVersion] = useState(null);
+    const [updateChecking, setUpdateChecking] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [updateProgress, setUpdateProgress] = useState(0);
+    const [updateStatus, setUpdateStatus] = useState('');
+    const [offlineBundle, setOfflineBundle] = useState(null);
     const setThemeVars = (vars, name) => {
         Object.entries(vars).forEach(([k, v]) => {
             document.documentElement.style.setProperty(k, v);
@@ -261,10 +268,78 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             '--border-color': 'rgba(255,255,255,0.08)'
         };
     };
+    const checkForUpdates = async () => {
+        try {
+            setUpdateChecking(true);
+            setUpdateStatus('Checking for updates...');
+            await new Promise(res => setTimeout(res, 1500));
+            const simulatedLatest = '1.2';
+            setLatestVersion(simulatedLatest);
+            setUpdateStatus(`Latest version ${simulatedLatest} found`);
+        } finally {
+            setUpdateChecking(false);
+        }
+    };
+    const startUpdateDownload = async () => {
+        if (!latestVersion) {
+            setUpdateStatus('No update available. Please check for updates first.');
+            return;
+        }
+        setIsUpdating(true);
+        setUpdateProgress(0);
+        setUpdateStatus('Downloading update...');
+        const start = Date.now();
+        const durationMs = 2 * 60 * 1000;
+        const interval = setInterval(() => {
+            const elapsed = Date.now() - start;
+            const pct = Math.min(100, Math.round((elapsed / durationMs) * 100));
+            setUpdateProgress(pct);
+            if (pct >= 100) {
+                clearInterval(interval);
+                const bundle = {
+                    version: latestVersion,
+                    timestamp: new Date().toISOString(),
+                    theme: localStorage.getItem('Theme') || 'Dark',
+                    wallpaper: localStorage.getItem('WallpaperNumber') || 8,
+                    appsInstalled: JSON.parse(localStorage.getItem('AppInstalled') || '[]'),
+                };
+                localStorage.setItem('OfflineBundle', JSON.stringify(bundle));
+                localStorage.setItem('OSVersion', latestVersion);
+                setOfflineBundle(bundle);
+                setOsVersion(latestVersion);
+                setUpdateStatus('Update downloaded. Restarting OS...');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                setIsUpdating(false);
+            }
+        }, 500);
+    };
     useEffect(() => {
         const saved = localStorage.getItem('Theme');
         const vars = getThemeVarsByName(saved || 'Dark');
         setThemeVars(vars, saved || 'Dark');
+    }, []);
+    useEffect(() => {
+        const savedVersion = localStorage.getItem('OSVersion');
+        if (savedVersion) setOsVersion(savedVersion);
+        const savedBundleStr = localStorage.getItem('OfflineBundle');
+        if (!savedBundleStr) {
+            const firstBundle = {
+                version: savedVersion || osVersion,
+                timestamp: new Date().toISOString(),
+                theme: localStorage.getItem('Theme') || 'Dark',
+                wallpaper: localStorage.getItem('WallpaperNumber') || 8,
+                appsInstalled: JSON.parse(localStorage.getItem('AppInstalled') || '[]'),
+            };
+            localStorage.setItem('OfflineBundle', JSON.stringify(firstBundle));
+            setOfflineBundle(firstBundle);
+        } else {
+            try {
+                const bundle = JSON.parse(savedBundleStr);
+                setOfflineBundle(bundle);
+            } catch {}
+        }
     }, []);
 
     useEffect(() => {
@@ -1695,6 +1770,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Themes</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
+                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Updates')}>Updates</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('HelpSupport')}>Help & Support</div>
                             </div>
                             <div id="SettingsMainWindow" className={styles.StoreMainWindow}>
@@ -1715,6 +1791,45 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                     <option className={styles.option}>GMT</option>
                                                     <option className={styles.option}>More option coming soon...</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                {selectedSettingsSection === 'Updates' && (
+                                    <div className={styles.SettingHomeProfile}>
+                                        <h3>System Updates</h3>
+                                        <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Current Version:</label>
+                                                <span style={{ color: '#93c5fd', fontWeight: 'bold' }}>v{osVersion}</span>
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Latest Version:</label>
+                                                <span style={{ color: latestVersion ? '#34d399' : '#fbbf24', fontWeight: 'bold' }}>{latestVersion ? `v${latestVersion}` : 'Unknown'}</span>
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', gap: '1vh', alignItems: 'center' }}>
+                                                <button onClick={checkForUpdates} disabled={updateChecking || isUpdating} className={styles.btn} style={{ padding: '1vh 2vh' }}>
+                                                    {updateChecking ? 'Checking…' : 'Check for Updates'}
+                                                </button>
+                                                <button onClick={startUpdateDownload} disabled={isUpdating || !latestVersion} className={styles.btn} style={{ padding: '1vh 2vh', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }}>
+                                                    {isUpdating ? 'Downloading…' : 'Download & Install'}
+                                                </button>
+                                            </div>
+                                            {isUpdating && (
+                                                <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh' }}>
+                                                    <label style={{ color: 'white' }}>Progress</label>
+                                                    <div style={{ width: '100%', height: '1.5vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
+                                                        <div style={{ width: `${updateProgress}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }} />
+                                                    </div>
+                                                    <span style={{ color: '#94a3b8' }}>{updateProgress}%</span>
+                                                </div>
+                                            )}
+                                            <div style={{ color: '#94a3b8' }}>{updateStatus}</div>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', flexDirection: 'column', gap: '1vh' }}>
+                                                <label style={{ color: 'white' }}>Offline Bundle Snapshot:</label>
+                                                <code style={{ color: '#cbd5e1', fontSize: '1.6vh', maxHeight: '18vh', overflow: 'auto' }}>
+                                                    {offlineBundle ? JSON.stringify(offlineBundle, null, 2) : 'Not created yet'}
+                                                </code>
                                             </div>
                                         </div>
                                     </div>
