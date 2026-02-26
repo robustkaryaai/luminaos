@@ -16,15 +16,14 @@ const databases = new Databases(client);
 
 const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [accounts, setAccounts] = useState([]);
-    
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [pin, setPin] = useState('');
     const [selectedWindow, setSelectedWindow] = useState("Start");
     const [selectedCode, setSelectedCode] = useState("Setup");
-    const [activateLoad, setActivateLoad] = useState(true);
     const [lockscreen, setLockscreen] = useState("close")
-    const [text, setText] = useState("Activating your LuminaOS. Please wait...");
+    const [text, setText] = useState("Activating LuminaOS by RK AI. Please wait...");
     const [startupProgress, setStartupProgress] = useState(0);
 
     // Ensure pin state is properly initialized
@@ -69,7 +68,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 console.log("GG4")
                                 console.log(localStorage.getItem("SetupDone"))
                                 setSelectedWindow("Pin");
-                            } else if(localStorage.getItem("SetupDone") != "true") {
+                            } else if (localStorage.getItem("SetupDone") != "true") {
                                 console.log("GG5")
                                 console.log(lockscreen)
                                 console.log(localStorage.getItem("SetupDone"))
@@ -84,7 +83,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                             } else {
                                 setSelectedCode("Home")
                             }
-                            
+
                             // Fetch data after startup completes
                             const fetchData = async () => {
                                 try {
@@ -175,7 +174,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     setActivateLoad(false);
                                     let btn = document.getElementById("btn")
                                     btn.style.visibility = "visible";
-                                    setText("Your LuminaOS is now activated...")
+                                    setText("RK AI Integration Initialized...")
                                 }, 7000);
                                 break;
                             }
@@ -321,7 +320,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                 }
                 const time = `${hh}:${mm} ${ampm}`;
                 const cdate = `${d}-${m}-${y}`;
-                
+
                 // Wait for elements to be available
                 setTimeout(() => {
                     const timeElement = document.getElementById('time');
@@ -341,7 +340,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
             // Ensure body and html don't have scrollbars
             document.body.style.overflow = 'hidden';
             document.documentElement.style.overflow = 'hidden';
-            
+
             return () => {
                 // Cleanup when component unmounts
                 document.body.style.overflow = '';
@@ -366,37 +365,37 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
         <div className={styles.Div1}>
             {selectedWindow == "Start" && <div>
                 <Head>
-                    <title>Start LuminaOS</title>
+                    <title>Start LuminaOS | RK AI</title>
                 </Head>
                 <main className={styles.main1}>
                     <div className={styles.icon}>
                         <BsFillLightningChargeFill className={styles.light} />
                     </div>
-                    <h2 className={styles.startscreen}>Starting LuminaOS</h2>
-                    
+                    <h2 className={styles.startscreen}>Starting LuminaOS by RK AI</h2>
+
                     {/* Stylish Loading Bar */}
                     <div className={styles.startupLoadingContainer}>
                         <div className={styles.startupLoadingBar}>
-                            <div 
-                                className={styles.startupProgress} 
+                            <div
+                                className={styles.startupProgress}
                                 style={{ width: `${startupProgress}%` }}
                             />
                             <div className={styles.startupGlow} style={{ width: `${startupProgress}%` }} />
                         </div>
                         <div className={styles.startupLoadingText}>
-                            Initializing System... {Math.round(startupProgress)}%
+                            Initializing Neural Synapses... {Math.round(startupProgress)}%
                         </div>
                     </div>
                 </main>
             </div>}
             {selectedCode == "Setup" && <div>
                 <Head>
-                    <title>SetUp LuminaOS</title>
+                    <title>Setup LuminaOS | RK AI</title>
                 </Head>
                 <main className={styles.main2}>
                     <img className={styles.img1} src="SetupWallpaper.jpg" />
                     {selectedWindow == "Login" && <div id="login" className={styles.Login}>
-                        <h1>Login to LuminaOS</h1>
+                        <h1>Login to LuminaOS System</h1>
                         <input
                             type="email"
                             name="email"
@@ -462,7 +461,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <option className={styles.option}>Light Theme (Coming Soon)</option>
                         </select>
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" name="ai" id="ai" className={styles.checkbox} />
-                        <label htmlFor="ai">Ai powered OS</label>
+                        <label htmlFor="ai">RK AI Core Integration</label>
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" name="city" id="city" className={styles.SetupInput} placeholder="Enter your city..." />
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" name="reason" id="reason" className={styles.SetupInput} placeholder="Why you want to use LuminaOS?" />
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" name="agree" id="agree" required className={styles.checkbox} />
@@ -495,7 +494,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <title>{name}'s LuminaOS</title>
                 </Head>
                 <Home />
-                
+
             </div>}
         </div>
     )

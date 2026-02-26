@@ -17,6 +17,7 @@ import { FaPowerOff } from "react-icons/fa";
 import { MdBattery20, MdBattery30, MdBattery50, MdBattery60, MdBattery80, MdBattery90, MdBatteryAlert, MdBatteryCharging20, MdBatteryCharging30, MdBatteryCharging50, MdBatteryCharging60, MdBatteryCharging80, MdBatteryCharging90, MdBatteryChargingFull, MdBatteryFull, MdOutlineOpenInNew } from 'react-icons/md';
 import dynamic from 'next/dynamic';
 import CustomCursor from './CustomCursor';
+import Draggable from 'react-draggable';
 import { Client, Storage } from 'appwrite';
 import { BsFacebook } from 'react-icons/bs';
 import { AiFillInstagram } from 'react-icons/ai';
@@ -61,8 +62,8 @@ import { SiMicrosoftword, SiMicrosoftexcel, SiMicrosoftpowerpoint } from 'react-
 
 // Import PdfViewer dynamically to prevent SSR issues
 const PdfViewer = dynamic(() => import('./PdfViewer'), {
-  ssr: false,
-  loading: () => <div>Loading PDF viewer...</div>
+    ssr: false,
+    loading: () => <div>Loading PDF viewer...</div>
 });
 
 const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
@@ -175,24 +176,24 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
 
     useEffect(() => {
         const handleMouseMove = (e) => {
-          if (storeDragging) {
-            setStorePosition({ x: e.clientX, y: e.clientY });
-          }
+            if (storeDragging) {
+                setStorePosition({ x: e.clientX, y: e.clientY });
+            }
         };
-    
+
         const handleMouseUp = () => {
             setStoreDragging(false);
         };
-    
+
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
-    
+
         return () => {
-          document.removeEventListener('mousemove', handleMouseMove);
-          document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
         };
-      }, [storeDragging]);
-      
+    }, [storeDragging]);
+
 
     // function isTotalSizeValid(files, maxSizeInMB) {
     //     const maxSizeInBytes = maxSizeInMB * 1024 * 1024; // Convert MB to bytes
@@ -435,7 +436,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
 
     const handleAIClick = () => {
         if (AIValue == false) {
-            setSearchPlaceholder("Type here to ask CereboNex...");
+            setSearchPlaceholder("Type here to ask RK AI...");
             setAIValue(true);
         } else {
             setSearchPlaceholder("Type here to search...");
@@ -468,27 +469,27 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             try {
                 setOutputText("Generating results for you...");
                 console.log('Sending request to Gemini API...');
-                
+
                 const response = await fetch('/api/GetAIResults', {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ message: query })
                 });
-                
+
                 console.log('Response status:', response.status);
-                
+
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(`API Error: ${errorData.error || response.statusText}`);
                 }
-                
+
                 const data = await response.text();
                 console.log('Received response:', data.substring(0, 100) + '...');
-                
+
                 // Display with typewriter animation
                 const completeResponse = data.trim();
                 setOutputText('');
-                
+
                 let currentIndex = 0;
                 const typeWriter = () => {
                     if (currentIndex < completeResponse.length) {
@@ -498,7 +499,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         setTimeout(typeWriter, 30);
                     }
                 };
-                
+
                 typeWriter();
             } catch (error) {
                 console.error('Gemini API error:', error);
@@ -748,7 +749,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             if (document.getElementById("result").innerHTML === "") {
                 document.getElementById("result").innerHTML = `
                     <div onClick={closeResults} id="closeResult" className={styles.closeResult}></div>
-                    <h1>CerebroNex:</h1>
+                    <h1>RK AI:</h1>
                     <br />
                     <p id="output">${outputText}</p>
                 `;
@@ -769,7 +770,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
 
             // Display with typewriter animation
             const completeResponse = data.trim();
-            
+
             let currentIndex = 0;
             const typeWriter = () => {
                 if (currentIndex < completeResponse.length) {
@@ -779,7 +780,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     setTimeout(typeWriter, 30);
                 }
             };
-            
+
             typeWriter();
         } catch (error) {
             alert("Sorry! Some error occurred!");
@@ -971,7 +972,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         let app = document.getElementById("result");
         app.style.width = "0vh";
         app.style.padding = "0";
-        setTimeout(() => { app.innerHTML = "" }, 500)
+        setOutputText('');
     };
 
     const closeAddFileWindow = () => {
@@ -998,18 +999,18 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     useEffect(() => {
         const savedCity = localStorage.getItem("city") || "Delhi";
         setCity(savedCity);
-        
+
         const fetchWeatherData = async () => {
             try {
                 const response = await fetch(`/api/weather?city=${savedCity}`);
                 const data = await response.json();
-                
+
                 if (data.error) {
                     console.error('Weather data not available:', data.error);
                 } else {
                     setWeatherData(data);
                     setCloudPct(data.cloud_pct);
-                    
+
                     // Update DOM elements for the taskbar weather widget
                     const temp = document.getElementById("temp");
                     const feels = document.getElementById("feels");
@@ -1023,10 +1024,10 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
 
         // Fetch weather data immediately
         fetchWeatherData();
-        
+
         // Set up interval for periodic updates
         const interval = setInterval(fetchWeatherData, 60000);
-        
+
         // Cleanup interval on unmount
         return () => clearInterval(interval);
     }, []);
@@ -1146,19 +1147,19 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             setCity(newCity);
             localStorage.setItem("city", newCity);
             setWeatherSearchQuery("");
-            
+
             // Fetch weather data for the new city
             const fetchWeatherForCity = async () => {
                 try {
                     const response = await fetch(`/api/weather?city=${newCity}`);
                     const data = await response.json();
-                    
+
                     if (data.error) {
                         console.error('Weather data not available:', data.error);
                     } else {
                         setWeatherData(data);
                         setCloudPct(data.cloud_pct);
-                        
+
                         // Update DOM elements for the taskbar weather widget
                         const temp = document.getElementById("temp");
                         const feels = document.getElementById("feels");
@@ -1169,7 +1170,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     console.error('Weather fetch error:', err);
                 }
             };
-            
+
             fetchWeatherForCity();
         }
     };
@@ -1202,7 +1203,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     )}
                     <div className={styles.search} id="ai">
                         <form onSubmit={handleSubmit}>
-                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" placeholder="Ask CerebroNex..." className={styles.input} id="input" name="input" />
+                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" placeholder="Ask RK AI..." className={styles.input} id="input" name="input" />
                         </form>
                     </div>
                     <div id="time" className={styles.time}></div>
@@ -1314,487 +1315,506 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         ))
                     )}
                 </div>}
-                <div id="result" className={styles.result}>
-                    <div onClick={closeResults} id="closeResult" className={styles.closeResult}></div>
-                    <h1>CerebroNex:</h1>
-                    <br />
-                    <p id="output">{outputText}</p>
-                </div>
+                <Draggable handle="#result">
+                    <div id="result" className={styles.result}>
+                        <div onClick={closeResults} id="closeResult" className={styles.closeResult}></div>
+                        <h1>RK AI:</h1>
+                        <br />
+                        <p id="output">{outputText}</p>
+                    </div>
+                </Draggable>
                 <div className={styles.Apps} id="AllApps">
-                
-                    <div id="LumiNexplorer" className={styles.App}>
-                        <div id="top" className={styles.top}>
-                            <div id="title" className={styles.title}>LumiNexplorer</div>
-                            <div onClick={() => { showApp("LumiNexplorer") }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("LumiNexplorer") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { maximize("LumiNexplorer", "top", "LumiNexplorerApp", "sidebar", "MainWindow") }} className={styles.maximize}></div>
-                        </div>
-                        <div id="LumiNexplorerApp" className={styles.Files}>
-                            <div id="sidebar" className={styles.sidebar}>
-                                <div className={styles.text} onClick={() => handleSectionClick('Home')}>Home</div>
-                                <div className={styles.text} onClick={() => handleSectionClick('Spark Drive')}>Spark Drive</div>
+
+                    <Draggable handle={`.${styles.top}`}>
+                        <div id="LumiNexplorer" className={styles.App}>
+                            <div id="top" className={styles.top}>
+                                <div id="title" className={styles.title}>LumiNexplorer</div>
+                                <div onClick={() => { showApp("LumiNexplorer") }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("LumiNexplorer") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { maximize("LumiNexplorer", "top", "LumiNexplorerApp", "sidebar", "MainWindow") }} className={styles.maximize}></div>
                             </div>
-                            <div id="MainWindow" className={styles.MainWindow}>
-                                {selectedSection === 'Home' && <div className={styles.AddFilesWindow} id="AddFilesWindow">
-                                    <div id="close" onClick={closeAddFileWindow} className={styles.AddFileWindowClose}></div>
-                                    <label className={styles.fileInput}>
-                                        <span>Choose File</span>
-                                        <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="file" onChange={handleFileUpload} />
-                                    </label>
-                                </div>}
-                                {selectedSection === 'Spark Drive' && (
-                                    <div className={styles.AddFilesWindow} id="AddFilesWindow">
+                            <div id="LumiNexplorerApp" className={styles.Files}>
+                                <div id="sidebar" className={styles.sidebar}>
+                                    <div className={styles.text} onClick={() => handleSectionClick('Home')}>Home</div>
+                                    <div className={styles.text} onClick={() => handleSectionClick('Spark Drive')}>Spark Drive</div>
+                                </div>
+                                <div id="MainWindow" className={styles.MainWindow}>
+                                    {selectedSection === 'Home' && <div className={styles.AddFilesWindow} id="AddFilesWindow">
                                         <div id="close" onClick={closeAddFileWindow} className={styles.AddFileWindowClose}></div>
                                         <label className={styles.fileInput}>
-                                            <span>Choose File. Max file size: 5mb</span>
-                                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="file" id="uploader" />
-                                            <button className={styles.UploadBtn} onClick={handleUpload}>Upload File</button>
+                                            <span>Choose File</span>
+                                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="file" onChange={handleFileUpload} />
                                         </label>
-                                    </div>
-                                )}
-                                {selectedSection === 'Home' && (
-                                    <div className={styles.Home}>
-                                        <div>Home</div>
-                                        {uploadedFiles && <div className={styles.AllHomeFiles}>
-                                            <ul className={styles.ul}>
-                                                {uploadedFiles.map((file, index) => (
-                                                    <li className={styles.file} key={index}>
-                                                        <img src="/file.png" />
-                                                        <span>{file.name.slice(0, 15)}...</span>
-                                                        <button className={styles.download} onClick={() => handleDownload(file)}><AiOutlineDownload /></button>
-                                                        <button className={styles.openIn} onClick={() => { setSelectedFileURL(file.dataUrl); showApp("LumiNexplorer"); showApp("PDFViewer"); console.log(file); console.log(file.dataUrl) }}><MdOutlineOpenInNew /></button>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>}
-                                    </div>
-                                )}
-                                {selectedSection === 'Spark Drive' && (
-                                    <div className={styles.Home}>
-                                        <div>SparkDrive (200mb)</div>
-                                        <div className={styles.AllHomeFiles}>
-                                            <ul>
-                                                {fileList.map((file) => (
-                                                    <li onAuxClick={() => { if (sparkDriveDropdown == false) { setSparkDriveDropdown(true) } else { setSparkDriveDropdown(false) } }} className={styles.file} key={file.$id}>
-                                                        <img src="/file.png" />
-                                                        <span>{file.name.slice(0, 15)}...</span>
-                                                        {sparkDriveDropdown && <div className={styles.rightOptions}>
-                                                            <button onClick={() => handleView(file.$id)}>View</button>
-                                                            <button onClick={() => handleSparkDownload(file.$id)}>Download</button>
-                                                            <button onClick={() => handleDelete(file.$id)}>Delete</button>
-                                                        </div>}
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                    </div>}
+                                    {selectedSection === 'Spark Drive' && (
+                                        <div className={styles.AddFilesWindow} id="AddFilesWindow">
+                                            <div id="close" onClick={closeAddFileWindow} className={styles.AddFileWindowClose}></div>
+                                            <label className={styles.fileInput}>
+                                                <span>Choose File. Max file size: 5mb</span>
+                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="file" id="uploader" />
+                                                <button className={styles.UploadBtn} onClick={handleUpload}>Upload File</button>
+                                            </label>
                                         </div>
-                                        <button onClick={removeFiles} className={styles.deleteFiles}>Delete all files</button>
-                                        <button onClick={showAddFileWindow} className={styles.addFiles}>Add files</button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div id="Clock" className={styles.App}>
-                        <div id="top" className={styles.top}>
-                            <div id="title" className={styles.title}>Clock</div>
-                            <div onClick={() => { showApp("Clock") }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Clock") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { maximize("Clock", "top", "ClockApp", "sidebar", "MainWindow") }} className={styles.maximize}></div>
-                        </div>
-                        <div id="ClockApp" className={styles.Files}>
-                            <div id="sidebar" className={styles.sidebar}>
-                                <div onClick={() => { setSelectedClockWindow("Clock") }} className={styles.text}>Time</div>
-                                <div onClick={() => { setSelectedClockWindow("Timer") }} className={styles.text}>Timer</div>
-                                <div onClick={() => { setSelectedClockWindow("StopClock") }} className={styles.text}>StopClock</div>
-                            </div>
-                            <div id="MainWindow" className={styles.MainWindow}>
-                                {selectedClockWindow == "Clock" && <div id="Window1">
-                                    <div id="time1" className={styles.windowtime}></div>
-                                    <div id="date1" className={styles.windowdate}></div>
-                                    <div id="times" className={styles.windowtimes}></div>
-                                </div>}
-                                {selectedClockWindow == "StopClock" && <div id="Window1">
-                                    <div className={styles.windowtime}>StopClock</div>
-                                    <div className={styles.windowdate}>{stopClock}</div>
-                                    <div className={styles.windowtimes}>
-                                        <button disabled={isStopClockRunning} className={styles.StartStopClock} onClick={startTimer}>Start</button>
-                                        <button disabled={!isStopClockRunning} className={styles.StopStopClock} onClick={stopTimer}>Stop</button>
-                                        <button disabled={checkDisabled()} className={styles.ResetStopClock} onClick={resetTimer}>Reset StopClock</button>
-                                    </div>
-                                </div>}
-                                {selectedClockWindow == "Timer" && <div id="Window1">
-                                    <div className={styles.windowtime}>Timer</div>
-                                    <div className={styles.windowdate}>
-                                        {!isRunning && <div className={styles.timerDiv}>
-                                            <label>
-                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.timerInput} type="number" placeholder='Enter hours.' value={hours} onChange={(e) => setHours(parseInt(e.target.value, 10))} />
-                                            </label>
-                                            <label>
-                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.timerInput} type="number" placeholder='Enter minutes.' value={minutes} onChange={(e) => setMinutes(parseInt(e.target.value, 10))} />
-                                            </label>
-                                            <label>
-                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.timerInput} type="number" placeholder='Enter seconds.' value={seconds} onChange={(e) => setSeconds(parseInt(e.target.value, 10))} />
-                                            </label>
-                                        </div>}
-                                        {isRunning && formatTime(remainingTime)}</div>
-                                    <div className={styles.windowtimes}>
-                                        <button disabled={isRunning} className={styles.StartStopClock} onClick={handleStart}>Start</button>
-                                        <button disabled={!isRunning} className={styles.StopStopClock} onClick={handleStop}>Stop</button>
-                                        <button disabled={checkTimerDisabled()} className={styles.ResetStopClock} onClick={handleReset}>Reset Timer</button>
-                                    </div>
-                                </div>}
-                            </div>
-                        </div>
-                    </div>
-                    <div id="Browser" className={styles.App}>
-                        <div id="Browsertop" className={styles.BroTop}>
-                            <div id="title" className={styles.title}>Vertice</div>
-                            <div onClick={() => { showApp("Browser") }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Browser") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { ChatMaximize("Browser", "Browsertop", "BrowserApp", "BrowserMainWindow", "BrowserIFrame") }} className={styles.maximize}></div>
-                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={url} onChange={(e) => { setUrl(e.target.value) }} type='url' className={styles.SearchBar} />
-                        </div>
-                        <div id="BrowserApp" className={styles.BrowserFiles}>
-                            <div id="BrowserMainWindow" className={styles.BroMainWindow}>
-                                <iframe
-                                    ref={iframeRef}
-                                    onChange={() => handleIframeLoad()}
-                                    id="BrowserIFrame"
-                                    className={styles.iFrame}
-                                    src={`https://luminaos.vercel.app/api/iframe-procxy?url=${encodeURIComponent(url)}`}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div id="WhatsApp" className={styles.App}>
-                        <div id="WhatsApptop" className={styles.BroTop}>
-                            <div id="title" className={styles.title}>Vertice</div>
-                            <div onClick={() => { showApp("WhatsApp") }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("WhatsApp") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { ChatMaximize("WhatsApp", "WhatsApptop", "WhatsAppApp", "WhatsAppMainWindow", "WhatsAppIFrame") }} className={styles.maximize}></div>
-                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={url} onChange={(e) => { setUrl(e.target.value) }} type='url' className={styles.SearchBar} />
-                        </div>
-                        <div id="WhatsAppApp" className={styles.BrowserFiles}>
-                            <div id="WhatsAppMainWindow" className={styles.BroMainWindow}>
-                                <iframe
-                                    id="WhatsAppIFrame"
-                                    className={styles.iFrame}
-                                    src={`https://luminaos.vercel.app/api/iframe-procxy?url=${encodeURIComponent('https://web.whatsapp.com/')}`}
-                                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div id="Calculator" className={styles.App}>
-                        <div id="Calctop" className={styles.top}>
-                            <div id="title" className={styles.title}>Calculator</div>
-                            <div onClick={() => { showApp("Calculator"); calc('C') }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Calculator") }} id="minimize" className={styles.minimize}></div>
-                        </div>
-                        <div id="CalculatorApp" className={styles.Files}>
-                            <div id="CalcSidebar" className={styles.sidebar}>
-                                <div className={styles.text}>Simple Calculator</div>
-                            </div>
-                            <div id="CalcMainWindow" className={styles.MainWindow}>
-                                <div id="CalcOutput" className={styles.CalcOutput}></div>
-                                <div className={styles.btns}>
-                                    <button onClick={() => { calc("9") }} className={styles.btn}>9</button>
-                                    <button onClick={() => { calc("8") }} className={styles.btn}>8</button>
-                                    <button onClick={() => { calc("7") }} className={styles.btn}>7</button>
-                                    <button onClick={() => { calc("+") }} className={styles.btn}>+</button>
-                                    <button onClick={() => { calc("6") }} className={styles.btn}>6</button>
-                                    <button onClick={() => { calc("5") }} className={styles.btn}>5</button>
-                                    <button onClick={() => { calc("4") }} className={styles.btn}>4</button>
-                                    <button onClick={() => { calc("-") }} className={styles.btn}>-</button>
-                                    <button onClick={() => { calc("3") }} className={styles.btn}>3</button>
-                                    <button onClick={() => { calc("2") }} className={styles.btn}>2</button>
-                                    <button onClick={() => { calc("1") }} className={styles.btn}>1</button>
-                                    <button onClick={() => { calc("*") }} className={styles.btn}>*</button>
-                                    <button onClick={() => { calc("0") }} className={styles.btn}>0</button>
-                                    <button onClick={() => { calc("C") }} className={styles.btn}>C</button>
-                                    <button onClick={() => { calc("=") }} className={styles.btn}>=</button>
-                                    <button onClick={() => { calc("/") }} className={styles.btn}>/</button>
+                                    )}
+                                    {selectedSection === 'Home' && (
+                                        <div className={styles.Home}>
+                                            <div>Home</div>
+                                            {uploadedFiles && <div className={styles.AllHomeFiles}>
+                                                <ul className={styles.ul}>
+                                                    {uploadedFiles.map((file, index) => (
+                                                        <li className={styles.file} key={index}>
+                                                            <img src="/file.png" />
+                                                            <span>{file.name.slice(0, 15)}...</span>
+                                                            <button className={styles.download} onClick={() => handleDownload(file)}><AiOutlineDownload /></button>
+                                                            <button className={styles.openIn} onClick={() => { setSelectedFileURL(file.dataUrl); showApp("LumiNexplorer"); showApp("PDFViewer"); console.log(file); console.log(file.dataUrl) }}><MdOutlineOpenInNew /></button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>}
+                                        </div>
+                                    )}
+                                    {selectedSection === 'Spark Drive' && (
+                                        <div className={styles.Home}>
+                                            <div>SparkDrive (200mb)</div>
+                                            <div className={styles.AllHomeFiles}>
+                                                <ul>
+                                                    {fileList.map((file) => (
+                                                        <li onAuxClick={() => { if (sparkDriveDropdown == false) { setSparkDriveDropdown(true) } else { setSparkDriveDropdown(false) } }} className={styles.file} key={file.$id}>
+                                                            <img src="/file.png" />
+                                                            <span>{file.name.slice(0, 15)}...</span>
+                                                            {sparkDriveDropdown && <div className={styles.rightOptions}>
+                                                                <button onClick={() => handleView(file.$id)}>View</button>
+                                                                <button onClick={() => handleSparkDownload(file.$id)}>Download</button>
+                                                                <button onClick={() => handleDelete(file.$id)}>Delete</button>
+                                                            </div>}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <button onClick={removeFiles} className={styles.deleteFiles}>Delete all files</button>
+                                            <button onClick={showAddFileWindow} className={styles.addFiles}>Add files</button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="Store" className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
-                        <div
-                            id="Storetop"
-                            className={styles.top}
-                            onMouseDown={()=>{setStoreDragging(true)}}
-                        >
-                            <div id="title" className={styles.title}>Sparking Store</div>
-                            <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Store") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { maximize("Store", "Storetop", "StoreApp", "StoreSidebar", "StoreMainWindow") }} className={styles.maximize}></div>
-                        </div>
-                        <div id="StoreApp" className={styles.Files}>
-                            <div id="StoreSidebar" className={styles.sidebar}>
-                                <div className={styles.text}>All Apps</div>
+                    </Draggable>
+                    <Draggable handle={`.${styles.top}`}>
+                        <div id="Clock" className={styles.App}>
+                            <div id="top" className={styles.top}>
+                                <div id="title" className={styles.title}>Clock</div>
+                                <div onClick={() => { showApp("Clock") }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Clock") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { maximize("Clock", "top", "ClockApp", "sidebar", "MainWindow") }} className={styles.maximize}></div>
                             </div>
-                            <div id="StoreMainWindow" className={styles.StoreMainWindow}>
-                                {luminaApps.map((app, index) => (
-                                    <div key={index} className={styles.application}>
-                                        {app.icon}
-                                        <span>{app.name}</span>
-                                        <button className={styles.appDownload}><AiOutlineDownload /></button>
+                            <div id="ClockApp" className={styles.Files}>
+                                <div id="sidebar" className={styles.sidebar}>
+                                    <div onClick={() => { setSelectedClockWindow("Clock") }} className={styles.text}>Time</div>
+                                    <div onClick={() => { setSelectedClockWindow("Timer") }} className={styles.text}>Timer</div>
+                                    <div onClick={() => { setSelectedClockWindow("StopClock") }} className={styles.text}>StopClock</div>
+                                </div>
+                                <div id="MainWindow" className={styles.MainWindow}>
+                                    {selectedClockWindow == "Clock" && <div id="Window1">
+                                        <div id="time1" className={styles.windowtime}></div>
+                                        <div id="date1" className={styles.windowdate}></div>
+                                        <div id="times" className={styles.windowtimes}></div>
+                                    </div>}
+                                    {selectedClockWindow == "StopClock" && <div id="Window1">
+                                        <div className={styles.windowtime}>StopClock</div>
+                                        <div className={styles.windowdate}>{stopClock}</div>
+                                        <div className={styles.windowtimes}>
+                                            <button disabled={isStopClockRunning} className={styles.StartStopClock} onClick={startTimer}>Start</button>
+                                            <button disabled={!isStopClockRunning} className={styles.StopStopClock} onClick={stopTimer}>Stop</button>
+                                            <button disabled={checkDisabled()} className={styles.ResetStopClock} onClick={resetTimer}>Reset StopClock</button>
+                                        </div>
+                                    </div>}
+                                    {selectedClockWindow == "Timer" && <div id="Window1">
+                                        <div className={styles.windowtime}>Timer</div>
+                                        <div className={styles.windowdate}>
+                                            {!isRunning && <div className={styles.timerDiv}>
+                                                <label>
+                                                    <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.timerInput} type="number" placeholder='Enter hours.' value={hours} onChange={(e) => setHours(parseInt(e.target.value, 10))} />
+                                                </label>
+                                                <label>
+                                                    <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.timerInput} type="number" placeholder='Enter minutes.' value={minutes} onChange={(e) => setMinutes(parseInt(e.target.value, 10))} />
+                                                </label>
+                                                <label>
+                                                    <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.timerInput} type="number" placeholder='Enter seconds.' value={seconds} onChange={(e) => setSeconds(parseInt(e.target.value, 10))} />
+                                                </label>
+                                            </div>}
+                                            {isRunning && formatTime(remainingTime)}</div>
+                                        <div className={styles.windowtimes}>
+                                            <button disabled={isRunning} className={styles.StartStopClock} onClick={handleStart}>Start</button>
+                                            <button disabled={!isRunning} className={styles.StopStopClock} onClick={handleStop}>Stop</button>
+                                            <button disabled={checkTimerDisabled()} className={styles.ResetStopClock} onClick={handleReset}>Reset Timer</button>
+                                        </div>
+                                    </div>}
+                                </div>
+                            </div>
+                        </div>
+                    </Draggable>
+                    <Draggable handle={`.${styles.BroTop}`}>
+                        <div id="Browser" className={styles.App}>
+                            <div id="Browsertop" className={styles.BroTop}>
+                                <div id="title" className={styles.title}>Vertice</div>
+                                <div onClick={() => { showApp("Browser") }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Browser") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { ChatMaximize("Browser", "Browsertop", "BrowserApp", "BrowserMainWindow", "BrowserIFrame") }} className={styles.maximize}></div>
+                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={url} onChange={(e) => { setUrl(e.target.value) }} type='url' className={styles.SearchBar} />
+                            </div>
+                            <div id="BrowserApp" className={styles.BrowserFiles}>
+                                <div id="BrowserMainWindow" className={styles.BroMainWindow}>
+                                    <iframe
+                                        ref={iframeRef}
+                                        onChange={() => handleIframeLoad()}
+                                        id="BrowserIFrame"
+                                        className={styles.iFrame}
+                                        src={`https://luminaos.vercel.app/api/iframe-procxy?url=${encodeURIComponent(url)}`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Draggable>
+                    <Draggable handle={`.${styles.BroTop}`}>
+                        <div id="WhatsApp" className={styles.App}>
+                            <div id="WhatsApptop" className={styles.BroTop}>
+                                <div id="title" className={styles.title}>Vertice</div>
+                                <div onClick={() => { showApp("WhatsApp") }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("WhatsApp") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { ChatMaximize("WhatsApp", "WhatsApptop", "WhatsAppApp", "WhatsAppMainWindow", "WhatsAppIFrame") }} className={styles.maximize}></div>
+                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={url} onChange={(e) => { setUrl(e.target.value) }} type='url' className={styles.SearchBar} />
+                            </div>
+                            <div id="WhatsAppApp" className={styles.BrowserFiles}>
+                                <div id="WhatsAppMainWindow" className={styles.BroMainWindow}>
+                                    <iframe
+                                        id="WhatsAppIFrame"
+                                        className={styles.iFrame}
+                                        src={`https://luminaos.vercel.app/api/iframe-procxy?url=${encodeURIComponent('https://web.whatsapp.com/')}`}
+                                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Draggable>
+                    <Draggable handle={`.${styles.top}`}>
+                        <div id="Calculator" className={styles.App}>
+                            <div id="Calctop" className={styles.top}>
+                                <div id="title" className={styles.title}>Calculator</div>
+                                <div onClick={() => { showApp("Calculator"); calc('C') }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Calculator") }} id="minimize" className={styles.minimize}></div>
+                            </div>
+                            <div id="CalculatorApp" className={styles.Files}>
+                                <div id="CalcSidebar" className={styles.sidebar}>
+                                    <div className={styles.text}>Simple Calculator</div>
+                                </div>
+                                <div id="CalcMainWindow" className={styles.MainWindow}>
+                                    <div id="CalcOutput" className={styles.CalcOutput}></div>
+                                    <div className={styles.btns}>
+                                        <button onClick={() => { calc("9") }} className={styles.btn}>9</button>
+                                        <button onClick={() => { calc("8") }} className={styles.btn}>8</button>
+                                        <button onClick={() => { calc("7") }} className={styles.btn}>7</button>
+                                        <button onClick={() => { calc("+") }} className={styles.btn}>+</button>
+                                        <button onClick={() => { calc("6") }} className={styles.btn}>6</button>
+                                        <button onClick={() => { calc("5") }} className={styles.btn}>5</button>
+                                        <button onClick={() => { calc("4") }} className={styles.btn}>4</button>
+                                        <button onClick={() => { calc("-") }} className={styles.btn}>-</button>
+                                        <button onClick={() => { calc("3") }} className={styles.btn}>3</button>
+                                        <button onClick={() => { calc("2") }} className={styles.btn}>2</button>
+                                        <button onClick={() => { calc("1") }} className={styles.btn}>1</button>
+                                        <button onClick={() => { calc("*") }} className={styles.btn}>*</button>
+                                        <button onClick={() => { calc("0") }} className={styles.btn}>0</button>
+                                        <button onClick={() => { calc("C") }} className={styles.btn}>C</button>
+                                        <button onClick={() => { calc("=") }} className={styles.btn}>=</button>
+                                        <button onClick={() => { calc("/") }} className={styles.btn}>/</button>
                                     </div>
-                                ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="Settings" className={styles.App}>
-                        <div id="Settingstop" className={styles.top}>
-                            <div id="title" className={styles.title}>Settings</div>
-                            <div onClick={() => { showApp("Settings"); }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Settings") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { maximize("Settings", "Settingstop", "SettingsApp", "SettingsSidebar", "SettingsMainWindow") }} className={styles.maximize}></div>
-                        </div>
-                        <div id="SettingsApp" className={styles.Files}>
-                            <div id="SettingsSidebar" className={styles.sidebar}>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Appearance</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Notifications')}>Notifications</div>
-                                {/* Add more sections as needed */}
+                    </Draggable>
+                    <Draggable handle={`.${styles.top}`}>
+                        <div id="Store" className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
+                            <div
+                                id="Storetop"
+                                className={styles.top}
+                                onMouseDown={() => { setStoreDragging(true) }}
+                            >
+                                <div id="title" className={styles.title}>Sparking Store</div>
+                                <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Store") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { maximize("Store", "Storetop", "StoreApp", "StoreSidebar", "StoreMainWindow") }} className={styles.maximize}></div>
                             </div>
-                            <div id="SettingsMainWindow" className={styles.StoreMainWindow}>
-                                {selectedSettingsSection === 'General' && (
-                                    <div className={styles.SettingHome}>
-                                        <h3>General Settings</h3>
-                                        <div className={styles.Options}>
+                            <div id="StoreApp" className={styles.Files}>
+                                <div id="StoreSidebar" className={styles.sidebar}>
+                                    <div className={styles.text}>All Apps</div>
+                                </div>
+                                <div id="StoreMainWindow" className={styles.StoreMainWindow}>
+                                    {luminaApps.map((app, index) => (
+                                        <div key={index} className={styles.application}>
+                                            {app.icon}
+                                            <span>{app.name}</span>
+                                            <button className={styles.appDownload}><AiOutlineDownload /></button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </Draggable>
+                    <Draggable handle={`.${styles.top}`}>
+                        <div id="Settings" className={styles.App}>
+                            <div id="Settingstop" className={styles.top}>
+                                <div id="title" className={styles.title}>Settings</div>
+                                <div onClick={() => { showApp("Settings"); }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Settings") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { maximize("Settings", "Settingstop", "SettingsApp", "SettingsSidebar", "SettingsMainWindow") }} className={styles.maximize}></div>
+                            </div>
+                            <div id="SettingsApp" className={styles.Files}>
+                                <div id="SettingsSidebar" className={styles.sidebar}>
+                                    <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
+                                    <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Appearance</div>
+                                    <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
+                                    <div className={styles.text} onClick={() => setSelectedSettingsSection('Notifications')}>Notifications</div>
+                                    {/* Add more sections as needed */}
+                                </div>
+                                <div id="SettingsMainWindow" className={styles.StoreMainWindow}>
+                                    {selectedSettingsSection === 'General' && (
+                                        <div className={styles.SettingHome}>
+                                            <h3>General Settings</h3>
+                                            <div className={styles.Options}>
+                                                <div className={styles.settingOption}>
+                                                    <label>Language:</label>
+                                                    <select className={styles.select}>
+                                                        <option className={styles.option}>English</option>
+                                                        <option className={styles.option}>More option coming soon...</option>
+                                                    </select>
+                                                </div>
+                                                <div className={styles.settingOption}>
+                                                    <label>Time Zone:</label>
+                                                    <select className={styles.select}>
+                                                        <option className={styles.option}>GMT</option>
+                                                        <option className={styles.option}>More option coming soon...</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {selectedSettingsSection === 'Profile' && (
+                                        <div className={styles.SettingHomeProfile}>
+                                            <h3>User Profile:</h3>
+                                            <div className={styles.Profile}>
+                                                <div className={styles.settingOption}>User Name</div>
+                                                <div className={styles.settingOption}>User Email</div>
+                                                <div className={styles.settingOption}>User Pin</div>
+                                                <div className={styles.settingOption}>ADMIN</div>
+                                                <div className={styles.settingOption}>Pro Mode</div>
+                                                <div className={styles.settingOption}>Premiem Account</div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {selectedSettingsSection === 'Appearance' && (
+                                        <div className={styles.SettingHome}>
+                                            <h3>Appearance Settings</h3>
                                             <div className={styles.settingOption}>
-                                                <label>Language:</label>
+                                                <label>Theme:</label>
                                                 <select className={styles.select}>
-                                                    <option className={styles.option}>English</option>
+                                                    <option className={styles.option}>Dark</option>
                                                     <option className={styles.option}>More option coming soon...</option>
                                                 </select>
                                             </div>
                                             <div className={styles.settingOption}>
-                                                <label>Time Zone:</label>
-                                                <select className={styles.select}>
-                                                    <option className={styles.option}>GMT</option>
-                                                    <option className={styles.option}>More option coming soon...</option>
+                                                <label>Background</label>
+                                                <div className={styles.allWallpaper}>
+                                                    <img onClick={() => { setNum(8); localStorage.setItem("WallpaperNumber", 8) }} className={styles.settingWallpaper} src={`Wallpapers/8.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/8.jpg`; }} alt={"selected wallpaper"} />
+                                                    <img onClick={() => { setNum(1); localStorage.setItem("WallpaperNumber", 1) }} className={styles.settingWallpaper} src={`Wallpapers/1.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/1.jpg`; }} alt={"selected wallpaper"} />
+                                                    <img onClick={() => { setNum(2); localStorage.setItem("WallpaperNumber", 2) }} className={styles.settingWallpaper} src={`Wallpapers/2.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/2.jpg`; }} alt={"selected wallpaper"} />
+                                                    <img onClick={() => { setNum(3); localStorage.setItem("WallpaperNumber", 3) }} className={styles.settingWallpaper} src={`Wallpapers/3.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/3.jpg`; }} alt={"selected wallpaper"} />
+                                                    <img onClick={() => { setNum(4); localStorage.setItem("WallpaperNumber", 4) }} className={styles.settingWallpaper} src={`Wallpapers/4.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/4.jpg`; }} alt={"selected wallpaper"} />
+                                                    <img onClick={() => { setNum(5); localStorage.setItem("WallpaperNumber", 5) }} className={styles.settingWallpaper} src={`Wallpapers/5.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/5.jpg`; }} alt={"selected wallpaper"} />
+                                                    <img onClick={() => { setNum(6); localStorage.setItem("WallpaperNumber", 6) }} className={styles.settingWallpaper} src={`Wallpapers/6.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/6.jpg`; }} alt={"selected wallpaper"} />
+                                                    <img onClick={() => { setNum(7); localStorage.setItem("WallpaperNumber", 7) }} className={styles.settingWallpaper} src={`Wallpapers/7.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/7.jpg`; }} alt={"selected wallpaper"} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {selectedSettingsSection === 'Security' && (
+                                        <div className={styles.Home}>
+                                            <h3>Security Settings</h3>
+                                            <div className={styles.settingOption}>
+                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} placeholder="Change pin" className={styles.input} type="password" />
+                                            </div>
+                                            <div className={styles.settingOption}>
+                                                <label>Two-Factor Authentication:</label>
+                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.input} type="checkbox" />
+                                            </div>
+                                        </div>
+                                    )}
+                                    {selectedSettingsSection === 'Notifications' && (
+                                        <div className={styles.Home}>
+                                            <h3>Notification Settings</h3>
+                                            <div className={styles.settingOption}>
+                                                <label>Allow Notifications:</label>
+                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" />
+                                            </div>
+                                            <div className={styles.settingOption}>
+                                                <label>Notification Sound:</label>
+                                                <select>
+                                                    <option value="default">Default</option>
+                                                    <option value="chime">Chime</option>
+                                                    <option value="bell">Bell</option>
+                                                    {/* Add more notification sound options */}
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                )}
-                                {selectedSettingsSection === 'Profile' && (
-                                    <div className={styles.SettingHomeProfile}>
-                                        <h3>User Profile:</h3>
-                                        <div className={styles.Profile}>
-                                            <div className={styles.settingOption}>User Name</div>
-                                            <div className={styles.settingOption}>User Email</div>
-                                            <div className={styles.settingOption}>User Pin</div>
-                                            <div className={styles.settingOption}>ADMIN</div>
-                                            <div className={styles.settingOption}>Pro Mode</div>
-                                            <div className={styles.settingOption}>Premiem Account</div>
-                                        </div>
-                                    </div>
-                                )}
-                                {selectedSettingsSection === 'Appearance' && (
-                                    <div className={styles.SettingHome}>
-                                        <h3>Appearance Settings</h3>
-                                        <div className={styles.settingOption}>
-                                            <label>Theme:</label>
-                                            <select className={styles.select}>
-                                                <option className={styles.option}>Dark</option>
-                                                <option className={styles.option}>More option coming soon...</option>
-                                            </select>
-                                        </div>
-                                        <div className={styles.settingOption}>
-                                            <label>Background</label>
-                                            <div className={styles.allWallpaper}>
-                                                <img onClick={() => { setNum(8); localStorage.setItem("WallpaperNumber", 8) }} className={styles.settingWallpaper} src={`Wallpapers/8.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/8.jpg`; }} alt={"selected wallpaper"} />
-                                                <img onClick={() => { setNum(1); localStorage.setItem("WallpaperNumber", 1) }} className={styles.settingWallpaper} src={`Wallpapers/1.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/1.jpg`; }} alt={"selected wallpaper"} />
-                                                <img onClick={() => { setNum(2); localStorage.setItem("WallpaperNumber", 2) }} className={styles.settingWallpaper} src={`Wallpapers/2.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/2.jpg`; }} alt={"selected wallpaper"} />
-                                                <img onClick={() => { setNum(3); localStorage.setItem("WallpaperNumber", 3) }} className={styles.settingWallpaper} src={`Wallpapers/3.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/3.jpg`; }} alt={"selected wallpaper"} />
-                                                <img onClick={() => { setNum(4); localStorage.setItem("WallpaperNumber", 4) }} className={styles.settingWallpaper} src={`Wallpapers/4.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/4.jpg`; }} alt={"selected wallpaper"} />
-                                                <img onClick={() => { setNum(5); localStorage.setItem("WallpaperNumber", 5) }} className={styles.settingWallpaper} src={`Wallpapers/5.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/5.jpg`; }} alt={"selected wallpaper"} />
-                                                <img onClick={() => { setNum(6); localStorage.setItem("WallpaperNumber", 6) }} className={styles.settingWallpaper} src={`Wallpapers/6.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/6.jpg`; }} alt={"selected wallpaper"} />
-                                                <img onClick={() => { setNum(7); localStorage.setItem("WallpaperNumber", 7) }} className={styles.settingWallpaper} src={`Wallpapers/7.png`} onError={(e) => { e.target.onerror = null; e.target.src = `Wallpapers/7.jpg`; }} alt={"selected wallpaper"} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                                {selectedSettingsSection === 'Security' && (
-                                    <div className={styles.Home}>
-                                        <h3>Security Settings</h3>
-                                        <div className={styles.settingOption}>
-                                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} placeholder="Change pin" className={styles.input} type="password" />
-                                        </div>
-                                        <div className={styles.settingOption}>
-                                            <label>Two-Factor Authentication:</label>
-                                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.input} type="checkbox" />
-                                        </div>
-                                    </div>
-                                )}
-                                {selectedSettingsSection === 'Notifications' && (
-                                    <div className={styles.Home}>
-                                        <h3>Notification Settings</h3>
-                                        <div className={styles.settingOption}>
-                                            <label>Allow Notifications:</label>
-                                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" />
-                                        </div>
-                                        <div className={styles.settingOption}>
-                                            <label>Notification Sound:</label>
-                                            <select>
-                                                <option value="default">Default</option>
-                                                <option value="chime">Chime</option>
-                                                <option value="bell">Bell</option>
-                                                {/* Add more notification sound options */}
-                                            </select>
-                                        </div>
-                                    </div>
-                                )}
-                                {/* Add more sections and options as needed */}
+                                    )}
+                                    {/* Add more sections and options as needed */}
+                                </div>
+                            </div>
+                        </div></Draggable>
+                    <Draggable handle={`.${styles.top}`}>
+                        <div id="Chat" className={styles.App}>
+                            <div id="Chattop" className={styles.top}>
+                                <div id="title" className={styles.title}>ChatExpress</div>
+                                <div onClick={() => { showApp("Chat") }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Chat") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { ChatMaximize("Chat", "Chattop", "ChatApp", "ChatMainWindow", "ChatIFrame") }} className={styles.maximize}></div>
+                            </div>
+                            <div id="ChatApp" className={styles.Files}>
+                                <div id="ChatMainWindow" className={styles.ChatMainWindow}>
+                                    <iframe id="ChatIFrame" className={styles.iFrame} src="https://chatexpress-chat-quickly.techabhigyan.repl.co/" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="Chat" className={styles.App}>
-                        <div id="Chattop" className={styles.top}>
-                            <div id="title" className={styles.title}>ChatExpress</div>
-                            <div onClick={() => { showApp("Chat") }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Chat") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { ChatMaximize("Chat", "Chattop", "ChatApp", "ChatMainWindow", "ChatIFrame") }} className={styles.maximize}></div>
-                        </div>
-                        <div id="ChatApp" className={styles.Files}>
-                            <div id="ChatMainWindow" className={styles.ChatMainWindow}>
-                                <iframe id="ChatIFrame" className={styles.iFrame} src="https://chatexpress-chat-quickly.techabhigyan.repl.co/" />
+                    </Draggable>
+                    <Draggable handle={`.${styles.top}`}>
+                        <div id="Weather" className={styles.App}>
+                            <div id="WeatherTop" className={styles.top}>
+                                <div id="title" className={styles.title}>Weather</div>
+                                <div onClick={() => { showApp("Weather") }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Weather") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { maximize("Weather", "WeatherTop", "WeatherApp", "WeatherSidebar", "WeatherMainWindow") }} className={styles.maximize}></div>
+                            </div>
+                            <div id="WeatherApp" className={styles.Files}>
+                                <div id="WeatherSidebar" className={styles.sidebar}>
+                                    <div onClick={() => { setSelectedWeatherView("Current") }} className={styles.text}>Current</div>
+                                    <div onClick={() => { setSelectedWeatherView("Details") }} className={styles.text}>Details</div>
+                                    <div onClick={() => { setSelectedWeatherView("Search") }} className={styles.text}>Search</div>
+                                </div>
+                                <div id="WeatherMainWindow" className={styles.MainWindow}>
+                                    {selectedWeatherView === "Current" && (
+                                        <div className={styles.weatherCurrentView}>
+                                            <div className={styles.weatherHeader}>
+                                                <h2 className={styles.weatherCity}>{city || "Loading..."}</h2>
+                                                <div className={styles.weatherIcon}>
+                                                    {cloudPct <= 30 ? (
+                                                        <FaCloudSun className={styles.weatherIconLarge} />
+                                                    ) : cloudPct <= 95 ? (
+                                                        <FaCloud className={styles.weatherIconLarge} />
+                                                    ) : (
+                                                        <FaCloudShowersHeavy className={styles.weatherIconLarge} />
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className={styles.weatherMainCard}>
+                                                <div className={styles.weatherTemp}>
+                                                    <span id="temp" className={styles.tempLarge}>--</span>°C
+                                                </div>
+                                                <div className={styles.weatherFeels}>
+                                                    Feels like <span id="feels" className={styles.feelsTemp}>--</span>°C
+                                                </div>
+                                            </div>
+                                            <div className={styles.weatherQuickInfo}>
+                                                <div className={styles.weatherInfoCard}>
+                                                    <div className={styles.infoIcon}>💧</div>
+                                                    <div className={styles.infoText}>
+                                                        <div className={styles.infoLabel}>Humidity</div>
+                                                        <div className={styles.infoValue}>{weatherData?.humidity || '--'}%</div>
+                                                    </div>
+                                                </div>
+                                                <div className={styles.weatherInfoCard}>
+                                                    <div className={styles.infoIcon}>🌬️</div>
+                                                    <div className={styles.infoText}>
+                                                        <div className={styles.infoLabel}>Wind</div>
+                                                        <div className={styles.infoValue}>{weatherData?.wind_speed || '--'} m/s</div>
+                                                    </div>
+                                                </div>
+                                                <div className={styles.weatherInfoCard}>
+                                                    <div className={styles.infoIcon}>☁️</div>
+                                                    <div className={styles.infoText}>
+                                                        <div className={styles.infoLabel}>Clouds</div>
+                                                        <div className={styles.infoValue}>{weatherData?.cloud_pct || '--'}%</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {selectedWeatherView === "Details" && (
+                                        <div className={styles.weatherDetailsView}>
+                                            <h3 className={styles.weatherDetailsTitle}>Weather Details</h3>
+                                            {weatherData ? (
+                                                <div className={styles.weatherDetailsGrid}>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Temperature</h4>
+                                                        <p>{weatherData.temp}°C</p>
+                                                    </div>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Feels Like</h4>
+                                                        <p>{weatherData.feels_like}°C</p>
+                                                    </div>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Humidity</h4>
+                                                        <p>{weatherData.humidity}%</p>
+                                                    </div>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Max Temperature</h4>
+                                                        <p>{weatherData.max_temp}°C</p>
+                                                    </div>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Min Temperature</h4>
+                                                        <p>{weatherData.min_temp}°C</p>
+                                                    </div>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Cloud Coverage</h4>
+                                                        <p>{weatherData.cloud_pct}%</p>
+                                                    </div>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Wind Speed</h4>
+                                                        <p>{weatherData.wind_speed} m/s</p>
+                                                    </div>
+                                                    <div className={styles.detailCard}>
+                                                        <h4>Wind Direction</h4>
+                                                        <p>{weatherData.wind_degrees}°</p>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <p className={styles.noData}>No weather data available.</p>
+                                            )}
+                                        </div>
+                                    )}
+                                    {selectedWeatherView === "Search" && (
+                                        <div className={styles.weatherSearchView}>
+                                            <h3 className={styles.weatherSearchTitle}>Search City</h3>
+                                            <form onSubmit={handleWeatherSearch} className={styles.weatherSearchForm}>
+                                                <input
+                                                    type="text"
+                                                    value={weatherSearchQuery}
+                                                    onChange={(e) => setWeatherSearchQuery(e.target.value)}
+                                                    placeholder="Enter city name..."
+                                                    className={styles.weatherSearchInput}
+                                                    onMouseEnter={onTextBoxHover}
+                                                    onMouseLeave={onTextBoxLeave}
+                                                />
+                                                <button type="submit" className={styles.weatherSearchButton}>
+                                                    Search
+                                                </button>
+                                            </form>
+                                            <div className={styles.currentLocation}>
+                                                <p>Current location: <strong>{city || "Not set"}</strong></p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="Weather" className={styles.App}>
-                        <div id="WeatherTop" className={styles.top}>
-                            <div id="title" className={styles.title}>Weather</div>
-                            <div onClick={() => { showApp("Weather") }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Weather") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { maximize("Weather", "WeatherTop", "WeatherApp", "WeatherSidebar", "WeatherMainWindow") }} className={styles.maximize}></div>
-                        </div>
-                        <div id="WeatherApp" className={styles.Files}>
-                            <div id="WeatherSidebar" className={styles.sidebar}>
-                                <div onClick={() => { setSelectedWeatherView("Current") }} className={styles.text}>Current</div>
-                                <div onClick={() => { setSelectedWeatherView("Details") }} className={styles.text}>Details</div>
-                                <div onClick={() => { setSelectedWeatherView("Search") }} className={styles.text}>Search</div>
-                            </div>
-                            <div id="WeatherMainWindow" className={styles.MainWindow}>
-                                {selectedWeatherView === "Current" && (
-                                    <div className={styles.weatherCurrentView}>
-                                        <div className={styles.weatherHeader}>
-                                            <h2 className={styles.weatherCity}>{city || "Loading..."}</h2>
-                                            <div className={styles.weatherIcon}>
-                                                {cloudPct <= 30 ? (
-                                                    <FaCloudSun className={styles.weatherIconLarge} />
-                                                ) : cloudPct <= 95 ? (
-                                                    <FaCloud className={styles.weatherIconLarge} />
-                                                ) : (
-                                                    <FaCloudShowersHeavy className={styles.weatherIconLarge} />
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className={styles.weatherMainCard}>
-                                            <div className={styles.weatherTemp}>
-                                                <span id="temp" className={styles.tempLarge}>--</span>°C
-                                            </div>
-                                            <div className={styles.weatherFeels}>
-                                                Feels like <span id="feels" className={styles.feelsTemp}>--</span>°C
-                                            </div>
-                                        </div>
-                                        <div className={styles.weatherQuickInfo}>
-                                            <div className={styles.weatherInfoCard}>
-                                                <div className={styles.infoIcon}>💧</div>
-                                                <div className={styles.infoText}>
-                                                    <div className={styles.infoLabel}>Humidity</div>
-                                                    <div className={styles.infoValue}>{weatherData?.humidity || '--'}%</div>
-                                                </div>
-                                            </div>
-                                            <div className={styles.weatherInfoCard}>
-                                                <div className={styles.infoIcon}>🌬️</div>
-                                                <div className={styles.infoText}>
-                                                    <div className={styles.infoLabel}>Wind</div>
-                                                    <div className={styles.infoValue}>{weatherData?.wind_speed || '--'} m/s</div>
-                                                </div>
-                                            </div>
-                                            <div className={styles.weatherInfoCard}>
-                                                <div className={styles.infoIcon}>☁️</div>
-                                                <div className={styles.infoText}>
-                                                    <div className={styles.infoLabel}>Clouds</div>
-                                                    <div className={styles.infoValue}>{weatherData?.cloud_pct || '--'}%</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                                {selectedWeatherView === "Details" && (
-                                    <div className={styles.weatherDetailsView}>
-                                        <h3 className={styles.weatherDetailsTitle}>Weather Details</h3>
-                                        {weatherData ? (
-                                            <div className={styles.weatherDetailsGrid}>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Temperature</h4>
-                                                    <p>{weatherData.temp}°C</p>
-                                                </div>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Feels Like</h4>
-                                                    <p>{weatherData.feels_like}°C</p>
-                                                </div>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Humidity</h4>
-                                                    <p>{weatherData.humidity}%</p>
-                                                </div>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Max Temperature</h4>
-                                                    <p>{weatherData.max_temp}°C</p>
-                                                </div>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Min Temperature</h4>
-                                                    <p>{weatherData.min_temp}°C</p>
-                                                </div>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Cloud Coverage</h4>
-                                                    <p>{weatherData.cloud_pct}%</p>
-                                                </div>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Wind Speed</h4>
-                                                    <p>{weatherData.wind_speed} m/s</p>
-                                                </div>
-                                                <div className={styles.detailCard}>
-                                                    <h4>Wind Direction</h4>
-                                                    <p>{weatherData.wind_degrees}°</p>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <p className={styles.noData}>No weather data available.</p>
-                                        )}
-                                    </div>
-                                )}
-                                {selectedWeatherView === "Search" && (
-                                    <div className={styles.weatherSearchView}>
-                                        <h3 className={styles.weatherSearchTitle}>Search City</h3>
-                                        <form onSubmit={handleWeatherSearch} className={styles.weatherSearchForm}>
-                                            <input
-                                                type="text"
-                                                value={weatherSearchQuery}
-                                                onChange={(e) => setWeatherSearchQuery(e.target.value)}
-                                                placeholder="Enter city name..."
-                                                className={styles.weatherSearchInput}
-                                                onMouseEnter={onTextBoxHover}
-                                                onMouseLeave={onTextBoxLeave}
-                                            />
-                                            <button type="submit" className={styles.weatherSearchButton}>
-                                                Search
-                                            </button>
-                                        </form>
-                                        <div className={styles.currentLocation}>
-                                            <p>Current location: <strong>{city || "Not set"}</strong></p>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    </Draggable>
                 </div>
                 {dropdown && (
                     <div className={styles.Dropdown}>
@@ -1905,13 +1925,13 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             )}
                         <div className={styles.Middle}>
-                            <p>Ask CereboNex:-</p>
+                            <p>Ask RK AI:-</p>
                             {!AIValue && <p>Hey there, click bottom left button to start a chat with me...</p>}
-                            {AIValue && <span>CereboNex: {outputText || "Output will come here..."}</span>}
+                            {AIValue && <span>RK AI: {outputText || "Output will come here..."}</span>}
                         </div>
                         <div className={styles.Bottom}>
                             <div className={styles.User}>
-                                {!AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to start chat with CereboNex...</button>}
+                                {!AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to start chat with RK AI...</button>}
                                 {AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to search apps and more...</button>}
                             </div>
                         </div>
