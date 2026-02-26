@@ -101,7 +101,7 @@ export default function Contact() {
                     marginBottom: '8px', color: '#f1f5f9',
                 }}>Get in touch</h1>
                 <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '32px', lineHeight: 1.6 }}>
-                    Have a question or feedback? The RK AI team is here to help.
+                    Have a question or feedback? The Arkis team is here to help.
                 </p>
 
                 {status === 'done' ? (

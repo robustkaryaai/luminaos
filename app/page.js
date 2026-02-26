@@ -19,7 +19,7 @@ const cards = [
     href: '/contact',
     emoji: '💬',
     title: 'Contact Us',
-    desc: 'Reach the RK AI team quickly with any question.',
+    desc: 'Reach the Arkis team quickly with any question.',
   },
   {
     href: '/signup',
@@ -77,6 +77,7 @@ export default function Home() {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 20px; max-width: 1000px; width: 100%; margin: 0 auto;
+          padding: 20px 0; /* Prevents transform hover clipping */
         }
         .lcard {
           background: rgba(255,255,255,0.03);
@@ -107,7 +108,7 @@ export default function Home() {
           pointerEvents: 'none',
         }} />
 
-        <div className="lbadge">⚡ Powered by RK AI</div>
+        <div className="lbadge">⚡ Powered by Arkis</div>
 
         <h1 className="ltitle">LuminaOS</h1>
         <p className="lsub">A next-gen AI-powered browser OS. Intelligent, fast, and always on.</p>
@@ -122,7 +123,7 @@ export default function Home() {
           ))}
         </div>
 
-        <p className="lfooter">LuminaOS v1.1 · Built on RK AI Technology</p>
+        <p className="lfooter">LuminaOS v1.1 · Built on Arkis Technology</p>
       </main>
     </>
   )

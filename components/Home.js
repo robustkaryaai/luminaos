@@ -446,7 +446,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
 
     const handleAIClick = () => {
         if (AIValue == false) {
-            setSearchPlaceholder("Type here to ask RK AI...");
+            setSearchPlaceholder("Type here to ask Arkis AI...");
             setAIValue(true);
         } else {
             setSearchPlaceholder("Type here to search...");
@@ -759,7 +759,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             if (document.getElementById("result").innerHTML === "") {
                 document.getElementById("result").innerHTML = `
                     <div onClick={closeResults} id="closeResult" className={styles.closeResult}></div>
-                    <h1>RK AI:</h1>
+                    <h1>Arkis AI:</h1>
                     <br />
                     <p id="output">${outputText}</p>
                 `;
@@ -1328,7 +1328,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 <Draggable nodeRef={resultRef} handle=".result-header">
                     <div id="result" ref={resultRef} className={styles.result}>
                         <div onClick={closeResults} id="closeResult" className={styles.closeResult}></div>
-                        <h1>RK AI:</h1>
+                        <h1>Arkis AI:</h1>
                         <br />
                         <p id="output">{outputText}</p>
                     </div>
@@ -1579,11 +1579,11 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             </div>
                             <div id="SettingsApp" className={styles.Files}>
                                 <div id="SettingsSidebar" className={styles.sidebar}>
+                                    <div className={styles.text} onClick={() => setSelectedSettingsSection('Profile')}>Profile</div>
                                     <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
                                     <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Appearance</div>
                                     <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
-                                    <div className={styles.text} onClick={() => setSelectedSettingsSection('Notifications')}>Notifications</div>
-                                    {/* Add more sections as needed */}
+                                    <div className={styles.text} onClick={() => setSelectedSettingsSection('HelpSupport')}>Help & Support</div>
                                 </div>
                                 <div id="SettingsMainWindow" className={styles.StoreMainWindow}>
                                     {selectedSettingsSection === 'General' && (
@@ -1609,14 +1609,13 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     )}
                                     {selectedSettingsSection === 'Profile' && (
                                         <div className={styles.SettingHomeProfile}>
-                                            <h3>User Profile:</h3>
+                                            <h3>Arkis User Profile</h3>
                                             <div className={styles.Profile}>
-                                                <div className={styles.settingOption}>User Name</div>
-                                                <div className={styles.settingOption}>User Email</div>
-                                                <div className={styles.settingOption}>User Pin</div>
-                                                <div className={styles.settingOption}>ADMIN</div>
-                                                <div className={styles.settingOption}>Pro Mode</div>
-                                                <div className={styles.settingOption}>Premiem Account</div>
+                                                <div className={styles.settingOption}>Username: {session ? session.name : 'Guest'}</div>
+                                                <div className={styles.settingOption}>Email: {session ? session.email : 'Not signed in'}</div>
+                                                <div className={styles.settingOption}>Account Status: Active</div>
+                                                <div className={styles.settingOption}>Subscription: Pro Tier</div>
+                                                <div className={styles.settingOption}>Device Privilege: Admin</div>
                                             </div>
                                         </div>
                                     )}
@@ -1657,21 +1656,14 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                             </div>
                                         </div>
                                     )}
-                                    {selectedSettingsSection === 'Notifications' && (
+                                    {selectedSettingsSection === 'HelpSupport' && (
                                         <div className={styles.Home}>
-                                            <h3>Notification Settings</h3>
+                                            <h3>Help & Support</h3>
                                             <div className={styles.settingOption}>
-                                                <label>Allow Notifications:</label>
-                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" />
+                                                <p>For immediate assistance with LuminaOS, contact the Arkis Team.</p>
                                             </div>
-                                            <div className={styles.settingOption}>
-                                                <label>Notification Sound:</label>
-                                                <select>
-                                                    <option value="default">Default</option>
-                                                    <option value="chime">Chime</option>
-                                                    <option value="bell">Bell</option>
-                                                    {/* Add more notification sound options */}
-                                                </select>
+                                            <div className={styles.settingOption} style={{ marginTop: '2vh' }}>
+                                                <button onClick={() => window.open('/contact', '_blank')} className={styles.btn} style={{ width: 'auto', padding: '0 2vh' }}>Contact Arkis Support</button>
                                             </div>
                                         </div>
                                     )}
@@ -1827,22 +1819,22 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             </div>
                     </Draggable>
                     {dropdown && (
-                        <div className={styles.Dropdown}>
+                        <div className={styles.Dropdown} style={{ position: 'absolute', bottom: '11vh', right: '3vh', background: 'rgba(0,0,0,0.85)', padding: '1vh', borderRadius: '1vh', border: '1px solid rgba(255,255,255,0.1)' }}>
                             <div onClick={() => {
                                 let a = confirm("This will erase all your Data! Are you sure to do this?")
                                 if (a == true) {
                                     localStorage.clear();
                                     window.location.replace("/");
                                 }
-                            }} className={styles.DropdownOption}>
+                            }} className={styles.DropdownOption} style={{ padding: '1vh 2vh', cursor: 'pointer', borderRadius: '0.5vh', transition: 'background 0.2s' }}>
                                 Reset
                             </div>
-                            <div className={styles.DropdownOption}>
+                            <div className={styles.DropdownOption} style={{ padding: '1vh 2vh', cursor: 'pointer', borderRadius: '0.5vh', transition: 'background 0.2s', marginTop: '0.5vh' }} onClick={() => window.location.replace("/")}>
                                 Shutdown
                             </div>
                             <div onClick={() => {
                                 window.location.reload();
-                            }} className={styles.DropdownOption}>
+                            }} className={styles.DropdownOption} style={{ padding: '1vh 2vh', cursor: 'pointer', borderRadius: '0.5vh', transition: 'background 0.2s', marginTop: '0.5vh' }}>
                                 Restart
                             </div>
                         </div>
@@ -2028,7 +2020,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             )
                         )}
                         <FaPowerOff onClick={() => { if (dropdown == true) { setDropdown(false) } else { setDropdown(true) } }} className={styles.TaskList} />
-                        <div className={styles.Badge}>Pro</div>
+                        <div className={styles.Badge2}>Pro</div>
                     </div>
             </main>
         </div>

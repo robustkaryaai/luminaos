@@ -23,7 +23,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [selectedWindow, setSelectedWindow] = useState("Start");
     const [selectedCode, setSelectedCode] = useState("Setup");
     const [lockscreen, setLockscreen] = useState("close")
-    const [text, setText] = useState("Activating LuminaOS by RK AI. Please wait...");
+    const [text, setText] = useState("Activating LuminaOS by Arkis. Please wait...");
     const [startupProgress, setStartupProgress] = useState(0);
 
     // Ensure pin state is properly initialized
@@ -365,13 +365,13 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
         <div className={styles.Div1}>
             {selectedWindow == "Start" && <div>
                 <Head>
-                    <title>Start LuminaOS | RK AI</title>
+                    <title>Start LuminaOS | Arkis</title>
                 </Head>
                 <main className={styles.main1}>
                     <div className={styles.icon}>
                         <BsFillLightningChargeFill className={styles.light} />
                     </div>
-                    <h2 className={styles.startscreen}>Starting LuminaOS by RK AI</h2>
+                    <h2 className={styles.startscreen}>Starting LuminaOS by Arkis</h2>
 
                     {/* Stylish Loading Bar */}
                     <div className={styles.startupLoadingContainer}>
@@ -390,7 +390,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
             </div>}
             {selectedCode == "Setup" && <div>
                 <Head>
-                    <title>Setup LuminaOS | RK AI</title>
+                    <title>Setup LuminaOS | Arkis</title>
                 </Head>
                 <main className={styles.main2}>
                     <img className={styles.img1} src="SetupWallpaper.jpg" />
@@ -461,7 +461,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <option className={styles.option}>Light Theme (Coming Soon)</option>
                         </select>
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" name="ai" id="ai" className={styles.checkbox} />
-                        <label htmlFor="ai">RK AI Core Integration</label>
+                        <label htmlFor="ai">Arkis Core Integration</label>
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" name="city" id="city" className={styles.SetupInput} placeholder="Enter your city..." />
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" name="reason" id="reason" className={styles.SetupInput} placeholder="Why you want to use LuminaOS?" />
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" name="agree" id="agree" required className={styles.checkbox} />

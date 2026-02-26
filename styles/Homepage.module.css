@@ -502,7 +502,7 @@
     right: 0;
     margin-right: 2vh;
     margin-top: 0.5vh;
-    font-size: 2.3vh;
+    font-size: 1.8vh; padding-top: 0.5vh; text-align: right;
     font-family: 'Inter', sans-serif;
 }
 
@@ -512,7 +512,7 @@
     right: 0;
     margin-right: 13vh;
     margin-top: 0.5vh;
-    font-size: 2.3vh;
+    font-size: 1.8vh; padding-top: 0.5vh; text-align: right;
     font-family: 'Inter', sans-serif;
 
 }
@@ -549,7 +549,7 @@
     border-radius: 2vh;
     font-family: 'Inter', sans-serif;
     padding: 0;
-    transition: all 2s;
+    /* transition: all 2s; removed for draggables */
 }
 
 .result h1 {
@@ -1100,7 +1100,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    transition: all 2s;
+    /* transition: all 2s; removed for draggables */
     top: 14vh;
     left: 60vh;
 }
@@ -1111,7 +1111,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    transition: width 2s, height 2s;
+    /* transition: width 2s, height 2s; removed */
     top: 14vh;
     left: 60vh;
 }
@@ -1126,7 +1126,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: row-reverse;
-    transition: all 2s;
+    /* transition: all 2s; removed for draggables */
 }
 
 .BroTop {
@@ -1139,7 +1139,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row-reverse;
-    transition: all 2s;
+    /* transition: all 2s; removed for draggables */
     padding-top: 1vh;
 }
 
@@ -1206,7 +1206,7 @@
     border-bottom-right-radius: 1.5vh;
     position: absolute;
     top: 4.1vh;
-    transition: all 2s;
+    /* transition: all 2s; removed for draggables */
 }
 
 .BrowserFiles {
@@ -1217,7 +1217,7 @@
     border-bottom-right-radius: 1.5vh;
     position: absolute;
     top: 9.1vh;
-    transition: all 2s;
+    /* transition: all 2s; removed for draggables */
 }
 
 .sidebar {
@@ -1595,7 +1595,7 @@
     border-radius: 1.2vh;
     top: 15%;
     left: 11%;
-    transition: all 2s;
+    /* transition: all 2s; removed for draggables */
 }
 
 .AddFileWindowClose {
