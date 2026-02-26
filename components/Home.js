@@ -1325,18 +1325,17 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         ))
                     )}
                 </div>}
-                                    <Draggable nodeRef={resultRef} handle=".result-header">
-<div id="result" ref={resultRef} className={styles.result}>
+                <Draggable nodeRef={resultRef} handle=".result-header">
+                    <div id="result" ref={resultRef} className={styles.result}>
                         <div onClick={closeResults} id="closeResult" className={styles.closeResult}></div>
                         <h1>RK AI:</h1>
                         <br />
                         <p id="output">{outputText}</p>
                     </div>
-                                <div className={styles.Apps} id="AllApps">
-
-                        </Draggable>
+                </Draggable>
+                <div className={styles.Apps} id="AllApps">
                     <Draggable nodeRef={lumiNexRef} handle={`.${styles.top}`}>
-<div id="LumiNexplorer" ref={lumiNexRef} className={styles.App}>
+                        <div id="LumiNexplorer" ref={lumiNexRef} className={styles.App}>
                             <div id="top" className={styles.top}>
                                 <div id="title" className={styles.title}>LumiNexplorer</div>
                                 <div onClick={() => { showApp("LumiNexplorer") }} id="close" className={styles.close}></div>
@@ -1408,9 +1407,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                                            </Draggable>
+                    </Draggable>
                     <Draggable nodeRef={clockRef} handle={`.${styles.top}`}>
-<div id="Clock" ref={clockRef} className={styles.App}>
+                        <div id="Clock" ref={clockRef} className={styles.App}>
                             <div id="top" className={styles.top}>
                                 <div id="title" className={styles.title}>Clock</div>
                                 <div onClick={() => { showApp("Clock") }} id="close" className={styles.close}></div>
@@ -1462,9 +1461,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                                            </Draggable>
+                    </Draggable>
                     <Draggable nodeRef={browserRef} handle={`.${styles.BroTop}`}>
-<div id="Browser" ref={browserRef} className={styles.App}>
+                        <div id="Browser" ref={browserRef} className={styles.App}>
                             <div id="Browsertop" className={styles.BroTop}>
                                 <div id="title" className={styles.title}>Vertice</div>
                                 <div onClick={() => { showApp("Browser") }} id="close" className={styles.close}></div>
@@ -1484,9 +1483,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                                            </Draggable>
+                    </Draggable>
                     <Draggable nodeRef={whatsappRef} handle={`.${styles.BroTop}`}>
-<div id="WhatsApp" ref={whatsappRef} className={styles.App}>
+                        <div id="WhatsApp" ref={whatsappRef} className={styles.App}>
                             <div id="WhatsApptop" className={styles.BroTop}>
                                 <div id="title" className={styles.title}>Vertice</div>
                                 <div onClick={() => { showApp("WhatsApp") }} id="close" className={styles.close}></div>
@@ -1505,9 +1504,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                                            </Draggable>
+                    </Draggable>
                     <Draggable nodeRef={calcRef} handle={`.${styles.top}`}>
-<div id="Calculator" ref={calcRef} className={styles.App}>
+                        <div id="Calculator" ref={calcRef} className={styles.App}>
                             <div id="Calctop" className={styles.top}>
                                 <div id="title" className={styles.title}>Calculator</div>
                                 <div onClick={() => { showApp("Calculator"); calc('C') }} id="close" className={styles.close}></div>
@@ -1540,9 +1539,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                                            </Draggable>
+                    </Draggable>
                     <Draggable nodeRef={storeRef} handle={`.${styles.top}`}>
-<div id="Store" ref={storeRef} className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
+                        <div id="Store" ref={storeRef} className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
                             <div
                                 id="Storetop"
                                 className={styles.top}
@@ -1568,9 +1567,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                                            </Draggable>
+                    </Draggable>
                     <Draggable nodeRef={settingsRef} handle={`.${styles.top}`}>
-<div id="Settings" ref={settingsRef} className={styles.App}>
+                        <div id="Settings" ref={settingsRef} className={styles.App}>
                             <div id="Settingstop" className={styles.top}>
                                 <div id="title" className={styles.title}>Settings</div>
                                 <div onClick={() => { showApp("Settings"); }} id="close" className={styles.close}></div>
@@ -1678,359 +1677,362 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     {/* Add more sections and options as needed */}
                                 </div>
                             </div>
-                        </div>                        </Draggable>
-                    <Draggable nodeRef={chatRef} handle={`.${styles.top}`}>
-<div id="Chat" ref={chatRef} className={styles.App}>
-                            <div id="Chattop" className={styles.top}>
-                                <div id="title" className={styles.title}>ChatExpress</div>
-                                <div onClick={() => { showApp("Chat") }} id="close" className={styles.close}></div>
-                                <div onClick={() => { minimizeApp("Chat") }} id="minimize" className={styles.minimize}></div>
-                                <div id="maximize" onClick={() => { ChatMaximize("Chat", "Chattop", "ChatApp", "ChatMainWindow", "ChatIFrame") }} className={styles.maximize}></div>
-                            </div>
-                            <div id="ChatApp" className={styles.Files}>
-                                <div id="ChatMainWindow" className={styles.ChatMainWindow}>
-                                    <iframe id="ChatIFrame" className={styles.iFrame} src="https://chatexpress-chat-quickly.techabhigyan.repl.co/" />
+                        </div>
+                        <Draggable nodeRef={chatRef} handle={`.${styles.top}`}>
+                            <div id="Chat" ref={chatRef} className={styles.App}>
+                                <div id="Chattop" className={styles.top}>
+                                    <div id="title" className={styles.title}>ChatExpress</div>
+                                    <div onClick={() => { showApp("Chat") }} id="close" className={styles.close}></div>
+                                    <div onClick={() => { minimizeApp("Chat") }} id="minimize" className={styles.minimize}></div>
+                                    <div id="maximize" onClick={() => { ChatMaximize("Chat", "Chattop", "ChatApp", "ChatMainWindow", "ChatIFrame") }} className={styles.maximize}></div>
                                 </div>
-                            </div>
-                        </div>
-                                            </Draggable>
-                    <Draggable nodeRef={weatherRef} handle={`.${styles.top}`}>
-<div id="Weather" ref={weatherRef} className={styles.App}>
-                            <div id="WeatherTop" className={styles.top}>
-                                <div id="title" className={styles.title}>Weather</div>
-                                <div onClick={() => { showApp("Weather") }} id="close" className={styles.close}></div>
-                                <div onClick={() => { minimizeApp("Weather") }} id="minimize" className={styles.minimize}></div>
-                                <div id="maximize" onClick={() => { maximize("Weather", "WeatherTop", "WeatherApp", "WeatherSidebar", "WeatherMainWindow") }} className={styles.maximize}></div>
-                            </div>
-                            <div id="WeatherApp" className={styles.Files}>
-                                <div id="WeatherSidebar" className={styles.sidebar}>
-                                    <div onClick={() => { setSelectedWeatherView("Current") }} className={styles.text}>Current</div>
-                                    <div onClick={() => { setSelectedWeatherView("Details") }} className={styles.text}>Details</div>
-                                    <div onClick={() => { setSelectedWeatherView("Search") }} className={styles.text}>Search</div>
-                                </div>
-                                <div id="WeatherMainWindow" className={styles.MainWindow}>
-                                    {selectedWeatherView === "Current" && (
-                                        <div className={styles.weatherCurrentView}>
-                                            <div className={styles.weatherHeader}>
-                                                <h2 className={styles.weatherCity}>{city || "Loading..."}</h2>
-                                                <div className={styles.weatherIcon}>
-                                                    {cloudPct <= 30 ? (
-                                                        <FaCloudSun className={styles.weatherIconLarge} />
-                                                    ) : cloudPct <= 95 ? (
-                                                        <FaCloud className={styles.weatherIconLarge} />
-                                                    ) : (
-                                                        <FaCloudShowersHeavy className={styles.weatherIconLarge} />
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className={styles.weatherMainCard}>
-                                                <div className={styles.weatherTemp}>
-                                                    <span id="temp" className={styles.tempLarge}>--</span>°C
-                                                </div>
-                                                <div className={styles.weatherFeels}>
-                                                    Feels like <span id="feels" className={styles.feelsTemp}>--</span>°C
-                                                </div>
-                                            </div>
-                                            <div className={styles.weatherQuickInfo}>
-                                                <div className={styles.weatherInfoCard}>
-                                                    <div className={styles.infoIcon}>💧</div>
-                                                    <div className={styles.infoText}>
-                                                        <div className={styles.infoLabel}>Humidity</div>
-                                                        <div className={styles.infoValue}>{weatherData?.humidity || '--'}%</div>
-                                                    </div>
-                                                </div>
-                                                <div className={styles.weatherInfoCard}>
-                                                    <div className={styles.infoIcon}>🌬️</div>
-                                                    <div className={styles.infoText}>
-                                                        <div className={styles.infoLabel}>Wind</div>
-                                                        <div className={styles.infoValue}>{weatherData?.wind_speed || '--'} m/s</div>
-                                                    </div>
-                                                </div>
-                                                <div className={styles.weatherInfoCard}>
-                                                    <div className={styles.infoIcon}>☁️</div>
-                                                    <div className={styles.infoText}>
-                                                        <div className={styles.infoLabel}>Clouds</div>
-                                                        <div className={styles.infoValue}>{weatherData?.cloud_pct || '--'}%</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {selectedWeatherView === "Details" && (
-                                        <div className={styles.weatherDetailsView}>
-                                            <h3 className={styles.weatherDetailsTitle}>Weather Details</h3>
-                                            {weatherData ? (
-                                                <div className={styles.weatherDetailsGrid}>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Temperature</h4>
-                                                        <p>{weatherData.temp}°C</p>
-                                                    </div>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Feels Like</h4>
-                                                        <p>{weatherData.feels_like}°C</p>
-                                                    </div>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Humidity</h4>
-                                                        <p>{weatherData.humidity}%</p>
-                                                    </div>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Max Temperature</h4>
-                                                        <p>{weatherData.max_temp}°C</p>
-                                                    </div>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Min Temperature</h4>
-                                                        <p>{weatherData.min_temp}°C</p>
-                                                    </div>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Cloud Coverage</h4>
-                                                        <p>{weatherData.cloud_pct}%</p>
-                                                    </div>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Wind Speed</h4>
-                                                        <p>{weatherData.wind_speed} m/s</p>
-                                                    </div>
-                                                    <div className={styles.detailCard}>
-                                                        <h4>Wind Direction</h4>
-                                                        <p>{weatherData.wind_degrees}°</p>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <p className={styles.noData}>No weather data available.</p>
-                                            )}
-                                        </div>
-                                    )}
-                                    {selectedWeatherView === "Search" && (
-                                        <div className={styles.weatherSearchView}>
-                                            <h3 className={styles.weatherSearchTitle}>Search City</h3>
-                                            <form onSubmit={handleWeatherSearch} className={styles.weatherSearchForm}>
-                                                <input
-                                                    type="text"
-                                                    value={weatherSearchQuery}
-                                                    onChange={(e) => setWeatherSearchQuery(e.target.value)}
-                                                    placeholder="Enter city name..."
-                                                    className={styles.weatherSearchInput}
-                                                    onMouseEnter={onTextBoxHover}
-                                                    onMouseLeave={onTextBoxLeave}
-                                                />
-                                                <button type="submit" className={styles.weatherSearchButton}>
-                                                    Search
-                                                </button>
-                                            </form>
-                                            <div className={styles.currentLocation}>
-                                                <p>Current location: <strong>{city || "Not set"}</strong></p>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                                    </div>
-                {dropdown && (
-                    <div className={styles.Dropdown}>
-                        <div onClick={() => {
-                            let a = confirm("This will erase all your Data! Are you sure to do this?")
-                            if (a == true) {
-                                localStorage.clear();
-                                window.location.replace("/");
-                            }
-                        }} className={styles.DropdownOption}>
-                            Reset
-                        </div>
-                        <div className={styles.DropdownOption}>
-                            Shutdown
-                        </div>
-                        <div onClick={() => {
-                            window.location.reload();
-                        }} className={styles.DropdownOption}>
-                            Restart
-                        </div>
-                    </div>
-                )}
-                {showStartMenu == true && <div id="StartMenu" className={styles.StartMenu}>
-                    <div className={styles.Top}>
-                        <p>All Apps:</p>
-                        <div className={styles.AllDesktopApps}>
-                            {appInstalled.map(item => (
-                                <div onClick={() => { showApp(item.Icon) }} className={styles.StartApp} key={item.Name}>
-                                    {item.Name != null ? (
-                                        item.Name == "Calculator" ? (
-                                            <IoCalculator className={styles.startBtn} />
-                                        ) : item.Name == "LumiNexplorer" ? (
-                                            <SiFiles className={styles.startBtn} />
-                                        ) : item.Name == "Clock" ? (
-                                            <BsFillClockFill className={styles.startBtn} />
-                                        ) : item.Name == "Browser" ? (
-                                            <SiTorbrowser className={styles.startBtn} />
-                                        ) : item.Name == "Weather" ? (
-                                            <TiWeatherCloudy className={styles.startBtn} />
-                                        ) : item.Name == "ChatExpress" ? (
-                                            <IoMdChatbubbles className={styles.startBtn} />
-                                        ) : item.Name == "Store" ? (
-                                            <IoMdAppstore className={styles.startBtn} />
-                                        ) : item.Name == "PDFViewer" ? (
-                                            <VscFilePdf className={styles.startBtn} />
-                                        ) : item.Name == "Vertice" ? (
-                                            <SiTorbrowser className={styles.startBtn} />
-                                        ) : item.Name == "Settings" ? (
-                                            <IoSettingsSharp className={styles.startBtn} />
-                                        ) : <BsFillLightningChargeFill className={styles.startBtn} />
-                                    ) : (
-                                        <BsFillLightningChargeFill className={styles.startBtn} />
-                                    )}
-                                    <p>{item.Name}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className={styles.Bottom}>
-                        <div className={styles.Toggles}>
-                            <div><AiFillHome onClick={() => { window.location.replace("/") }} /></div>
-                            <div><IoIosKeypad /></div>
-                            <div><IoSettingsSharp onClick={() => { showApp("Settings") }} /></div>
-                        </div>
-                        <div className={styles.User}>
-                            <p>{name}</p>
-                            <div className={styles.Badge2}>Pro</div>
-                        </div>
-                    </div>
-                </div>}
-                {showSearchMenu && (
-                    <div id="StartMenu" className={styles.StartMenu}>
-                        <div className={styles.SearchBarCSS}>
-                            <form onSubmit={handleSearch}>
-                                <BsSearch className={styles.SearchIcon} />
-                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={searchQuery} onChange={AIValue === false ? handleSearch : handleChange} type="search" id="SearchBar" onSubmit={handleSearch} className={styles.SearchBarInputCSS} placeholder={searchPlaceholder} />
-                            </form>
-                        </div>
-                        {(searchResults.length <= 0 && (
-                            <div className={styles.Top}>
-                                <p>Recommended Apps:</p>
-                                <div className={styles.AllDesktopApps}>
-                                    <div className={styles.StartApp}>
-                                        <SiTorbrowser className={styles.startBtn} />
-                                        <p>Vertice</p>
-                                    </div>
-                                    <div className={styles.StartApp}>
-                                        <IoMdAppstore className={styles.startBtn} />
-                                        <p>Sparking Store</p>
-                                    </div>
-                                    <div className={styles.StartApp}>
-                                        <IoMdChatbubbles className={styles.startBtn} />
-                                        <p>ChatExpress</p>
+                                <div id="ChatApp" className={styles.Files}>
+                                    <div id="ChatMainWindow" className={styles.ChatMainWindow}>
+                                        <iframe id="ChatIFrame" className={styles.iFrame} src="https://chatexpress-chat-quickly.techabhigyan.repl.co/" />
                                     </div>
                                 </div>
                             </div>
-                        )) || (
-                                <div className={styles.Top}>
-                                    <p>Apps:</p>
-                                    <div className={styles.AllDesktopApps}>
-                                        {searchResults.map((result) => (
-                                            <div onClick={() => { showApp(result.Icon) }} key={result.Name} className={styles.StartApp}>
-                                                {getAppIcon(result.Icon)}
-                                                <p>{result.Name}</p>
+                        </Draggable>
+                        <Draggable nodeRef={weatherRef} handle={`.${styles.top}`}>
+                            <div id="Weather" ref={weatherRef} className={styles.App}>
+                                <div id="WeatherTop" className={styles.top}>
+                                    <div id="title" className={styles.title}>Weather</div>
+                                    <div onClick={() => { showApp("Weather") }} id="close" className={styles.close}></div>
+                                    <div onClick={() => { minimizeApp("Weather") }} id="minimize" className={styles.minimize}></div>
+                                    <div id="maximize" onClick={() => { maximize("Weather", "WeatherTop", "WeatherApp", "WeatherSidebar", "WeatherMainWindow") }} className={styles.maximize}></div>
+                                </div>
+                                <div id="WeatherApp" className={styles.Files}>
+                                    <div id="WeatherSidebar" className={styles.sidebar}>
+                                        <div onClick={() => { setSelectedWeatherView("Current") }} className={styles.text}>Current</div>
+                                        <div onClick={() => { setSelectedWeatherView("Details") }} className={styles.text}>Details</div>
+                                        <div onClick={() => { setSelectedWeatherView("Search") }} className={styles.text}>Search</div>
+                                    </div>
+                                    <div id="WeatherMainWindow" className={styles.MainWindow}>
+                                        {selectedWeatherView === "Current" && (
+                                            <div className={styles.weatherCurrentView}>
+                                                <div className={styles.weatherHeader}>
+                                                    <h2 className={styles.weatherCity}>{city || "Loading..."}</h2>
+                                                    <div className={styles.weatherIcon}>
+                                                        {cloudPct <= 30 ? (
+                                                            <FaCloudSun className={styles.weatherIconLarge} />
+                                                        ) : cloudPct <= 95 ? (
+                                                            <FaCloud className={styles.weatherIconLarge} />
+                                                        ) : (
+                                                            <FaCloudShowersHeavy className={styles.weatherIconLarge} />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className={styles.weatherMainCard}>
+                                                    <div className={styles.weatherTemp}>
+                                                        <span id="temp" className={styles.tempLarge}>--</span>°C
+                                                    </div>
+                                                    <div className={styles.weatherFeels}>
+                                                        Feels like <span id="feels" className={styles.feelsTemp}>--</span>°C
+                                                    </div>
+                                                </div>
+                                                <div className={styles.weatherQuickInfo}>
+                                                    <div className={styles.weatherInfoCard}>
+                                                        <div className={styles.infoIcon}>💧</div>
+                                                        <div className={styles.infoText}>
+                                                            <div className={styles.infoLabel}>Humidity</div>
+                                                            <div className={styles.infoValue}>{weatherData?.humidity || '--'}%</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className={styles.weatherInfoCard}>
+                                                        <div className={styles.infoIcon}>🌬️</div>
+                                                        <div className={styles.infoText}>
+                                                            <div className={styles.infoLabel}>Wind</div>
+                                                            <div className={styles.infoValue}>{weatherData?.wind_speed || '--'} m/s</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className={styles.weatherInfoCard}>
+                                                        <div className={styles.infoIcon}>☁️</div>
+                                                        <div className={styles.infoText}>
+                                                            <div className={styles.infoLabel}>Clouds</div>
+                                                            <div className={styles.infoValue}>{weatherData?.cloud_pct || '--'}%</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        ))}
+                                        )}
+                                        {selectedWeatherView === "Details" && (
+                                            <div className={styles.weatherDetailsView}>
+                                                <h3 className={styles.weatherDetailsTitle}>Weather Details</h3>
+                                                {weatherData ? (
+                                                    <div className={styles.weatherDetailsGrid}>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Temperature</h4>
+                                                            <p>{weatherData.temp}°C</p>
+                                                        </div>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Feels Like</h4>
+                                                            <p>{weatherData.feels_like}°C</p>
+                                                        </div>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Humidity</h4>
+                                                            <p>{weatherData.humidity}%</p>
+                                                        </div>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Max Temperature</h4>
+                                                            <p>{weatherData.max_temp}°C</p>
+                                                        </div>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Min Temperature</h4>
+                                                            <p>{weatherData.min_temp}°C</p>
+                                                        </div>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Cloud Coverage</h4>
+                                                            <p>{weatherData.cloud_pct}%</p>
+                                                        </div>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Wind Speed</h4>
+                                                            <p>{weatherData.wind_speed} m/s</p>
+                                                        </div>
+                                                        <div className={styles.detailCard}>
+                                                            <h4>Wind Direction</h4>
+                                                            <p>{weatherData.wind_degrees}°</p>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <p className={styles.noData}>No weather data available.</p>
+                                                )}
+                                            </div>
+                                        )}
+                                        {selectedWeatherView === "Search" && (
+                                            <div className={styles.weatherSearchView}>
+                                                <h3 className={styles.weatherSearchTitle}>Search City</h3>
+                                                <form onSubmit={handleWeatherSearch} className={styles.weatherSearchForm}>
+                                                    <input
+                                                        type="text"
+                                                        value={weatherSearchQuery}
+                                                        onChange={(e) => setWeatherSearchQuery(e.target.value)}
+                                                        placeholder="Enter city name..."
+                                                        className={styles.weatherSearchInput}
+                                                        onMouseEnter={onTextBoxHover}
+                                                        onMouseLeave={onTextBoxLeave}
+                                                    />
+                                                    <button type="submit" className={styles.weatherSearchButton}>
+                                                        Search
+                                                    </button>
+                                                </form>
+                                                <div className={styles.currentLocation}>
+                                                    <p>Current location: <strong>{city || "Not set"}</strong></p>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-                            )}
-                        <div className={styles.Middle}>
-                            <p>Ask RK AI:-</p>
-                            {!AIValue && <p>Hey there, click bottom left button to start a chat with me...</p>}
-                            {AIValue && <span>RK AI: {outputText || "Output will come here..."}</span>}
+                            </div>
+                        </div>
+                    </Draggable>
+                    {dropdown && (
+                        <div className={styles.Dropdown}>
+                            <div onClick={() => {
+                                let a = confirm("This will erase all your Data! Are you sure to do this?")
+                                if (a == true) {
+                                    localStorage.clear();
+                                    window.location.replace("/");
+                                }
+                            }} className={styles.DropdownOption}>
+                                Reset
+                            </div>
+                            <div className={styles.DropdownOption}>
+                                Shutdown
+                            </div>
+                            <div onClick={() => {
+                                window.location.reload();
+                            }} className={styles.DropdownOption}>
+                                Restart
+                            </div>
+                        </div>
+                    )}
+                    {showStartMenu == true && <div id="StartMenu" className={styles.StartMenu}>
+                        <div className={styles.Top}>
+                            <p>All Apps:</p>
+                            <div className={styles.AllDesktopApps}>
+                                {appInstalled.map(item => (
+                                    <div onClick={() => { showApp(item.Icon) }} className={styles.StartApp} key={item.Name}>
+                                        {item.Name != null ? (
+                                            item.Name == "Calculator" ? (
+                                                <IoCalculator className={styles.startBtn} />
+                                            ) : item.Name == "LumiNexplorer" ? (
+                                                <SiFiles className={styles.startBtn} />
+                                            ) : item.Name == "Clock" ? (
+                                                <BsFillClockFill className={styles.startBtn} />
+                                            ) : item.Name == "Browser" ? (
+                                                <SiTorbrowser className={styles.startBtn} />
+                                            ) : item.Name == "Weather" ? (
+                                                <TiWeatherCloudy className={styles.startBtn} />
+                                            ) : item.Name == "ChatExpress" ? (
+                                                <IoMdChatbubbles className={styles.startBtn} />
+                                            ) : item.Name == "Store" ? (
+                                                <IoMdAppstore className={styles.startBtn} />
+                                            ) : item.Name == "PDFViewer" ? (
+                                                <VscFilePdf className={styles.startBtn} />
+                                            ) : item.Name == "Vertice" ? (
+                                                <SiTorbrowser className={styles.startBtn} />
+                                            ) : item.Name == "Settings" ? (
+                                                <IoSettingsSharp className={styles.startBtn} />
+                                            ) : <BsFillLightningChargeFill className={styles.startBtn} />
+                                        ) : (
+                                            <BsFillLightningChargeFill className={styles.startBtn} />
+                                        )}
+                                        <p>{item.Name}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className={styles.Bottom}>
+                            <div className={styles.Toggles}>
+                                <div><AiFillHome onClick={() => { window.location.replace("/") }} /></div>
+                                <div><IoIosKeypad /></div>
+                                <div><IoSettingsSharp onClick={() => { showApp("Settings") }} /></div>
+                            </div>
                             <div className={styles.User}>
-                                {!AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to start chat with RK AI...</button>}
-                                {AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to search apps and more...</button>}
+                                <p>{name}</p>
+                                <div className={styles.Badge2}>Pro</div>
                             </div>
                         </div>
-                    </div>
-                )}
-                <div className={styles.TaskDock}>
-                    <BsFillLightningChargeFill onClick={() => { if (showStartMenu == false) { setShowStartMenu(true) } else { setShowStartMenu(false) } }} className={styles.TaskList} />
-                    <BsSearch onClick={() => { if (showSearchMenu == false) { setShowSearchMenu(true) } else { setShowSearchMenu(false) } }} className={styles.TaskList} />
-                    <BsListTask onClick={() => { showNotificationFunction("Notification", "I am working!!!") }} className={styles.TaskList} />
-                    <MdWidgets onClick={() => { if (showWidget == false) { setShowWidget(true) } else { setShowWidget(false) } }} className={styles.TaskList} />
-                    <div className={styles.Line}></div>
-                    <SiFiles onClick={() => { showApp("LumiNexplorer") }} className={styles.TaskList} />
-                    <BsFillClockFill onClick={() => { showApp("Clock") }} className={styles.TaskList} />
-                    <IoCalculator onClick={() => { showApp("Calculator") }} className={styles.TaskList} />
-                    <SiTorbrowser onClick={() => { showApp("Browser") }} className={styles.TaskList} />
-                    <IoMdAppstore onClick={() => { showApp("Store") }} className={styles.TaskList} />
-                    <TiWeatherCloudy onClick={() => { showApp("Weather") }} className={styles.TaskList} />
-                    <IoMdChatbubbles onClick={() => { showApp("Chat") }} className={styles.TaskList} />
-                    <BsWhatsapp onClick={() => { showApp("WhatsApp") }} className={styles.TaskList} />
-                    <div className={styles.Line}></div>
-                    <div onClick={() => { if (notificationDropdown) { setNotificationDropdown(false) } else { setNotificationDropdown(true) } }} className={styles.WeatherDiv}>
-                        {cloudPct <= 30 ? (
-                            <FaCloudSun className={styles.WeatherType} />
-                        ) : cloudPct <= 95 ? (
-                            <FaCloud className={styles.WeatherType} />
+                    </div>}
+                    {showSearchMenu && (
+                        <div id="StartMenu" className={styles.StartMenu}>
+                            <div className={styles.SearchBarCSS}>
+                                <form onSubmit={handleSearch}>
+                                    <BsSearch className={styles.SearchIcon} />
+                                    <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={searchQuery} onChange={AIValue === false ? handleSearch : handleChange} type="search" id="SearchBar" onSubmit={handleSearch} className={styles.SearchBarInputCSS} placeholder={searchPlaceholder} />
+                                </form>
+                            </div>
+                            {(searchResults.length <= 0 && (
+                                <div className={styles.Top}>
+                                    <p>Recommended Apps:</p>
+                                    <div className={styles.AllDesktopApps}>
+                                        <div className={styles.StartApp}>
+                                            <SiTorbrowser className={styles.startBtn} />
+                                            <p>Vertice</p>
+                                        </div>
+                                        <div className={styles.StartApp}>
+                                            <IoMdAppstore className={styles.startBtn} />
+                                            <p>Sparking Store</p>
+                                        </div>
+                                        <div className={styles.StartApp}>
+                                            <IoMdChatbubbles className={styles.startBtn} />
+                                            <p>ChatExpress</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )) || (
+                                    <div className={styles.Top}>
+                                        <p>Apps:</p>
+                                        <div className={styles.AllDesktopApps}>
+                                            {searchResults.map((result) => (
+                                                <div onClick={() => { showApp(result.Icon) }} key={result.Name} className={styles.StartApp}>
+                                                    {getAppIcon(result.Icon)}
+                                                    <p>{result.Name}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            <div className={styles.Middle}>
+                                <p>Ask RK AI:-</p>
+                                {!AIValue && <p>Hey there, click bottom left button to start a chat with me...</p>}
+                                {AIValue && <span>RK AI: {outputText || "Output will come here..."}</span>}
+                            </div>
+                            <div className={styles.Bottom}>
+                                <div className={styles.User}>
+                                    {!AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to start chat with RK AI...</button>}
+                                    {AIValue && <button className={styles.button} onClick={handleAIClick}>Click here to search apps and more...</button>}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    <div className={styles.TaskDock}>
+                        <BsFillLightningChargeFill onClick={() => { if (showStartMenu == false) { setShowStartMenu(true) } else { setShowStartMenu(false) } }} className={styles.TaskList} />
+                        <BsSearch onClick={() => { if (showSearchMenu == false) { setShowSearchMenu(true) } else { setShowSearchMenu(false) } }} className={styles.TaskList} />
+                        <BsListTask onClick={() => { showNotificationFunction("Notification", "I am working!!!") }} className={styles.TaskList} />
+                        <MdWidgets onClick={() => { if (showWidget == false) { setShowWidget(true) } else { setShowWidget(false) } }} className={styles.TaskList} />
+                        <div className={styles.Line}></div>
+                        <SiFiles onClick={() => { showApp("LumiNexplorer") }} className={styles.TaskList} />
+                        <BsFillClockFill onClick={() => { showApp("Clock") }} className={styles.TaskList} />
+                        <IoCalculator onClick={() => { showApp("Calculator") }} className={styles.TaskList} />
+                        <SiTorbrowser onClick={() => { showApp("Browser") }} className={styles.TaskList} />
+                        <IoMdAppstore onClick={() => { showApp("Store") }} className={styles.TaskList} />
+                        <TiWeatherCloudy onClick={() => { showApp("Weather") }} className={styles.TaskList} />
+                        <IoMdChatbubbles onClick={() => { showApp("Chat") }} className={styles.TaskList} />
+                        <BsWhatsapp onClick={() => { showApp("WhatsApp") }} className={styles.TaskList} />
+                        <div className={styles.Line}></div>
+                        <div onClick={() => { if (notificationDropdown) { setNotificationDropdown(false) } else { setNotificationDropdown(true) } }} className={styles.WeatherDiv}>
+                            {cloudPct <= 30 ? (
+                                <FaCloudSun className={styles.WeatherType} />
+                            ) : cloudPct <= 95 ? (
+                                <FaCloud className={styles.WeatherType} />
+                            ) : (
+                                <FaCloudShowersHeavy className={styles.WeatherType} />
+                            )}
+                            <p><span id="temp"></span>°C</p>
+                            <p>Feels: <span id="feels"></span>°C</p>
+                        </div>
+                        <div className={styles.Line}></div>
+                        {isOnline ? (
+                            wifiStrength <= -60 ? (
+                                <BsWifi1 className={styles.TaskList} />
+                            ) : (
+                                <BsWifi className={styles.TaskList} />
+                            )
                         ) : (
-                            <FaCloudShowersHeavy className={styles.WeatherType} />
+                            <BsWifiOff className={styles.TaskList} />
                         )}
-                        <p><span id="temp"></span>°C</p>
-                        <p>Feels: <span id="feels"></span>°C</p>
-                    </div>
-                    <div className={styles.Line}></div>
-                    {isOnline ? (
-                        wifiStrength <= -60 ? (
-                            <BsWifi1 className={styles.TaskList} />
+                        {isCharging ? (
+                            batteryLevel > 90 ? (
+                                <MdBatteryChargingFull className={styles.TaskList} />
+                            ) : batteryLevel > 80 ? (
+                                <MdBatteryCharging90 className={styles.TaskList} />
+                            ) : batteryLevel > 60 ? (
+                                <MdBatteryCharging80 className={styles.TaskList} />
+                            ) : batteryLevel > 50 ? (
+                                <MdBatteryCharging60 className={styles.TaskList} />
+                            ) : batteryLevel > 30 ? (
+                                <MdBatteryCharging50 className={styles.TaskList} />
+                            ) : batteryLevel > 20 ? (
+                                <MdBatteryCharging30 className={styles.TaskList} />
+                            ) : (
+                                <MdBatteryAlert className={styles.TaskList} />
+                            )
                         ) : (
-                            <BsWifi className={styles.TaskList} />
-                        )
-                    ) : (
-                        <BsWifiOff className={styles.TaskList} />
-                    )}
-                    {isCharging ? (
-                        batteryLevel > 90 ? (
-                            <MdBatteryChargingFull className={styles.TaskList} />
-                        ) : batteryLevel > 80 ? (
-                            <MdBatteryCharging90 className={styles.TaskList} />
-                        ) : batteryLevel > 60 ? (
-                            <MdBatteryCharging80 className={styles.TaskList} />
-                        ) : batteryLevel > 50 ? (
-                            <MdBatteryCharging60 className={styles.TaskList} />
-                        ) : batteryLevel > 30 ? (
-                            <MdBatteryCharging50 className={styles.TaskList} />
-                        ) : batteryLevel > 20 ? (
-                            <MdBatteryCharging30 className={styles.TaskList} />
-                        ) : (
-                            <MdBatteryAlert className={styles.TaskList} />
-                        )
-                    ) : (
-                        batteryLevel > 90 ? (
-                            <MdBatteryFull className={styles.TaskList} />
-                        ) : batteryLevel > 80 ? (
-                            <MdBattery90 className={styles.TaskList} />
-                        ) : batteryLevel > 60 ? (
-                            <MdBattery80 className={styles.TaskList} />
-                        ) : batteryLevel > 50 ? (
-                            <MdBattery60 className={styles.TaskList} />
-                        ) : batteryLevel > 30 ? (
-                            <MdBattery50 className={styles.TaskList} />
-                        ) : batteryLevel > 20 ? (
-                            <MdBattery30 className={styles.TaskList} />
-                        ) : (
-                            <MdBattery20 className={styles.TaskList} />
-                        )
-                    )}
-                    {isMuted ? (
-                        <BiVolumeMute className={styles.TaskList} />
-                    ) : (
-                        volume > 70 ? (
-                            <BiVolumeFull className={styles.TaskList} />
-                        ) : volume > 30 ? (
-                            <BiVolumeLow className={styles.TaskList} />
-                        ) : (
+                            batteryLevel > 90 ? (
+                                <MdBatteryFull className={styles.TaskList} />
+                            ) : batteryLevel > 80 ? (
+                                <MdBattery90 className={styles.TaskList} />
+                            ) : batteryLevel > 60 ? (
+                                <MdBattery80 className={styles.TaskList} />
+                            ) : batteryLevel > 50 ? (
+                                <MdBattery60 className={styles.TaskList} />
+                            ) : batteryLevel > 30 ? (
+                                <MdBattery50 className={styles.TaskList} />
+                            ) : batteryLevel > 20 ? (
+                                <MdBattery30 className={styles.TaskList} />
+                            ) : (
+                                <MdBattery20 className={styles.TaskList} />
+                            )
+                        )}
+                        {isMuted ? (
                             <BiVolumeMute className={styles.TaskList} />
-                        )
-                    )}
-                    <FaPowerOff onClick={() => { if (dropdown == true) { setDropdown(false) } else { setDropdown(true) } }} className={styles.TaskList} />
-                    <div className={styles.Badge}>Pro</div>
-                </div>
-            </main >
-        </div >
+                        ) : (
+                            volume > 70 ? (
+                                <BiVolumeFull className={styles.TaskList} />
+                            ) : volume > 30 ? (
+                                <BiVolumeLow className={styles.TaskList} />
+                            ) : (
+                                <BiVolumeMute className={styles.TaskList} />
+                            )
+                        )}
+                        <FaPowerOff onClick={() => { if (dropdown == true) { setDropdown(false) } else { setDropdown(true) } }} className={styles.TaskList} />
+                        <div className={styles.Badge}>Pro</div>
+                    </div>
+            </main>
+        </div>
+            </Draggable >
+        </>
     );
 };
 

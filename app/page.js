@@ -75,8 +75,8 @@ export default function Home() {
         }
         .lgrid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 20px; max-width: 600px; width: 100%; margin: 0 auto;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px; max-width: 1000px; width: 100%; margin: 0 auto;
         }
         .lcard {
           background: rgba(255,255,255,0.03);

@@ -105,7 +105,7 @@ export default function SignUp() {
       <div style={{
         position: 'absolute', top: '0', left: '50%', transform: 'translateX(-50%)',
         width: '600px', height: '600px',
-        background: 'radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -119,7 +119,7 @@ export default function SignUp() {
         {/* Badge */}
         <div style={{
           display: 'inline-block',
-          background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)',
+          background: 'rgba(167,139,250,0.12)', border: '1px solid rgba(167,139,250,0.3)',
           borderRadius: '50px', padding: '5px 14px',
           fontSize: '11px', fontWeight: '700', color: '#34d399',
           letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '20px',
@@ -137,8 +137,8 @@ export default function SignUp() {
         {status === 'done' ? (
           <div style={{
             textAlign: 'center', padding: '40px 20px',
-            background: 'rgba(16,185,129,0.08)', borderRadius: '16px',
-            border: '1px solid rgba(16,185,129,0.2)',
+            background: 'rgba(167,139,250,0.08)', borderRadius: '16px',
+            border: '1px solid rgba(167,139,250,0.2)',
           }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>🚀</div>
             <h3 style={{ color: '#34d399', fontWeight: '800', marginBottom: '8px' }}>Account Created!</h3>
@@ -170,7 +170,7 @@ export default function SignUp() {
             <button type="submit" disabled={status === 'loading'} style={{
               width: '100%',
               background: status === 'loading'
-                ? 'rgba(16,185,129,0.4)'
+                ? 'rgba(167,139,250,0.4)'
                 : 'linear-gradient(135deg, #9b59f5, #9b59f5)',
               border: 'none', borderRadius: '12px', padding: '16px',
               color: '#fff', fontSize: '15px', fontWeight: '700',

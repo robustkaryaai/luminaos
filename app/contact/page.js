@@ -107,8 +107,8 @@ export default function Contact() {
                 {status === 'done' ? (
                     <div style={{
                         textAlign: 'center', padding: '40px 20px',
-                        background: 'rgba(16,185,129,0.08)', borderRadius: '16px',
-                        border: '1px solid rgba(16,185,129,0.2)',
+                        background: 'rgba(167,139,250,0.08)', borderRadius: '16px',
+                        border: '1px solid rgba(167,139,250,0.2)',
                     }}>
                         <div style={{ fontSize: '48px', marginBottom: '16px' }}>✅</div>
                         <h3 style={{ color: '#34d399', fontWeight: '800', marginBottom: '8px' }}>Message Sent!</h3>
