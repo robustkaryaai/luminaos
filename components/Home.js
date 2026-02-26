@@ -82,7 +82,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [wifiStrength, setWifiStrength] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
     const [isCharging, setIsCharging] = useState(false);
-    const [url, setUrl] = useState("https://duckduckgo.com");
+    const [url, setUrl] = useState("https://en.wikipedia.org");
     const [num, setNum] = useState(8);
     const iframeRef = useRef(null);
     const resultRef = useRef(null);
@@ -118,9 +118,10 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [AIValue, setAIValue] = useState(false)
+    const [showTaskView, setShowTaskView] = useState(false);
     const [aiEnabled, setAiEnabled] = useState(true);
     const [userInstalledApps, setUserInstalledApps] = useState([]);
-    const [showTaskView, setShowTaskView] = useState(false);
+    const [installingApps, setInstallingApps] = useState([]);
     const [searchPlaceholder, setSearchPlaceholder] = useState("Type here to search...");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [year, month] = [selectedDate.getFullYear(), selectedDate.getMonth()];
@@ -829,12 +830,17 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 }
                 let time = `${hh}:${mm} ${ampm}`;
                 let date = `${d}-${m}-${y}`;
-                document.getElementById("time").innerHTML = time;
-                document.getElementById("date").innerHTML = date;
+                let elTime = document.getElementById("time");
+                if (elTime) elTime.innerHTML = time;
+                let elDate = document.getElementById("date");
+                if (elDate) elDate.innerHTML = date;
                 if (document.getElementById("time1")) {
-                    document.getElementById("times").innerHTML = `${hh}:${mm}:${ss} ${ampm}`;
-                    document.getElementById("time1").innerHTML = time;
-                    document.getElementById("date1").innerHTML = date;
+                    let elTimes = document.getElementById("times");
+                    if (elTimes) elTimes.innerHTML = `${hh}:${mm}:${ss} ${ampm}`;
+                    let elTime1 = document.getElementById("time1");
+                    if (elTime1) elTime1.innerHTML = time;
+                    let elDate1 = document.getElementById("date1");
+                    if (elDate1) elDate1.innerHTML = date;
                 }
             }, 1000);
         }
@@ -1540,44 +1546,44 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={storeRef} handle={`.${styles.top}`}>
-                    <div id="Store" ref={storeRef} className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
-                        <div
-                            id="Storetop"
-                            className={styles.top}
-                            onMouseDown={() => { setStoreDragging(true) }}
-                        >
-                            <div id="title" className={styles.title}>Sparking Store</div>
-                            <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
-                            <div onClick={() => { minimizeApp("Store") }} id="minimize" className={styles.minimize}></div>
-                            <div id="maximize" onClick={() => { maximize("Store", "Storetop", "StoreApp", "StoreSidebar", "StoreMainWindow") }} className={styles.maximize}></div>
-                        </div>
-                        <div id="StoreApp" className={styles.Files}>
-                            <div id="StoreSidebar" className={styles.sidebar}>
-                                <div className={styles.text}>All Apps</div>
+                    <div className={styles.DragFix}>
+                        <div id="Store" ref={storeRef} className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
+                            <div
+                                id="Storetop"
+                                className={styles.top}
+                                onMouseDown={() => { setStoreDragging(true) }}
+                            >
+                                <div id="title" className={styles.title}>Sparking Store</div>
+                                <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
+                                <div onClick={() => { minimizeApp("Store") }} id="minimize" className={styles.minimize}></div>
+                                <div id="maximize" onClick={() => { maximize("Store", "Storetop", "StoreApp", "StoreSidebar", "StoreMainWindow") }} className={styles.maximize}></div>
                             </div>
-                            <div id="StoreMainWindow" className={styles.StoreMainWindow}>
-                                {luminaApps.map((app, index) => (
-                                    <div key={index} className={styles.application}>
-                                        {app.icon}
-                                        <span>{app.name}</span>
-                                        <button onClick={(e) => {
-                                                if (!userInstalledApps.find(a => a.name === app.name)) {
-                                                    const btn = e.currentTarget;
-                                                    btn.innerHTML = "Installing...";
-                                                    btn.style.opacity = "0.7";
+                            <div id="StoreApp" className={styles.Files}>
+                                <div id="StoreSidebar" className={styles.sidebar}>
+                                    <div className={styles.text}>All Apps</div>
+                                </div>
+                                <div id="StoreMainWindow" className={styles.StoreMainWindow}>
+                                    {luminaApps.map((app, index) => (
+                                        <div key={index} className={styles.application}>
+                                            {app.icon}
+                                            <span>{app.name}</span>
+                                            <button onClick={() => {
+                                                if (!userInstalledApps.find(a => a.name === app.name) && !installingApps.includes(app.name)) {
+                                                    setInstallingApps(prev => [...prev, app.name]);
                                                     setTimeout(() => {
-                                                        setUserInstalledApps([...userInstalledApps, app]);
+                                                        setInstallingApps(prev => prev.filter(n => n !== app.name));
+                                                        setUserInstalledApps(prev => [...prev, app]);
                                                         alert(`${app.name} installed! You can launch it from your Desktop Dock.`);
-                                                        btn.innerHTML = "Installed";
                                                     }, 3000);
-                                                } else {
+                                                } else if (userInstalledApps.find(a => a.name === app.name)) {
                                                     alert(`${app.name} is already installed.`);
                                                 }
                                             }} className={styles.appDownload}>
-                                                {userInstalledApps.find(a => a.name === app.name) ? "Installed" : <AiOutlineDownload />}
+                                                {installingApps.includes(app.name) ? <span style={{ fontSize: "1.2vh" }}>Wait...</span> : (userInstalledApps.find(a => a.name === app.name) ? <span style={{ fontSize: "1.2vh" }}>Done</span> : <AiOutlineDownload />)}
                                             </button>
-                                    </div>
-                                ))}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1624,8 +1630,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     <div className={styles.SettingHomeProfile}>
                                         <h3>Arkis User Profile</h3>
                                         <div className={styles.Profile}>
-                                            <div className={styles.settingOption}>Username: {session ? session.name : 'Guest'}</div>
-                                            <div className={styles.settingOption}>Email: {session ? session.email : 'Not signed in'}</div>
+                                            <div className={styles.settingOption}>Username: {name || 'Guest'}</div>
+                                            <div className={styles.settingOption}>Email: user@arkis.ai</div>
                                             <div className={styles.settingOption}>Account Status: Active</div>
                                             <div className={styles.settingOption}>Subscription: Pro Tier</div>
                                             <div className={styles.settingOption}>Device Privilege: Admin</div>
@@ -1658,14 +1664,21 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     </div>
                                 )}
                                 {selectedSettingsSection === 'Security' && (
-                                    <div className={styles.Home}>
+                                    <div className={styles.SettingHomeProfile}>
                                         <h3>Security Settings</h3>
-                                        <div className={styles.settingOption}>
-                                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} placeholder="Change pin" className={styles.input} type="password" />
-                                        </div>
-                                        <div className={styles.settingOption}>
-                                            <label>Two-Factor Authentication:</label>
-                                            <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.input} type="checkbox" />
+                                        <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
+                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Change PIN Code:</label>
+                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} placeholder="••••" className={styles.input} type="password" style={{ padding: '1vh', borderRadius: '0.5vh', border: '1px solid rgba(255, 255, 255, 0.2)', background: 'rgba(0,0,0,0.5)', color: 'white', width: '30%' }} />
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Two-Factor Authentication:</label>
+                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.input} type="checkbox" style={{ transform: 'scale(1.5)', cursor: 'pointer' }} />
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Device Encryption:</label>
+                                                <button style={{ padding: '1vh 2vh', background: '#10b981', color: 'white', border: 'none', borderRadius: '0.5vh', fontWeight: 'bold' }}>Enabled</button>
+                                            </div>
                                         </div>
                                     </div>
                                 )}
@@ -1955,7 +1968,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 <div className={styles.TaskDock}>
                     <BsFillLightningChargeFill onClick={() => { if (showStartMenu == false) { setShowStartMenu(true) } else { setShowStartMenu(false) } }} className={styles.TaskList} />
                     <BsSearch onClick={() => { if (showSearchMenu == false) { setShowSearchMenu(true) } else { setShowSearchMenu(false) } }} className={styles.TaskList} />
-                    <BsListTask onClick={() => { showNotificationFunction("Notification", "I am working!!!") }} className={styles.TaskList} />
+                    <BsListTask onClick={() => { setShowTaskView(!showTaskView) }} className={styles.TaskList} title="Task View" />
                     <MdWidgets onClick={() => { if (showWidget == false) { setShowWidget(true) } else { setShowWidget(false) } }} className={styles.TaskList} />
                     <div className={styles.Line}></div>
                     <SiFiles onClick={() => { showApp("LumiNexplorer") }} className={styles.TaskList} />
