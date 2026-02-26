@@ -274,7 +274,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             setUpdateChecking(true);
             setUpdateStatus('Checking for updates...');
             await new Promise(res => setTimeout(res, 1500));
-            const simulatedLatest = '1.2';
+            const simulatedLatest = '1.3';
             setLatestVersion(simulatedLatest);
             setUpdateStatus(`Latest version ${simulatedLatest} found`);
         } finally {
@@ -297,16 +297,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             setUpdateProgress(pct);
             if (pct >= 100) {
                 clearInterval(interval);
-                const bundle = {
-                    version: latestVersion,
-                    timestamp: new Date().toISOString(),
-                    theme: localStorage.getItem('Theme') || 'Dark',
-                    wallpaper: localStorage.getItem('WallpaperNumber') || 8,
-                    appsInstalled: JSON.parse(localStorage.getItem('AppInstalled') || '[]'),
-                };
-                localStorage.setItem('OfflineBundle', JSON.stringify(bundle));
                 localStorage.setItem('OSVersion', latestVersion);
-                setOfflineBundle(bundle);
                 setOsVersion(latestVersion);
                 setUpdateStatus('Update downloaded. Restarting OS...');
                 setTimeout(() => {
@@ -324,23 +315,6 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     useEffect(() => {
         const savedVersion = localStorage.getItem('OSVersion');
         if (savedVersion) setOsVersion(savedVersion);
-        const savedBundleStr = localStorage.getItem('OfflineBundle');
-        if (!savedBundleStr) {
-            const firstBundle = {
-                version: savedVersion || osVersion,
-                timestamp: new Date().toISOString(),
-                theme: localStorage.getItem('Theme') || 'Dark',
-                wallpaper: localStorage.getItem('WallpaperNumber') || 8,
-                appsInstalled: JSON.parse(localStorage.getItem('AppInstalled') || '[]'),
-            };
-            localStorage.setItem('OfflineBundle', JSON.stringify(firstBundle));
-            setOfflineBundle(firstBundle);
-        } else {
-            try {
-                const bundle = JSON.parse(savedBundleStr);
-                setOfflineBundle(bundle);
-            } catch {}
-        }
     }, []);
 
     useEffect(() => {
@@ -1840,6 +1814,19 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                 <label style={{ color: 'white' }}>Latest Version:</label>
                                                 <span style={{ color: latestVersion ? '#34d399' : '#fbbf24', fontWeight: 'bold' }}>{latestVersion ? `v${latestVersion}` : 'Unknown'}</span>
                                             </div>
+                                            {latestVersion && (
+                                                <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh' }}>
+                                                    <label style={{ color: 'white', fontWeight: 'bold' }}>Release Notes for v{latestVersion}</label>
+                                                    <ul style={{ marginTop: '1vh', color: '#cbd5e1' }}>
+                                                        <li>Multi-theme support with persistence</li>
+                                                        <li>Updates section with timed install flow</li>
+                                                        <li>Mission Control animations and delete desktop</li>
+                                                        <li>Weather data fallback without API key</li>
+                                                        <li>Battery detection fallback on mobile</li>
+                                                        <li>Enhanced custom cursor for text selection</li>
+                                                    </ul>
+                                                </div>
+                                            )}
                                             <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', gap: '1vh', alignItems: 'center' }}>
                                                 <button onClick={checkForUpdates} disabled={updateChecking || isUpdating} className={styles.btn} style={{ padding: '1vh 2vh' }}>
                                                     {updateChecking ? 'Checking…' : 'Check for Updates'}
