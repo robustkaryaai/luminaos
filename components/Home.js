@@ -191,7 +191,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [notificationHistory, setNotificationHistory] = useState([]);
     const [selectedWeatherView, setSelectedWeatherView] = useState("Current");
     const [weatherSearchQuery, setWeatherSearchQuery] = useState("");
-    const [osVersion, setOsVersion] = useState('1.2');
+    const [osVersion, setOsVersion] = useState('1.3');
     const [latestVersion, setLatestVersion] = useState(null);
     const [updateChecking, setUpdateChecking] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
@@ -243,7 +243,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#f1f5f9',
                 '--text-color': '#1e293b',
                 '--accent-color': '#4f46e5',
-                '--panel-bg': 'rgba(255,255,255,0.85)',
+                '--panel-bg': '#ffffff',
                 '--border-color': 'rgba(0,0,0,0.12)'
             };
         }
@@ -252,7 +252,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#000000',
                 '--text-color': '#ffffff',
                 '--accent-color': '#10b981',
-                '--panel-bg': 'rgba(255,255,255,0.12)',
+                '--panel-bg': '#111111',
                 '--border-color': 'rgba(255,255,255,0.25)'
             };
         }
@@ -261,7 +261,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#0b0b17',
                 '--text-color': '#e9d5ff',
                 '--accent-color': '#9b59f5',
-                '--panel-bg': 'rgba(155,89,245,0.15)',
+                '--panel-bg': '#1a1030',
                 '--border-color': 'rgba(155,89,245,0.3)'
             };
         }
@@ -270,7 +270,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#071924',
                 '--text-color': '#d1f4ff',
                 '--accent-color': '#22d3ee',
-                '--panel-bg': 'rgba(34,211,238,0.15)',
+                '--panel-bg': '#0b2433',
                 '--border-color': 'rgba(34,211,238,0.3)'
             };
         }
@@ -279,7 +279,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#002b36',
                 '--text-color': '#93a1a1',
                 '--accent-color': '#b58900',
-                '--panel-bg': 'rgba(147,161,161,0.15)',
+                '--panel-bg': '#073642',
                 '--border-color': 'rgba(147,161,161,0.25)'
             };
         }
@@ -288,7 +288,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--bg-color': '#000000',
                 '--text-color': '#ffffff',
                 '--accent-color': '#ffcc00',
-                '--panel-bg': 'rgba(255,255,255,0.22)',
+                '--panel-bg': '#111111',
                 '--border-color': 'rgba(255,255,255,0.45)'
             };
         }
@@ -296,8 +296,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             '--bg-color': '#06091a',
             '--text-color': '#f8fafc',
             '--accent-color': '#9b59f5',
-            '--panel-bg': 'rgba(0,0,0,0.65)',
-            '--border-color': 'rgba(255,255,255,0.08)'
+            '--panel-bg': '#0a0e20',
+            '--border-color': 'rgba(255,255,255,0.12)'
         };
     };
     const checkForUpdates = async () => {
@@ -305,7 +305,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             setUpdateChecking(true);
             setUpdateStatus('Checking for updates...');
             await new Promise(res => setTimeout(res, 1500));
-            const simulatedLatest = '1.3';
+            const simulatedLatest = '1.4';
             setLatestVersion(simulatedLatest);
             setUpdateStatus(`Latest version ${simulatedLatest} found`);
         } finally {
@@ -1867,7 +1867,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                                 onClick={hasUpdate ? startUpdateDownload : checkForUpdates}
                                                                 disabled={updateChecking || isUpdating}
                                                                 className={styles.btn}
-                                                                style={{ padding: '0.6vh 1.2vh', fontSize: '1.6vh', borderRadius: '0.6vh' }}
+                                                                style={{ padding: '0.4vh 1vh', height: '3.6vh', fontSize: '1.5vh', borderRadius: '0.6vh' }}
                                                             >
                                                                 {hasUpdate ? (isUpdating ? 'Downloading…' : 'Update Now') : (updateChecking ? 'Checking…' : 'Check for Updates')}
                                                             </button>
@@ -1879,7 +1879,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                 })()}
                                             </div>
                                             {isUpdating && (
-                                                <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', width: '80%' }}>
+                                                <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', width: '80%' }}>
                                                     <label style={{ color: 'white' }}>Progress</label>
                                                     <div style={{ width: '100%', height: '2.5vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
                                                         <div style={{ width: `${updateProgress}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }} />
@@ -2018,15 +2018,15 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     <div className={styles.SettingHomeProfile}>
                                         <h3>Security Settings</h3>
                                         <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
-                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <label style={{ color: 'white' }}>Change PIN Code:</label>
-                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} placeholder="••••" className={styles.input} type="password" style={{ padding: '1vh', borderRadius: '0.5vh', border: '1px solid rgba(255, 255, 255, 0.2)', background: 'rgba(0,0,0,0.5)', color: 'white', width: '30%' }} />
+                                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} placeholder="••••" className={styles.input} type="password" style={{ padding: '1vh', borderRadius: '0.5vh', border: '1px solid var(--border-color)', background: 'var(--panel-bg)', color: 'var(--text-color)', width: '30%' }} />
                                             </div>
-                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <label style={{ color: 'white' }}>Two-Factor Authentication:</label>
                                                 <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} className={styles.input} type="checkbox" style={{ transform: 'scale(1.5)', cursor: 'pointer' }} />
                                             </div>
-                                            <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <label style={{ color: 'white' }}>Device Encryption:</label>
                                                 <button style={{ padding: '1vh 2vh', background: '#10b981', color: 'white', border: 'none', borderRadius: '0.5vh', fontWeight: 'bold' }}>Enabled</button>
                                             </div>
