@@ -85,6 +85,16 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [url, setUrl] = useState("https://www.bing.com");
     const [num, setNum] = useState(8);
     const iframeRef = useRef(null);
+    const resultRef = useRef(null);
+    const lumiNexRef = useRef(null);
+    const clockRef = useRef(null);
+    const browserRef = useRef(null);
+    const whatsappRef = useRef(null);
+    const calcRef = useRef(null);
+    const storeRef = useRef(null);
+    const settingsRef = useRef(null);
+    const chatRef = useRef(null);
+    const weatherRef = useRef(null);
     const [outputText, setOutputText] = useState('');
     const [selectedSection, setSelectedSection] = useState('Home');
     const [selectedFileURL, setSelectedFileURL] = useState("");
@@ -1315,18 +1325,18 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         ))
                     )}
                 </div>}
-                <Draggable handle="#result">
-                    <div id="result" className={styles.result}>
+                                    <Draggable nodeRef={resultRef} handle=".result-header">
+<div id="result" ref={resultRef} className={styles.result}>
                         <div onClick={closeResults} id="closeResult" className={styles.closeResult}></div>
                         <h1>RK AI:</h1>
                         <br />
                         <p id="output">{outputText}</p>
                     </div>
-                </Draggable>
-                <div className={styles.Apps} id="AllApps">
+                                <div className={styles.Apps} id="AllApps">
 
-                    <Draggable handle={`.${styles.top}`}>
-                        <div id="LumiNexplorer" className={styles.App}>
+                        </Draggable>
+                    <Draggable nodeRef={lumiNexRef} handle={`.${styles.top}`}>
+<div id="LumiNexplorer" ref={lumiNexRef} className={styles.App}>
                             <div id="top" className={styles.top}>
                                 <div id="title" className={styles.title}>LumiNexplorer</div>
                                 <div onClick={() => { showApp("LumiNexplorer") }} id="close" className={styles.close}></div>
@@ -1398,9 +1408,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                    <Draggable handle={`.${styles.top}`}>
-                        <div id="Clock" className={styles.App}>
+                                            </Draggable>
+                    <Draggable nodeRef={clockRef} handle={`.${styles.top}`}>
+<div id="Clock" ref={clockRef} className={styles.App}>
                             <div id="top" className={styles.top}>
                                 <div id="title" className={styles.title}>Clock</div>
                                 <div onClick={() => { showApp("Clock") }} id="close" className={styles.close}></div>
@@ -1452,9 +1462,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                    <Draggable handle={`.${styles.BroTop}`}>
-                        <div id="Browser" className={styles.App}>
+                                            </Draggable>
+                    <Draggable nodeRef={browserRef} handle={`.${styles.BroTop}`}>
+<div id="Browser" ref={browserRef} className={styles.App}>
                             <div id="Browsertop" className={styles.BroTop}>
                                 <div id="title" className={styles.title}>Vertice</div>
                                 <div onClick={() => { showApp("Browser") }} id="close" className={styles.close}></div>
@@ -1474,9 +1484,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                    <Draggable handle={`.${styles.BroTop}`}>
-                        <div id="WhatsApp" className={styles.App}>
+                                            </Draggable>
+                    <Draggable nodeRef={whatsappRef} handle={`.${styles.BroTop}`}>
+<div id="WhatsApp" ref={whatsappRef} className={styles.App}>
                             <div id="WhatsApptop" className={styles.BroTop}>
                                 <div id="title" className={styles.title}>Vertice</div>
                                 <div onClick={() => { showApp("WhatsApp") }} id="close" className={styles.close}></div>
@@ -1495,9 +1505,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                    <Draggable handle={`.${styles.top}`}>
-                        <div id="Calculator" className={styles.App}>
+                                            </Draggable>
+                    <Draggable nodeRef={calcRef} handle={`.${styles.top}`}>
+<div id="Calculator" ref={calcRef} className={styles.App}>
                             <div id="Calctop" className={styles.top}>
                                 <div id="title" className={styles.title}>Calculator</div>
                                 <div onClick={() => { showApp("Calculator"); calc('C') }} id="close" className={styles.close}></div>
@@ -1530,9 +1540,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                    <Draggable handle={`.${styles.top}`}>
-                        <div id="Store" className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
+                                            </Draggable>
+                    <Draggable nodeRef={storeRef} handle={`.${styles.top}`}>
+<div id="Store" ref={storeRef} className={styles.StoreApp} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
                             <div
                                 id="Storetop"
                                 className={styles.top}
@@ -1558,9 +1568,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                    <Draggable handle={`.${styles.top}`}>
-                        <div id="Settings" className={styles.App}>
+                                            </Draggable>
+                    <Draggable nodeRef={settingsRef} handle={`.${styles.top}`}>
+<div id="Settings" ref={settingsRef} className={styles.App}>
                             <div id="Settingstop" className={styles.top}>
                                 <div id="title" className={styles.title}>Settings</div>
                                 <div onClick={() => { showApp("Settings"); }} id="close" className={styles.close}></div>
@@ -1668,9 +1678,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     {/* Add more sections and options as needed */}
                                 </div>
                             </div>
-                        </div></Draggable>
-                    <Draggable handle={`.${styles.top}`}>
-                        <div id="Chat" className={styles.App}>
+                        </div>                        </Draggable>
+                    <Draggable nodeRef={chatRef} handle={`.${styles.top}`}>
+<div id="Chat" ref={chatRef} className={styles.App}>
                             <div id="Chattop" className={styles.top}>
                                 <div id="title" className={styles.title}>ChatExpress</div>
                                 <div onClick={() => { showApp("Chat") }} id="close" className={styles.close}></div>
@@ -1683,9 +1693,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                    <Draggable handle={`.${styles.top}`}>
-                        <div id="Weather" className={styles.App}>
+                                            </Draggable>
+                    <Draggable nodeRef={weatherRef} handle={`.${styles.top}`}>
+<div id="Weather" ref={weatherRef} className={styles.App}>
                             <div id="WeatherTop" className={styles.top}>
                                 <div id="title" className={styles.title}>Weather</div>
                                 <div onClick={() => { showApp("Weather") }} id="close" className={styles.close}></div>
@@ -1814,8 +1824,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 </div>
                             </div>
                         </div>
-                    </Draggable>
-                </div>
+                                    </div>
                 {dropdown && (
                     <div className={styles.Dropdown}>
                         <div onClick={() => {

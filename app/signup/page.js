@@ -171,7 +171,7 @@ export default function SignUp() {
               width: '100%',
               background: status === 'loading'
                 ? 'rgba(16,185,129,0.4)'
-                : 'linear-gradient(135deg, #10b981, #3b82f6)',
+                : 'linear-gradient(135deg, #9b59f5, #9b59f5)',
               border: 'none', borderRadius: '12px', padding: '16px',
               color: '#fff', fontSize: '15px', fontWeight: '700',
               cursor: status === 'loading' ? 'not-allowed' : 'pointer',

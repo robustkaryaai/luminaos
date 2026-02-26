@@ -127,7 +127,7 @@ export default function Contact() {
                             width: '100%',
                             background: status === 'sending'
                                 ? 'rgba(6,182,212,0.4)'
-                                : 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+                                : 'linear-gradient(135deg, #9b59f5, #9b59f5)',
                             border: 'none', borderRadius: '12px',
                             padding: '15px', color: '#fff', fontSize: '15px',
                             fontWeight: '700', cursor: 'pointer',

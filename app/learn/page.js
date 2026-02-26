@@ -36,8 +36,8 @@ export default function Learn() {
         <div style={{ textAlign: 'center', margin: '40px 0 60px' }}>
           <div style={{
             display: 'inline-block',
-            background: 'rgba(139,92,246,0.12)',
-            border: '1px solid rgba(139,92,246,0.3)',
+            background: 'rgba(79,70,229,0.12)',
+            border: '1px solid rgba(79,70,229,0.3)',
             borderRadius: '50px', padding: '6px 18px',
             fontSize: '12px', fontWeight: '700', color: '#a78bfa',
             letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '24px',
@@ -93,8 +93,8 @@ export default function Learn() {
 
         {/* AI Section */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1))',
-          border: '1px solid rgba(139,92,246,0.25)',
+          background: 'linear-gradient(135deg, rgba(155,89,245,0.1), rgba(79,70,229,0.1))',
+          border: '1px solid rgba(79,70,229,0.25)',
           borderRadius: '20px', padding: '36px', textAlign: 'center',
         }}>
           <div style={{ fontSize: '40px', marginBottom: '16px' }}>⚡</div>
@@ -107,7 +107,7 @@ export default function Learn() {
           </p>
           <Link href="/lumina-os" style={{
             display: 'inline-block',
-            background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+            background: 'linear-gradient(135deg, #9b59f5, #4f46e5)',
             color: '#fff', padding: '14px 32px', borderRadius: '50px',
             fontWeight: '700', textDecoration: 'none', fontSize: '15px',
           }}>
