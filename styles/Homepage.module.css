@@ -802,7 +802,7 @@
 .Bottom {
     position: absolute;
     bottom: 0;
-    background: var(--panel-bg);
+    background: var(--dock-bg);
     width: 100%;
     height: 10%;
 }
@@ -821,7 +821,7 @@
 
 .Toggles div {
     width: 5vh;
-    background: var(--panel-bg);
+    background: var(--dock-bg);
     display: flex;
     justify-content: center;
     padding: 0.5vh 1vh;

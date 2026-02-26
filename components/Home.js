@@ -213,6 +213,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--text-color': '#1e293b',
                 '--accent-color': '#4f46e5',
                 '--panel-bg': 'rgba(0,0,0,0.03)',
+                '--dock-bg': '#111827',
                 '--border-color': 'rgba(0,0,0,0.12)'
             };
         }
@@ -222,6 +223,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--text-color': '#ffffff',
                 '--accent-color': '#10b981',
                 '--panel-bg': 'rgba(255,255,255,0.06)',
+                '--dock-bg': '#000000f7',
                 '--border-color': 'rgba(255,255,255,0.25)'
             };
         }
@@ -231,6 +233,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--text-color': '#e9d5ff',
                 '--accent-color': '#9b59f5',
                 '--panel-bg': 'rgba(155,89,245,0.08)',
+                '--dock-bg': '#0b0b17f7',
                 '--border-color': 'rgba(155,89,245,0.3)'
             };
         }
@@ -240,6 +243,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--text-color': '#d1f4ff',
                 '--accent-color': '#22d3ee',
                 '--panel-bg': 'rgba(34,211,238,0.08)',
+                '--dock-bg': '#0b2433f7',
                 '--border-color': 'rgba(34,211,238,0.3)'
             };
         }
@@ -249,6 +253,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--text-color': '#93a1a1',
                 '--accent-color': '#b58900',
                 '--panel-bg': 'rgba(147,161,161,0.08)',
+                '--dock-bg': '#073642f7',
                 '--border-color': 'rgba(147,161,161,0.25)'
             };
         }
@@ -258,6 +263,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 '--text-color': '#ffffff',
                 '--accent-color': '#ffcc00',
                 '--panel-bg': 'rgba(255,255,255,0.12)',
+                '--dock-bg': '#000000f7',
                 '--border-color': 'rgba(255,255,255,0.45)'
             };
         }
@@ -266,6 +272,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             '--text-color': '#f8fafc',
             '--accent-color': '#9b59f5',
             '--panel-bg': 'rgba(255,255,255,0.03)',
+            '--dock-bg': '#000000f7',
             '--border-color': 'rgba(255,255,255,0.08)'
         };
     };
@@ -1889,85 +1896,19 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                         <h3>Themes & Personalization</h3>
                                         <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh', marginBottom: '4vh' }}>
                                             <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold' }}>System Theme</label>
-                                            <div style={{ display: 'flex', gap: '2vh', flexWrap: 'wrap' }}>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#06091a',
-                                                        '--text-color': '#f8fafc',
-                                                        '--accent-color': '#9b59f5',
-                                                        '--panel-bg': 'rgba(255,255,255,0.03)',
-                                                        '--border-color': 'rgba(255,255,255,0.08)'
-                                                    }, 'Dark');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#06091a', border: '2px solid rgba(255,255,255,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#f8fafc' }}>
-                                                    <h4>Dark Mode</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#f1f5f9',
-                                                        '--text-color': '#1e293b',
-                                                        '--accent-color': '#4f46e5',
-                                                        '--panel-bg': 'rgba(0,0,0,0.03)',
-                                                        '--border-color': 'rgba(0,0,0,0.12)'
-                                                    }, 'Light');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#f1f5f9', border: '2px solid rgba(0,0,0,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#1e293b' }}>
-                                                    <h4>Light Mode</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#000000',
-                                                        '--text-color': '#ffffff',
-                                                        '--accent-color': '#10b981',
-                                                        '--panel-bg': 'rgba(255,255,255,0.06)',
-                                                        '--border-color': 'rgba(255,255,255,0.25)'
-                                                    }, 'OLED');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.4)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
-                                                    <h4>OLED Pitch Black</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#0b0b17',
-                                                        '--text-color': '#e9d5ff',
-                                                        '--accent-color': '#9b59f5',
-                                                        '--panel-bg': 'rgba(155,89,245,0.08)',
-                                                        '--border-color': 'rgba(155,89,245,0.3)'
-                                                    }, 'Midnight');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#0b0b17', border: '2px solid rgba(155,89,245,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#e9d5ff' }}>
-                                                    <h4>Midnight Purple</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#071924',
-                                                        '--text-color': '#d1f4ff',
-                                                        '--accent-color': '#22d3ee',
-                                                        '--panel-bg': 'rgba(34,211,238,0.08)',
-                                                        '--border-color': 'rgba(34,211,238,0.3)'
-                                                    }, 'Ocean');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#071924', border: '2px solid rgba(34,211,238,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#d1f4ff' }}>
-                                                    <h4>Ocean Blue</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#002b36',
-                                                        '--text-color': '#93a1a1',
-                                                        '--accent-color': '#b58900',
-                                                        '--panel-bg': 'rgba(147,161,161,0.08)',
-                                                        '--border-color': 'rgba(147,161,161,0.25)'
-                                                    }, 'Solarized');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#002b36', border: '2px solid rgba(147,161,161,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#93a1a1' }}>
-                                                    <h4>Solarized Dark</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#000000',
-                                                        '--text-color': '#ffffff',
-                                                        '--accent-color': '#ffcc00',
-                                                        '--panel-bg': 'rgba(255,255,255,0.12)',
-                                                        '--border-color': 'rgba(255,255,255,0.45)'
-                                                    }, 'HighContrast');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.6)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
-                                                    <h4>High Contrast</h4>
-                                                </div>
-                                            </div>
+                                            <select className={styles.select} defaultValue={localStorage.getItem('Theme') || 'Dark'} onChange={(e) => {
+                                                const name = e.target.value;
+                                                const vars = getThemeVarsByName(name);
+                                                setThemeVars(vars, name);
+                                            }}>
+                                                <option className={styles.option} value="Dark">Dark</option>
+                                                <option className={styles.option} value="Light">Light</option>
+                                                <option className={styles.option} value="OLED">OLED</option>
+                                                <option className={styles.option} value="Midnight">Midnight</option>
+                                                <option className={styles.option} value="Ocean">Ocean</option>
+                                                <option className={styles.option} value="Solarized">Solarized</option>
+                                                <option className={styles.option} value="HighContrast">High Contrast</option>
+                                            </select>
                                         </div>
                                         <div className={styles.settingOption} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                                             <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold', marginBottom: '2vh' }}>Desktop Wallpapers</label>
