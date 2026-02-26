@@ -207,6 +207,21 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         document.body.style.color = vars['--text-color'];
         localStorage.setItem('Theme', name);
     };
+    const THEME_OPTIONS = [
+        { name: 'Dark', title: 'Dark', vars: { '--bg-color': '#0f172a', '--text-color': '#e2e8f0', '--accent-color': '#6366f1', '--panel-bg': '#111827', '--border-color': 'rgba(255,255,255,0.12)' }, previewBg: '#0f172a', previewTextColor: '#e2e8f0' },
+        { name: 'Light', title: 'Light', vars: { '--bg-color': '#f8fafc', '--text-color': '#0f172a', '--accent-color': '#4f46e5', '--panel-bg': '#ffffff', '--border-color': 'rgba(0,0,0,0.12)' }, previewBg: '#f8fafc', previewTextColor: '#0f172a' },
+        { name: 'OLED', title: 'OLED', vars: { '--bg-color': '#000000', '--text-color': '#ffffff', '--accent-color': '#10b981', '--panel-bg': '#0a0a0a', '--border-color': 'rgba(255,255,255,0.25)' }, previewBg: '#000000', previewTextColor: '#ffffff' },
+        { name: 'Midnight', title: 'Midnight Purple', vars: { '--bg-color': '#0b0b17', '--text-color': '#e9d5ff', '--accent-color': '#9b59f5', '--panel-bg': '#1a1030', '--border-color': 'rgba(155,89,245,0.3)' }, previewBg: '#0b0b17', previewTextColor: '#e9d5ff' },
+        { name: 'Ocean', title: 'Ocean Blue', vars: { '--bg-color': '#071924', '--text-color': '#d1f4ff', '--accent-color': '#22d3ee', '--panel-bg': '#0b2433', '--border-color': 'rgba(34,211,238,0.3)' }, previewBg: '#071924', previewTextColor: '#d1f4ff' },
+        { name: 'Solarized', title: 'Solarized Dark', vars: { '--bg-color': '#002b36', '--text-color': '#93a1a1', '--accent-color': '#b58900', '--panel-bg': '#073642', '--border-color': 'rgba(147,161,161,0.25)' }, previewBg: '#002b36', previewTextColor: '#93a1a1' },
+        { name: 'HighContrast', title: 'High Contrast', vars: { '--bg-color': '#000000', '--text-color': '#ffffff', '--accent-color': '#ffcc00', '--panel-bg': '#111111', '--border-color': 'rgba(255,255,255,0.45)' }, previewBg: '#000000', previewTextColor: '#ffffff' },
+        { name: 'Forest', title: 'Forest', vars: { '--bg-color': '#0b1f15', '--text-color': '#d3f9d8', '--accent-color': '#22c55e', '--panel-bg': '#10251a', '--border-color': 'rgba(34,197,94,0.3)' }, previewBg: '#0b1f15', previewTextColor: '#d3f9d8' },
+        { name: 'Sunset', title: 'Sunset', vars: { '--bg-color': '#1a0e0e', '--text-color': '#ffd7c2', '--accent-color': '#fb7185', '--panel-bg': '#2a1414', '--border-color': 'rgba(251,113,133,0.3)' }, previewBg: '#1a0e0e', previewTextColor: '#ffd7c2' },
+        { name: 'Neon', title: 'Neon', vars: { '--bg-color': '#0a0a0f', '--text-color': '#eaffff', '--accent-color': '#00f0ff', '--panel-bg': '#121225', '--border-color': 'rgba(0,240,255,0.3)' }, previewBg: '#0a0a0f', previewTextColor: '#eaffff' },
+        { name: 'Monochrome', title: 'Monochrome', vars: { '--bg-color': '#111111', '--text-color': '#f5f5f5', '--accent-color': '#9e9e9e', '--panel-bg': '#1a1a1a', '--border-color': 'rgba(255,255,255,0.2)' }, previewBg: '#111111', previewTextColor: '#f5f5f5' },
+        { name: 'Material', title: 'Material', vars: { '--bg-color': '#0b1021', '--text-color': '#e2e8f0', '--accent-color': '#3b82f6', '--panel-bg': '#111827', '--border-color': 'rgba(59,130,246,0.25)' }, previewBg: '#0b1021', previewTextColor: '#e2e8f0' },
+        { name: 'Pastel', title: 'Pastel', vars: { '--bg-color': '#101317', '--text-color': '#e6f1ff', '--accent-color': '#a5b4fc', '--panel-bg': '#1a202e', '--border-color': 'rgba(165,180,252,0.3)' }, previewBg: '#101317', previewTextColor: '#e6f1ff' }
+    ];
     const compareVersion = (a, b) => {
         const pa = String(a).split('.').map(n => parseInt(n || '0', 10));
         const pb = String(b).split('.').map(n => parseInt(n || '0', 10));
@@ -238,67 +253,10 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         } catch {}
     };
     const getThemeVarsByName = (name) => {
-        if (name === 'Light') {
-            return {
-                '--bg-color': '#f1f5f9',
-                '--text-color': '#1e293b',
-                '--accent-color': '#4f46e5',
-                '--panel-bg': '#ffffff',
-                '--border-color': 'rgba(0,0,0,0.12)'
-            };
-        }
-        if (name === 'OLED') {
-            return {
-                '--bg-color': '#000000',
-                '--text-color': '#ffffff',
-                '--accent-color': '#10b981',
-                '--panel-bg': '#111111',
-                '--border-color': 'rgba(255,255,255,0.25)'
-            };
-        }
-        if (name === 'Midnight') {
-            return {
-                '--bg-color': '#0b0b17',
-                '--text-color': '#e9d5ff',
-                '--accent-color': '#9b59f5',
-                '--panel-bg': '#1a1030',
-                '--border-color': 'rgba(155,89,245,0.3)'
-            };
-        }
-        if (name === 'Ocean') {
-            return {
-                '--bg-color': '#071924',
-                '--text-color': '#d1f4ff',
-                '--accent-color': '#22d3ee',
-                '--panel-bg': '#0b2433',
-                '--border-color': 'rgba(34,211,238,0.3)'
-            };
-        }
-        if (name === 'Solarized') {
-            return {
-                '--bg-color': '#002b36',
-                '--text-color': '#93a1a1',
-                '--accent-color': '#b58900',
-                '--panel-bg': '#073642',
-                '--border-color': 'rgba(147,161,161,0.25)'
-            };
-        }
-        if (name === 'HighContrast') {
-            return {
-                '--bg-color': '#000000',
-                '--text-color': '#ffffff',
-                '--accent-color': '#ffcc00',
-                '--panel-bg': '#111111',
-                '--border-color': 'rgba(255,255,255,0.45)'
-            };
-        }
-        return {
-            '--bg-color': '#06091a',
-            '--text-color': '#f8fafc',
-            '--accent-color': '#9b59f5',
-            '--panel-bg': '#0a0e20',
-            '--border-color': 'rgba(255,255,255,0.12)'
-        };
+        const found = THEME_OPTIONS.find(t => t.name === name);
+        if (found) return found.vars;
+        const fallback = THEME_OPTIONS.find(t => t.name === 'Dark');
+        return fallback ? fallback.vars : THEME_OPTIONS[0].vars;
     };
     const checkForUpdates = async () => {
         try {
@@ -340,8 +298,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     };
     useEffect(() => {
         const saved = localStorage.getItem('Theme');
-        const vars = getThemeVarsByName(saved || 'Dark');
-        setThemeVars(vars, saved || 'Dark');
+        const vars = getThemeVarsByName(saved || 'Midnight');
+        setThemeVars(vars, saved || 'Midnight');
     }, []);
     useEffect(() => {
         const savedVersion = localStorage.getItem('OSVersion');
@@ -1806,7 +1764,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div id="SettingsSidebar" className={styles.sidebar}>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Profile')}>Profile</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Themes</div>
+                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Appearance</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Updates')}>Updates</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('HelpSupport')}>Help & Support</div>
@@ -1920,83 +1878,11 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                         <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh', marginBottom: '4vh' }}>
                                             <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold' }}>System Theme</label>
                                             <div style={{ display: 'flex', gap: '2vh', flexWrap: 'wrap' }}>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#06091a',
-                                                        '--text-color': '#f8fafc',
-                                                        '--accent-color': '#9b59f5',
-                                                        '--panel-bg': 'rgba(255,255,255,0.03)',
-                                                        '--border-color': 'rgba(255,255,255,0.08)'
-                                                    }, 'Dark');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#06091a', border: '2px solid rgba(255,255,255,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#f8fafc' }}>
-                                                    <h4>Dark Mode</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#f1f5f9',
-                                                        '--text-color': '#1e293b',
-                                                        '--accent-color': '#4f46e5',
-                                                        '--panel-bg': 'rgba(0,0,0,0.03)',
-                                                        '--border-color': 'rgba(0,0,0,0.12)'
-                                                    }, 'Light');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#f1f5f9', border: '2px solid rgba(0,0,0,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#1e293b' }}>
-                                                    <h4>Light Mode</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#000000',
-                                                        '--text-color': '#ffffff',
-                                                        '--accent-color': '#10b981',
-                                                        '--panel-bg': 'rgba(255,255,255,0.06)',
-                                                        '--border-color': 'rgba(255,255,255,0.25)'
-                                                    }, 'OLED');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.4)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
-                                                    <h4>OLED Pitch Black</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#0b0b17',
-                                                        '--text-color': '#e9d5ff',
-                                                        '--accent-color': '#9b59f5',
-                                                        '--panel-bg': 'rgba(155,89,245,0.08)',
-                                                        '--border-color': 'rgba(155,89,245,0.3)'
-                                                    }, 'Midnight');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#0b0b17', border: '2px solid rgba(155,89,245,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#e9d5ff' }}>
-                                                    <h4>Midnight Purple</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#071924',
-                                                        '--text-color': '#d1f4ff',
-                                                        '--accent-color': '#22d3ee',
-                                                        '--panel-bg': 'rgba(34,211,238,0.08)',
-                                                        '--border-color': 'rgba(34,211,238,0.3)'
-                                                    }, 'Ocean');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#071924', border: '2px solid rgba(34,211,238,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#d1f4ff' }}>
-                                                    <h4>Ocean Blue</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#002b36',
-                                                        '--text-color': '#93a1a1',
-                                                        '--accent-color': '#b58900',
-                                                        '--panel-bg': 'rgba(147,161,161,0.08)',
-                                                        '--border-color': 'rgba(147,161,161,0.25)'
-                                                    }, 'Solarized');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#002b36', border: '2px solid rgba(147,161,161,0.35)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#93a1a1' }}>
-                                                    <h4>Solarized Dark</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    setThemeVars({
-                                                        '--bg-color': '#000000',
-                                                        '--text-color': '#ffffff',
-                                                        '--accent-color': '#ffcc00',
-                                                        '--panel-bg': 'rgba(255,255,255,0.12)',
-                                                        '--border-color': 'rgba(255,255,255,0.45)'
-                                                    }, 'HighContrast');
-                                                }} style={{ flex: '1 1 160px', padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.6)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
-                                                    <h4>High Contrast</h4>
-                                                </div>
+                                                {THEME_OPTIONS.map(t => (
+                                                    <div key={t.name} onClick={() => { setThemeVars(t.vars, t.name); }} style={{ flex: '1 1 160px', padding: '3vh', background: t.previewBg || t.vars['--bg-color'], border: '2px solid rgba(255,255,255,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: t.previewTextColor || t.vars['--text-color'] }}>
+                                                        <h4>{t.title || t.name}</h4>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                         <div className={styles.settingOption} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
