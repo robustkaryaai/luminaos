@@ -105,3 +105,7 @@ input {
 @import '../styles/SignUp.module.css';
 @import '../styles/Purchase.module.css';
 @import '../styles/404.module.css'; 
+
+.react-draggable-dragging {
+  transition: none !important;
+}

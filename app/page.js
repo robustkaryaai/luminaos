@@ -35,10 +35,13 @@ export default function Home() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        
+        /* Override globals.css */
+        * { overflow: visible !important; cursor: default; }
+        html, body { scroll-behavior: smooth; overflow: auto !important; }
         body { background: #06091a; }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #06091a; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #4f46e5, #9b59f5); border-radius: 50px; }
 
@@ -108,10 +111,10 @@ export default function Home() {
           pointerEvents: 'none',
         }} />
 
-        <div className="lbadge">⚡ Powered by Arkis</div>
+        <div className="lbadge">⚡ Powered by RK AI</div>
 
-        <h1 className="ltitle">LuminaOS</h1>
-        <p className="lsub">A next-gen AI-powered browser OS. Intelligent, fast, and always on.</p>
+        <h1 className="ltitle">Lumina OS</h1>
+        <p className="lsub">A Privacy-First, AI-Native Operating System built from the ground up to rethink how humans interact with machines in the AI era.</p>
 
         <div className="lgrid">
           {cards.map(c => (

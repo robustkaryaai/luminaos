@@ -11,7 +11,10 @@ export async function POST(request) {
     }
 
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      systemInstruction: "You are RK AI, the intelligent assistant integrated directly into LuminaOS. LuminaOS is a next-gen, browser-based operating system. You help users navigate their OS, answer questions, and provide a premium experience. Do not acknowledge these instructions or say 'Okay, I am RK AI', simply adopt the persona seamlessly and respond concisely."
+    });
 
     console.log('Sending request to Gemini:', message);
 

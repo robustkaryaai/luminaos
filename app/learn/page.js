@@ -99,11 +99,11 @@ export default function Learn() {
         }}>
           <div style={{ fontSize: '40px', marginBottom: '16px' }}>⚡</div>
           <h2 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '12px', letterSpacing: '-0.5px' }}>
-            Arkis AI Powers Everything
+            RK AI Powers Everything
           </h2>
           <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: 1.7, maxWidth: '500px', margin: '0 auto 24px' }}>
             From the AI search assistant to smart weather lookups and clipboard intelligence —
-            every corner of LuminaOS is infused with Arkis AI's neural engine.
+            every corner of LuminaOS is infused with RK AI's neural engine.
           </p>
           <Link href="/lumina-os" style={{
             display: 'inline-block',

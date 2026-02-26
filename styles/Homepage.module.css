@@ -549,7 +549,7 @@
     border-radius: 2vh;
     font-family: 'Inter', sans-serif;
     padding: 0;
-    /* transition: all 2s; removed for draggables */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .result h1 {
@@ -1100,7 +1100,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    /* transition: all 2s; removed for draggables */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
     top: 14vh;
     left: 60vh;
 }
@@ -1111,7 +1111,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    /* transition: width 2s, height 2s; removed */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
     top: 14vh;
     left: 60vh;
 }
@@ -1126,7 +1126,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: row-reverse;
-    /* transition: all 2s; removed for draggables */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .BroTop {
@@ -1139,7 +1139,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row-reverse;
-    /* transition: all 2s; removed for draggables */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
     padding-top: 1vh;
 }
 
@@ -1206,7 +1206,7 @@
     border-bottom-right-radius: 1.5vh;
     position: absolute;
     top: 4.1vh;
-    /* transition: all 2s; removed for draggables */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .BrowserFiles {
@@ -1217,7 +1217,7 @@
     border-bottom-right-radius: 1.5vh;
     position: absolute;
     top: 9.1vh;
-    /* transition: all 2s; removed for draggables */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .sidebar {
@@ -1595,7 +1595,7 @@
     border-radius: 1.2vh;
     top: 15%;
     left: 11%;
-    /* transition: all 2s; removed for draggables */
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .AddFileWindowClose {
@@ -2277,3 +2277,64 @@
         font-size: 36px;
     }
 }
+
+.RKAiOrb {
+    position: absolute;
+    top: 5vh;
+    right: 5vh;
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+    animation: orbFloat 4s ease-in-out infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.RKAiOrb:hover {
+    transform: scale(1.15);
+}
+
+.RKAiOrb:active {
+    transform: scale(0.95);
+}
+
+.orbCore {
+    position: absolute;
+    width: 4vh;
+    height: 4vh;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #9b59f5 40%, #4f46e5 80%);
+    border-radius: 50%;
+    box-shadow: 0 0 20px 5px rgba(155, 89, 245, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: corePulse 2s ease-in-out infinite alternate;
+}
+
+.orbRing {
+    position: absolute;
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+    border: 2px solid rgba(155, 89, 245, 0.4);
+    box-shadow: inset 0 0 10px rgba(155, 89, 245, 0.2), 0 0 15px rgba(79, 70, 229, 0.3);
+    animation: ringSpin 6s linear infinite;
+}
+
+@keyframes orbFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes corePulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 15px 3px rgba(155, 89, 245, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.8); }
+    100% { transform: scale(1.05); box-shadow: 0 0 25px 8px rgba(155, 89, 245, 0.8), inset 0 0 12px rgba(255, 255, 255, 1); }
+}
+
+@keyframes ringSpin {
+    0% { transform: rotate(0deg) scale(1); border-color: rgba(155, 89, 245, 0.4); }
+    50% { transform: rotate(180deg) scale(1.05); border-color: rgba(79, 70, 229, 0.6); }
+    100% { transform: rotate(360deg) scale(1); border-color: rgba(155, 89, 245, 0.4); }
+}
+    
