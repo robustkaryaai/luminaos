@@ -206,6 +206,18 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         document.body.style.color = vars['--text-color'];
         localStorage.setItem('Theme', name);
     };
+    const compareVersion = (a, b) => {
+        const pa = String(a).split('.').map(n => parseInt(n || '0', 10));
+        const pb = String(b).split('.').map(n => parseInt(n || '0', 10));
+        const len = Math.max(pa.length, pb.length);
+        for (let i = 0; i < len; i++) {
+            const da = pa[i] || 0;
+            const db = pb[i] || 0;
+            if (da > db) return 1;
+            if (da < db) return -1;
+        }
+        return 0;
+    };
     const getThemeVarsByName = (name) => {
         if (name === 'Light') {
             return {
@@ -1828,12 +1840,24 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                 </div>
                                             )}
                                             <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', gap: '1vh', alignItems: 'center' }}>
-                                                <button onClick={checkForUpdates} disabled={updateChecking || isUpdating} className={styles.btn} style={{ padding: '1vh 2vh' }}>
-                                                    {updateChecking ? 'Checking…' : 'Check for Updates'}
-                                                </button>
-                                                <button onClick={startUpdateDownload} disabled={isUpdating || !latestVersion} className={styles.btn} style={{ padding: '1vh 2vh', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }}>
-                                                    {isUpdating ? 'Downloading…' : 'Download & Install'}
-                                                </button>
+                                                {(() => {
+                                                    const hasUpdate = latestVersion && compareVersion(latestVersion, osVersion) > 0;
+                                                    return (
+                                                        <>
+                                                            <button
+                                                                onClick={hasUpdate ? startUpdateDownload : checkForUpdates}
+                                                                disabled={updateChecking || isUpdating}
+                                                                className={styles.btn}
+                                                                style={{ padding: '0.6vh 1.2vh', fontSize: '1.6vh', borderRadius: '0.6vh' }}
+                                                            >
+                                                                {hasUpdate ? (isUpdating ? 'Downloading…' : 'Update Now') : (updateChecking ? 'Checking…' : 'Check for Updates')}
+                                                            </button>
+                                                            {hasUpdate && (
+                                                                <span style={{ color: '#9ca3af', fontSize: '1.6vh' }}>Latest: v{latestVersion}</span>
+                                                            )}
+                                                        </>
+                                                    );
+                                                })()}
                                             </div>
                                             {isUpdating && (
                                                 <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', width: '80%' }}>
