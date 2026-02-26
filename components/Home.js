@@ -1879,7 +1879,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                 })()}
                                             </div>
                                             {isUpdating && (
-                                                <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', width: '80%' }}>
+                                                <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', width: '80%', transition: 'all 0.3s ease' }}>
                                                     <label style={{ color: 'white' }}>Progress</label>
                                                     <div style={{ width: '100%', height: '2.5vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
                                                         <div style={{ width: `${updateProgress}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }} />

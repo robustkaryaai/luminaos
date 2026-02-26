@@ -1295,7 +1295,7 @@
 .Files {
     height: 63vh;
     width: 116vh;
-    background: #000000bd;
+    background: var(--panel-bg);
     border-bottom-left-radius: 1.5vh;
     border-bottom-right-radius: 1.5vh;
     position: absolute;
@@ -1306,7 +1306,7 @@
 .BrowserFiles {
     height: 63vh;
     width: 116vh;
-    background: #000000bd;
+    background: var(--panel-bg);
     border-bottom-left-radius: 1.5vh;
     border-bottom-right-radius: 1.5vh;
     position: absolute;
@@ -1317,7 +1317,7 @@
 .sidebar {
     width: 27.6%;
     height: 63vh;
-    background: #000000ba;
+    background: var(--panel-bg);
     text-align: start;
 }
 
@@ -1331,16 +1331,16 @@
 }
 
 .text:hover {
-    background: #0000008f;
+    background: var(--panel-bg);
 }
 
 .text:active {
-    background: #000000ca;
+    background: var(--panel-bg);
 }
 
 .MainWindow {
     width: 72.4%;
-    background: #000000ed;
+    background: var(--panel-bg);
     height: 63vh;
     position: absolute;
     top: 0;
@@ -1349,7 +1349,7 @@
 }
 
 .QuickDropDown {
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     color: #fff;
     position: absolute;
     top: 5vh;
@@ -1378,7 +1378,7 @@
 
 .StoreMainWindow {
     width: 72.4%;
-    background: #000000ed;
+    background: var(--panel-bg);
     height: 63vh;
     position: absolute;
     justify-content: center;
@@ -1392,7 +1392,7 @@
 
 .ChatMainWindow {
     width: 100%;
-    background: #000000ed;
+    background: var(--panel-bg);
     height: 63vh;
     position: absolute;
     top: 0;
@@ -1402,7 +1402,7 @@
 
 .BroMainWindow {
     width: 100%;
-    background: #000000ed;
+    background: var(--panel-bg);
     height: 63vh;
     position: absolute;
     top: 3;
@@ -1432,7 +1432,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     border-radius: 0.5rem;
     padding: 0vh 1vh;
     font-family: 'Inter', sans-serif;
@@ -1450,7 +1450,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    background: rgb(0 0 0 / 65%);
+    background: var(--panel-bg);
     border-radius: 0.5rem;
     padding: 1vh;
     font-family: 'Inter', sans-serif;
