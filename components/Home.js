@@ -202,13 +202,13 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     el.style.display = "none";
                 } else if (el.style.display === "none" && appToDesktopMap[id] === currentDesktop) {
                     // Restore it if it was open
-                    if (activeApp === id || activeApps.includes(id)) {
+                    if (activeApp === id || (el.style.height && el.style.height !== "0vh")) {
                         el.style.display = "flex";
                     }
                 }
             }
         });
-    }, [currentDesktop, appToDesktopMap, activeApps, activeApp]);
+    }, [currentDesktop, appToDesktopMap, activeApp]);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -2022,7 +2022,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             {desktops.map(desk => (
                                 <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} style={{ width: '30vh', height: '20vh', background: currentDesktop === desk.id ? 'rgba(0, 106, 255, 0.4)' : 'rgba(255,255,255,0.1)', border: currentDesktop === desk.id ? '2px solid #006aff' : '2px solid rgba(255,255,255,0.2)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s', flexDirection: 'column', gap: '1vh' }}>
                                     <h2 style={{ color: 'white' }}>{desk.name}</h2>
-                                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && activeApps.includes(app)).length} Apps Open</span>
+                                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && document.getElementById(app) && document.getElementById(app).style.height !== "0vh").length} Apps Open</span>
                                 </div>
                             ))}
                             <div onClick={() => setDesktops([...desktops, { id: desktops.length + 1, name: `Desktop ${desktops.length + 1}` }])} style={{ width: '30vh', height: '20vh', background: 'rgba(255,255,255,0.05)', border: '2px dashed rgba(255,255,255,0.3)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s' }}>
