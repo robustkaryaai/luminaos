@@ -126,7 +126,7 @@ export default function Home() {
           ))}
         </div>
 
-        <p className="lfooter">LuminaOS v1.4 · Built on Rexycore Technology</p>
+        <p className="lfooter">LuminaOS v1.5 · Built on Rexycore Technology</p>
       </main>
     </>
   )

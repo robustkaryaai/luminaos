@@ -263,7 +263,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             setUpdateChecking(true);
             setUpdateStatus('Checking for updates...');
             await new Promise(res => setTimeout(res, 1500));
-            const simulatedLatest = '1.4';
+            const simulatedLatest = '1.5';
             setLatestVersion(simulatedLatest);
             setUpdateStatus(`Latest version ${simulatedLatest} found`);
         } finally {
