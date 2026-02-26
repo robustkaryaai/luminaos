@@ -2287,16 +2287,25 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 )}
                 {showTaskView && (
-                    <div className={styles.TaskViewOverlay} style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)', zIndex: 99999, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '5vh' }}>
+                    <div className={styles.TaskViewOverlay}>
                         <h1 style={{ color: 'white', fontWeight: 'bold', fontSize: '4vh', marginBottom: '5vh' }}>Mission Control</h1>
-                        <div style={{ display: 'flex', gap: '3vh', flexWrap: 'wrap', justifyContent: 'center', width: '80%' }}>
+                        <div className={styles.DesktopGrid}>
                             {desktops.map(desk => (
-                                <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} style={{ width: '30vh', height: '20vh', background: currentDesktop === desk.id ? 'rgba(0, 106, 255, 0.4)' : 'rgba(255,255,255,0.1)', border: currentDesktop === desk.id ? '2px solid #006aff' : '2px solid rgba(255,255,255,0.2)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s', flexDirection: 'column', gap: '1vh' }}>
+                                <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} className={`${styles.DesktopCard} ${currentDesktop === desk.id ? styles.DesktopCardActive : ''}`} style={{ position: 'relative' }}>
                                     <h2 style={{ color: 'white' }}>{desk.name}</h2>
                                     <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && document.getElementById(app) && document.getElementById(app).style.height !== "0vh").length} Apps Open</span>
+                                    <button className={styles.DeleteDesktopBtn} onClick={(e) => {
+                                        e.stopPropagation();
+                                        const remaining = desktops.filter(d => d.id !== desk.id);
+                                        if (remaining.length === 0) return;
+                                        setDesktops(remaining);
+                                        if (currentDesktop === desk.id) {
+                                            setCurrentDesktop(remaining[0].id);
+                                        }
+                                    }}>×</button>
                                 </div>
                             ))}
-                            <div onClick={() => setDesktops([...desktops, { id: desktops.length + 1, name: `Desktop ${desktops.length + 1}` }])} style={{ width: '30vh', height: '20vh', background: 'rgba(255,255,255,0.05)', border: '2px dashed rgba(255,255,255,0.3)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s' }}>
+                            <div onClick={() => setDesktops([...desktops, { id: desktops.length + 1, name: `Desktop ${desktops.length + 1}` }])} className={styles.AddDesktopCard}>
                                 <h1 style={{ color: 'white', fontSize: '6vh' }}>+</h1>
                             </div>
                         </div>

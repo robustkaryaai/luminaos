@@ -660,6 +660,102 @@
     outline: none;
 }
 
+.TaskViewOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5vh;
+    animation: taskFadeIn 0.25s ease-out;
+}
+
+.DesktopGrid {
+    display: flex;
+    gap: 3vh;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+}
+
+.DesktopCard {
+    width: 30vh;
+    height: 20vh;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.DesktopCard:hover {
+    transform: scale(1.04);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    background: rgba(255,255,255,0.14);
+}
+
+.DesktopCardActive {
+    background: rgba(0, 106, 255, 0.4);
+    border: 2px solid #006aff;
+}
+
+.DeleteDesktopBtn {
+    position: absolute;
+    top: 1vh;
+    right: 1vh;
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    background: #ef4444;
+    border: none;
+    color: #fff;
+    font-size: 2vh;
+    line-height: 3vh;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.DeleteDesktopBtn:hover {
+    transform: scale(1.1);
+    background: #dc2626;
+}
+
+.AddDesktopCard {
+    width: 30vh;
+    height: 20vh;
+    background: rgba(255,255,255,0.05);
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.AddDesktopCard:hover {
+    transform: scale(1.04);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    background: rgba(255,255,255,0.08);
+}
+
+@keyframes taskFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .SearchBarInputCSS {
     border-radius: 0.5vh;
     background: var(--panel-bg);
