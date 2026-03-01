@@ -549,7 +549,7 @@
     position: absolute;
     top: 8vh;
     text-align: center;
-    background: rgba(15, 23, 42, 0.75);
+    background: rgba(38, 38, 38, .71);;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1216,7 +1216,6 @@
     background: rgba(15, 23, 42, 0.7);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
     transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1), height 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
     top: 14vh;
     left: 60vh;
