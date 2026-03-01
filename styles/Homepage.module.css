@@ -532,13 +532,12 @@
 
 .input {
     background: var(--panel-bg);
-    border: 1px solid var(--border-color);
     outline: none;
     cursor: none;
-    border-radius: 0.7vh;
+    border-radius: 1.2;
     padding: 0.5vh 1vh;
     width: 44vh;
-    margin-top: 0.7vh;
+    margin-top: 0.6vh;
     font-size: 2vh;
     color: var(--text-color);
 }
@@ -650,10 +649,8 @@
     position: absolute;
     bottom: 0;
     overflow: hidden;
-    background: rgba(38, 38, 38, .71);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
-    max-width: auto;
     min-width: 80%;
     max-width: 99.5%;
     height: 8vh;
