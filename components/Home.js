@@ -1213,6 +1213,24 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         }
     };
 
+    // Hide app (close animation) — app stays running in dock with dot indicator
+    const hideApp = (id) => {
+        try {
+            let app = document.getElementById(id);
+            if (app) {
+                app.style.width = "0vh";
+                app.style.height = "0vh";
+            }
+        } catch (e) { }
+        setActiveApp(null);
+    };
+
+    // Fully quit app — removes from runningApps, dot disappears from dock
+    const quitApp = (id) => {
+        hideApp(id);
+        setRunningApps(prev => prev.filter(a => a !== id));
+    };
+
     const closeResults = () => {
         let app = document.getElementById("result");
         app.style.width = "0vh";
@@ -2677,7 +2695,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div onClick={() => setDockContextMenu({ visible: false, app: null, x: 0, y: 0 })} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99998 }} />
                 )}
                 {dockContextMenu.visible && (
-                    <div style={{ position: 'fixed', left: dockContextMenu.x, bottom: '10vh', zIndex: 99999, background: 'rgba(15,23,42,0.95)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '0.8vh', padding: '0.5vh 0', minWidth: '18vh', boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+                    <div style={{ position: 'fixed', left: dockContextMenu.x, bottom: '10vh', zIndex: 99999, background: 'rgba(15,23,42,0.95)', backdropFilter: 'blur(20px)', borderRadius: '0.8vh', padding: '0.5vh 0', minWidth: '18vh', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)' }}>
                         <div style={{ padding: '1vh 1.5vh', color: 'rgba(255,255,255,0.5)', fontSize: '1.3vh', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: '0.5vh', fontWeight: '600' }}>{dockContextMenu.app}</div>
                         <div onClick={() => { showApp(dockContextMenu.app); setDockContextMenu({ visible: false, app: null, x: 0, y: 0 }); }} style={{ padding: '1vh 1.5vh', color: 'white', fontSize: '1.4vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
                             <span>▲</span> Bring to Front
