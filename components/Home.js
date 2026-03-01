@@ -1187,6 +1187,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
 
     const showApp = (id) => {
         setAppToDesktopMap(prev => ({ ...prev, [id]: prev[id] || currentDesktop }));
+        setRunningApps(prev => prev.includes(id) ? prev : [...prev, id]);
         try {
             let app = document.getElementById(id);
             if (app.style.height == "0vh") {
@@ -1213,13 +1214,12 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         }
     };
 
-    // Hide app (close animation) — app stays running in dock with dot indicator
+    // Hide app — reverse of open animation (collapses width only, CSS transition handles it)
     const hideApp = (id) => {
         try {
             let app = document.getElementById(id);
             if (app) {
-                app.style.width = "0vh";
-                app.style.height = "0vh";
+                app.style.width = "0vh"; // mirrors showApp which opens by setting width
             }
         } catch (e) { }
         setActiveApp(null);
@@ -2552,9 +2552,10 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             {appInstalled.map(item => (
                                 <div onClick={() => {
                                     // Native OS apps open directly; web-based store apps open in Vertice Browser
-                                    const nativeApps = ["Calculator", "LumiNexplorer", "Clock", "Browser", "Weather", "ChatExpress", "Store", "PDFViewer", "Vertice", "Settings", "Chat", "Chat1", "WhatsApp"];
-                                    if (nativeApps.includes(item.Name)) {
-                                        showApp(item.Name);
+                                    const appId = item.Name || item.name;
+                                    const nativeApps = ["Calculator", "LumiNexplorer", "Clock", "Browser", "Weather", "ChatExpress", "Store", "PDFViewer", "Vertice", "Settings", "Chat", "Chat1", "WhatsApp", "Spotify", "YouTube", "Netflix", "GitHub", "GoogleDrive", "Slack", "Trello", "Instagram", "Facebook", "Canva"];
+                                    if (nativeApps.includes(appId)) {
+                                        showApp(appId);
                                     } else {
                                         const appUrls = {
                                             "Facebook": "https://www.facebook.com",
@@ -2591,47 +2592,47 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                         showApp("Browser");
                                     }
                                 }} className={styles.StartApp} key={item.Name}>
-                                    {item.Name == "Calculator" ? <IoCalculator className={styles.startBtn} />
-                                        : item.Name == "LumiNexplorer" ? <SiFiles className={styles.startBtn} />
-                                            : item.Name == "Clock" ? <BsFillClockFill className={styles.startBtn} />
-                                                : item.Name == "Browser" || item.Name == "Vertice" ? <SiTorbrowser className={styles.startBtn} />
-                                                    : item.Name == "Weather" ? <TiWeatherCloudy className={styles.startBtn} />
-                                                        : item.Name == "ChatExpress" || item.Name == "Chat" || item.Name == "Chat1" ? <IoMdChatbubbles className={styles.startBtn} />
-                                                            : item.Name == "Store" ? <IoMdAppstore className={styles.startBtn} />
-                                                                : item.Name == "PDFViewer" ? <VscFilePdf className={styles.startBtn} />
-                                                                    : item.Name == "Settings" ? <IoSettingsSharp className={styles.startBtn} />
-                                                                        : item.Name == "WhatsApp" ? <BsWhatsapp className={styles.startBtn} />
-                                                                            : item.Name == "Facebook" ? <FaFacebookF className={styles.startBtn} />
-                                                                                : item.Name == "Instagram" ? <FaInstagram className={styles.startBtn} />
-                                                                                    : item.Name == "Twitter (X)" ? <FaTwitter className={styles.startBtn} />
-                                                                                        : item.Name == "Spotify" ? <BsSpotify className={styles.startBtn} />
-                                                                                            : item.Name == "TikTok" ? <FaTiktok className={styles.startBtn} />
-                                                                                                : item.Name == "Snapchat" ? <FaSnapchatGhost className={styles.startBtn} />
-                                                                                                    : item.Name == "LinkedIn" ? <AiFillLinkedin className={styles.startBtn} />
-                                                                                                        : item.Name == "Pinterest" ? <BsPinterest className={styles.startBtn} />
-                                                                                                            : item.Name == "Skype" ? <BsSkype className={styles.startBtn} />
-                                                                                                                : item.Name == "Microsoft Office Suite (Word, Excel, PowerPoint)" ? <TbBrandOffice className={styles.startBtn} />
-                                                                                                                    : item.Name == "Google Drive" ? <FaGoogleDrive className={styles.startBtn} />
-                                                                                                                        : item.Name == "Netflix" ? <RiNetflixFill className={styles.startBtn} />
-                                                                                                                            : item.Name == "Amazon Prime Video" ? <SiAmazonprime className={styles.startBtn} />
-                                                                                                                                : item.Name == "Uber" ? <SiUber className={styles.startBtn} />
-                                                                                                                                    : item.Name == "Lyft" ? <FaLyft className={styles.startBtn} />
-                                                                                                                                        : item.Name == "Evernote" ? <FaEvernote className={styles.startBtn} />
-                                                                                                                                            : item.Name == "Trello" ? <BsTrello className={styles.startBtn} />
-                                                                                                                                                : item.Name == "Dropbox" ? <ImDropbox className={styles.startBtn} />
-                                                                                                                                                    : item.Name == "Slack" ? <BsSlack className={styles.startBtn} />
-                                                                                                                                                        : item.Name == "Asana" ? <SiAsana className={styles.startBtn} />
-                                                                                                                                                            : item.Name == "Adobe Photoshop Express" ? <SiAdobephotoshop className={styles.startBtn} />
-                                                                                                                                                                : item.Name == "OneDrive" ? <TbBrandOnedrive className={styles.startBtn} />
-                                                                                                                                                                    : item.Name == "GitHub" ? <FiGithub className={styles.startBtn} />
-                                                                                                                                                                        : item.Name == "Canva" ? <SiCanva className={styles.startBtn} />
-                                                                                                                                                                            : item.Name == "Vimeo" ? <BsVimeo className={styles.startBtn} />
-                                                                                                                                                                                : item.Name == "Hulu" ? <SiHulu className={styles.startBtn} />
-                                                                                                                                                                                    : item.Name == "Zomato" ? <SiZomato className={styles.startBtn} />
-                                                                                                                                                                                        : item.Name == "Swiggy" ? <SiSwiggy className={styles.startBtn} />
-                                                                                                                                                                                            : item.Name == "Youtube" || item.Name == "YouTube" ? <FaYoutube className={styles.startBtn} />
+                                    {appId == "Calculator" ? <IoCalculator className={styles.startBtn} />
+                                        : appId == "LumiNexplorer" ? <SiFiles className={styles.startBtn} />
+                                            : appId == "Clock" ? <BsFillClockFill className={styles.startBtn} />
+                                                : appId == "Browser" || appId == "Vertice" ? <SiTorbrowser className={styles.startBtn} />
+                                                    : appId == "Weather" ? <TiWeatherCloudy className={styles.startBtn} />
+                                                        : appId == "ChatExpress" || appId == "Chat" || appId == "Chat1" ? <IoMdChatbubbles className={styles.startBtn} />
+                                                            : appId == "Store" ? <IoMdAppstore className={styles.startBtn} />
+                                                                : appId == "PDFViewer" ? <VscFilePdf className={styles.startBtn} />
+                                                                    : appId == "Settings" ? <IoSettingsSharp className={styles.startBtn} />
+                                                                        : appId == "WhatsApp" ? <BsWhatsapp className={styles.startBtn} />
+                                                                            : appId == "Facebook" ? <FaFacebookF className={styles.startBtn} />
+                                                                                : appId == "Instagram" ? <FaInstagram className={styles.startBtn} />
+                                                                                    : appId == "Twitter (X)" ? <FaTwitter className={styles.startBtn} />
+                                                                                        : appId == "Spotify" ? <BsSpotify className={styles.startBtn} />
+                                                                                            : appId == "TikTok" ? <FaTiktok className={styles.startBtn} />
+                                                                                                : appId == "Snapchat" ? <FaSnapchatGhost className={styles.startBtn} />
+                                                                                                    : appId == "LinkedIn" ? <AiFillLinkedin className={styles.startBtn} />
+                                                                                                        : appId == "Pinterest" ? <BsPinterest className={styles.startBtn} />
+                                                                                                            : appId == "Skype" ? <BsSkype className={styles.startBtn} />
+                                                                                                                : appId == "Microsoft Office Suite (Word, Excel, PowerPoint)" ? <TbBrandOffice className={styles.startBtn} />
+                                                                                                                    : appId == "Google Drive" ? <FaGoogleDrive className={styles.startBtn} />
+                                                                                                                        : appId == "Netflix" ? <RiNetflixFill className={styles.startBtn} />
+                                                                                                                            : appId == "Amazon Prime Video" ? <SiAmazonprime className={styles.startBtn} />
+                                                                                                                                : appId == "Uber" ? <SiUber className={styles.startBtn} />
+                                                                                                                                    : appId == "Lyft" ? <FaLyft className={styles.startBtn} />
+                                                                                                                                        : appId == "Evernote" ? <FaEvernote className={styles.startBtn} />
+                                                                                                                                            : appId == "Trello" ? <BsTrello className={styles.startBtn} />
+                                                                                                                                                : appId == "Dropbox" ? <ImDropbox className={styles.startBtn} />
+                                                                                                                                                    : appId == "Slack" ? <BsSlack className={styles.startBtn} />
+                                                                                                                                                        : appId == "Asana" ? <SiAsana className={styles.startBtn} />
+                                                                                                                                                            : appId == "Adobe Photoshop Express" ? <SiAdobephotoshop className={styles.startBtn} />
+                                                                                                                                                                : appId == "OneDrive" ? <TbBrandOnedrive className={styles.startBtn} />
+                                                                                                                                                                    : appId == "GitHub" ? <FiGithub className={styles.startBtn} />
+                                                                                                                                                                        : appId == "Canva" ? <SiCanva className={styles.startBtn} />
+                                                                                                                                                                            : appId == "Vimeo" ? <BsVimeo className={styles.startBtn} />
+                                                                                                                                                                                : appId == "Hulu" ? <SiHulu className={styles.startBtn} />
+                                                                                                                                                                                    : appId == "Zomato" ? <SiZomato className={styles.startBtn} />
+                                                                                                                                                                                        : appId == "Swiggy" ? <SiSwiggy className={styles.startBtn} />
+                                                                                                                                                                                            : appId == "Youtube" || appId == "YouTube" ? <FaYoutube className={styles.startBtn} />
                                                                                                                                                                                                 : <BsFillLightningChargeFill className={styles.startBtn} />}
-                                    <p>{item.Name}</p>
+                                    <p>{appId}</p>
                                 </div>
                             ))}
                         </div>
@@ -2739,9 +2740,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <span>♪</span> Now Playing
                         </div>}
                         <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '0.5vh 0' }} />
-                        <div onClick={() => { quitApp(dockContextMenu.app); setDockContextMenu({ visible: false, app: null, x: 0, y: 0 }); }} style={{ padding: '1vh 1.5vh', color: '#ef4444', fontSize: '1.4vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
+                        {runningApps.includes(dockContextMenu.app) && <div onClick={() => { quitApp(dockContextMenu.app); setDockContextMenu({ visible: false, app: null, x: 0, y: 0 }); }} style={{ padding: '1vh 1.5vh', color: '#ef4444', fontSize: '1.4vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
                             <span>✕</span> Quit
-                        </div>
+                        </div>}
                     </div>
                 )}
                 <div className={styles.TaskDock}>
