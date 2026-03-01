@@ -534,7 +534,7 @@
     background: var(--panel-bg);
     outline: none;
     cursor: none;
-    border-radius: 1.2;
+    border-radius: 1.2vh;
     padding: 0.5vh 1vh;
     width: 44vh;
     margin-top: 0.6vh;
