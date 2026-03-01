@@ -2488,3 +2488,56 @@
         border-color: rgba(155, 89, 245, 0.4);
     }
 }
+/* ========== DOCK RUNNING INDICATOR SYSTEM ========== */
+.DockIconWrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.DockDot {
+    width: 5px;
+    height: 5px;
+    background: #ffffff;
+    border-radius: 50%;
+    margin-top: 2px;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.85);
+}
+
+/* ========== RIGHT-CLICK CONTEXT MENU ========== */
+.DockContextMenu {
+    position: fixed;
+    z-index: 99999;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.8vh;
+    padding: 0.5vh 0;
+    min-width: 18vh;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+}
+
+.DockContextMenuItem {
+    padding: 1vh 1.5vh;
+    color: #e2e8f0;
+    font-size: 1.4vh;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+    transition: background 0.15s;
+}
+
+.DockContextMenuItem:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.DockContextMenuQuit {
+    color: #ef4444;
+}
+
+.DockContextMenuQuit:hover {
+    background: rgba(239, 68, 68, 0.1);
+}

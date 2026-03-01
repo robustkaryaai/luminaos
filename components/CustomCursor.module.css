@@ -19,7 +19,7 @@
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-bottom: 16px solid var(--accent-color, #31ff16);
+    border-bottom: 16px solid #31ff16;
     transform: translate(-50%, -50%) rotate(-30deg);
     pointer-events: none;
     z-index: 9999;

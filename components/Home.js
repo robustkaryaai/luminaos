@@ -185,6 +185,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
         { name: "Zomato", icon: <SiZomato className={styles.AppIcon} /> },
         { name: "Swiggy", icon: <SiSwiggy className={styles.AppIcon} /> },
     ]);
+    const [runningApps, setRunningApps] = useState([]);
+    const [dockContextMenu, setDockContextMenu] = useState({ visible: false, app: null, x: 0, y: 0 });
     const [storeDragging, setStoreDragging] = useState(false);
     const [storePosition, setStorePosition] = useState({ x: 0, y: 0 });
     const [notificationDropdown, setNotificationDropdown] = useState(false);
@@ -1556,7 +1558,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         <div id="LumiNexplorer" ref={lumiNexRef} className={styles.App}>
                             <div id="top" className={styles.top}>
                                 <div id="title" className={styles.title}>LumiNexplorer</div>
-                                <div onClick={() => { showApp("LumiNexplorer") }} id="close" className={styles.close}></div>
+                                <div onClick={() => { hideApp("LumiNexplorer") }} id="close" className={styles.close}></div>
                                 <div onClick={() => { minimizeApp("LumiNexplorer") }} id="minimize" className={styles.minimize}></div>
                                 <div id="maximize" onClick={() => { maximize("LumiNexplorer", "top", "LumiNexplorerApp", "sidebar", "MainWindow") }} className={styles.maximize}></div>
                             </div>
@@ -1631,7 +1633,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div id="Clock" ref={clockRef} className={styles.App}>
                         <div id="top" className={styles.top}>
                             <div id="title" className={styles.title}>Clock</div>
-                            <div onClick={() => { showApp("Clock") }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Clock") }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("Clock") }} id="minimize" className={styles.minimize}></div>
                             <div id="maximize" onClick={() => { maximize("Clock", "top", "ClockApp", "sidebar", "MainWindow") }} className={styles.maximize}></div>
                         </div>
@@ -1685,7 +1687,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div id="Browser" ref={browserRef} className={styles.App}>
                         <div id="Browsertop" className={styles.BroTop}>
                             <div id="title" className={styles.title}>Vertice</div>
-                            <div onClick={() => { showApp("Browser") }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Browser") }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("Browser") }} id="minimize" className={styles.minimize}></div>
                             <div id="maximize" onClick={() => { ChatMaximize("Browser", "Browsertop", "BrowserApp", "BrowserMainWindow", "BrowserIFrame") }} className={styles.maximize}></div>
                             <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={url} onChange={(e) => { setUrl(e.target.value) }} type='url' className={styles.SearchBar} />
@@ -1707,7 +1709,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div id="WhatsApp" ref={whatsappRef} className={styles.App}>
                         <div id="WhatsApptop" className={styles.BroTop}>
                             <div id="title" className={styles.title}>Vertice</div>
-                            <div onClick={() => { showApp("WhatsApp") }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("WhatsApp") }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("WhatsApp") }} id="minimize" className={styles.minimize}></div>
                             <div id="maximize" onClick={() => { ChatMaximize("WhatsApp", "WhatsApptop", "WhatsAppApp", "WhatsAppMainWindow", "WhatsAppIFrame") }} className={styles.maximize}></div>
                             <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={url} onChange={(e) => { setUrl(e.target.value) }} type='url' className={styles.SearchBar} />
@@ -1728,7 +1730,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div id="Calculator" ref={calcRef} className={styles.App}>
                         <div id="Calctop" className={styles.top}>
                             <div id="title" className={styles.title}>Calculator</div>
-                            <div onClick={() => { showApp("Calculator"); calc('C') }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Calculator"); calc('C') }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("Calculator") }} id="minimize" className={styles.minimize}></div>
                         </div>
                         <div id="CalculatorApp" className={styles.Files}>
@@ -1763,7 +1765,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div id="Store" ref={storeRef} className={styles.App}>
                         <div id="Storetop" className={styles.top}>
                             <div id="title" className={styles.title}>Sparking Store</div>
-                            <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Store"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("Store") }} id="minimize" className={styles.minimize}></div>
                             <div id="maximize" onClick={() => { maximize("Store", "Storetop", "StoreApp", "StoreSidebar", "StoreMainWindow") }} className={styles.maximize}></div>
                         </div>
@@ -1798,22 +1800,373 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         </div>
                     </div>
                 </Draggable>
+
+                {/* ===== SPOTIFY ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="Spotify" className={styles.App}>
+                        <div id="Spotifytop" className={styles.top}>
+                            <div className={styles.title}>Spotify</div>
+                            <div onClick={() => { hideApp("Spotify"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Spotify") }} className={styles.minimize}></div>
+                        </div>
+                        <div className={styles.Files} style={{ background: '#121212', display: 'flex', flexDirection: 'row', height: '100%' }}>
+                            <div style={{ width: '22%', background: '#000', padding: '2vh', display: 'flex', flexDirection: 'column', gap: '1.5vh', height: '100%', overflowY: 'auto' }}>
+                                <h4 style={{ color: 'white', fontSize: '1.6vh', marginBottom: '1vh' }}>Your Library</h4>
+                                {['Liked Songs', 'Discover Weekly', 'Daily Mix 1', 'Daily Mix 2', 'RK AI Vibes', 'Lo-Fi Beats', 'Top Hits 2024'].map(p => (
+                                    <div key={p} style={{ color: '#b3b3b3', fontSize: '1.4vh', padding: '0.8vh', borderRadius: '0.5vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }} onMouseEnter={e => e.target.style.color = 'white'} onMouseLeave={e => e.target.style.color = '#b3b3b3'}>
+                                        🎵 {p}
+                                    </div>
+                                ))}
+                            </div>
+                            <div style={{ flex: 1, padding: '2vh', overflowY: 'auto' }}>
+                                <h2 style={{ color: 'white', fontSize: '2vh', marginBottom: '2vh' }}>Good Evening, {name}</h2>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.5vh' }}>
+                                    {[{ title: 'Blinding Lights', artist: 'The Weeknd', bg: '#e8175d' }, { title: 'Levitating', artist: 'Dua Lipa', bg: '#1db954' }, { title: 'Stay', artist: 'Justin Bieber', bg: '#ff5500' }, { title: 'Peaches', artist: 'Justin Bieber', bg: '#7c3aed' }, { title: 'Montero', artist: 'Lil Nas X', bg: '#0ea5e9' }, { title: 'Good 4 U', artist: 'Olivia Rodrigo', bg: '#ec4899' }].map(s => (
+                                        <div key={s.title} style={{ background: s.bg + '33', border: `1px solid ${s.bg}44`, borderRadius: '1vh', padding: '1.5vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }} onClick={() => { }}>
+                                            <div style={{ width: '5vh', height: '5vh', background: s.bg, borderRadius: '0.5vh', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2vh' }}>♪</div>
+                                            <div>
+                                                <div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{s.title}</div>
+                                                <div style={{ color: '#b3b3b3', fontSize: '1.2vh' }}>{s.artist}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div style={{ marginTop: '5vh', background: 'rgba(255,255,255,0.05)', borderRadius: '1vh', padding: '1.5vh', display: 'flex', alignItems: 'center', gap: '2vh', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                    <div style={{ width: '6vh', height: '6vh', background: '#1db954', borderRadius: '0.5vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5vh' }}>♪</div>
+                                    <div style={{ flex: 1 }}><div style={{ color: 'white', fontSize: '1.4vh', fontWeight: '600' }}>Blinding Lights</div><div style={{ color: '#b3b3b3', fontSize: '1.2vh' }}>The Weeknd</div></div>
+                                    <div style={{ display: 'flex', gap: '2vh', color: 'white', fontSize: '2vh' }}>⏮ ▶ ⏭</div>
+                                    <div style={{ width: '20vh', background: 'rgba(255,255,255,0.2)', height: '0.4vh', borderRadius: '1vh' }}><div style={{ width: '40%', height: '100%', background: '#1db954', borderRadius: '1vh' }}></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== YOUTUBE ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="YouTube" className={styles.App}>
+                        <div id="YouTubetop" className={styles.top}>
+                            <div className={styles.title}>YouTube</div>
+                            <div onClick={() => { hideApp("YouTube"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("YouTube") }} className={styles.minimize}></div>
+                        </div>
+                        <div style={{ background: '#0f0f0f', height: '100%', overflowY: 'auto', paddingTop: '4.5vh' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', padding: '1.5vh 2vh', background: '#212121', gap: '1vh', borderBottom: '1px solid #333' }}>
+                                <span style={{ color: '#ff0000', fontSize: '2.5vh', fontWeight: '900' }}>▶</span>
+                                <span style={{ color: 'white', fontSize: '1.8vh', fontWeight: '700' }}>YouTube</span>
+                                <div style={{ flex: 1, margin: '0 2vh' }}>
+                                    <input style={{ width: '100%', background: '#121212', border: '1px solid #333', borderRadius: '2vh', padding: '0.6vh 1.5vh', color: 'white', fontSize: '1.4vh' }} placeholder="Search" />
+                                </div>
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.5vh', padding: '1.5vh' }}>
+                                {[{ t: '10 Things About AI You Must Know', ch: 'TechBurst', v: '2.1M', bg: '#1a1a2e' }, { t: 'Top 10 Coding Projects 2024', ch: 'DevZone', v: '980K', bg: '#16213e' }, { t: 'Lumina OS First Look!', ch: 'RK Tech', v: '421K', bg: '#0f3460' }, { t: 'Best Music 2024 Mix', ch: 'VibesMix', v: '5.3M', bg: '#533483' }, { t: 'Build a Full Stack App', ch: 'CodeWithMe', v: '1.8M', bg: '#1a1a2e' }, { t: 'Science Behind Sleep', ch: 'Curiosity', v: '3.2M', bg: '#16213e' }].map(v => (
+                                    <div key={v.t} style={{ cursor: 'pointer', borderRadius: '0.8vh', overflow: 'hidden' }}>
+                                        <div style={{ width: '100%', height: '9vh', background: v.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3vh' }}>▶</div>
+                                        <div style={{ padding: '0.8vh 0' }}>
+                                            <div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{v.t}</div>
+                                            <div style={{ color: '#aaa', fontSize: '1.1vh' }}>{v.ch} · {v.v} views</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== NETFLIX ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="Netflix" className={styles.App}>
+                        <div id="Netflixtop" className={styles.top}>
+                            <div className={styles.title}>Netflix</div>
+                            <div onClick={() => { hideApp("Netflix"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Netflix") }} className={styles.minimize}></div>
+                        </div>
+                        <div style={{ background: '#141414', height: '100%', overflowY: 'auto', paddingTop: '4.5vh' }}>
+                            <div style={{ height: '22vh', background: 'linear-gradient(to bottom, #141414 0%, transparent 100%), linear-gradient(135deg, #e50914 0%, #830000 100%)', display: 'flex', alignItems: 'flex-end', padding: '2vh', borderRadius: '0.8vh', margin: '0 1vh 1.5vh 1vh' }}>
+                                <div><div style={{ color: 'white', fontSize: '3.5vh', fontWeight: '900' }}>Stranger Things</div><div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.4vh', margin: '0.5vh 0' }}>◆ 98% Match · Season 4</div><div style={{ display: 'flex', gap: '1vh', marginTop: '1vh' }}><button style={{ background: 'white', color: 'black', border: 'none', borderRadius: '0.5vh', padding: '0.8vh 2vh', fontSize: '1.4vh', fontWeight: '700', cursor: 'pointer' }}>▶ Play</button><button style={{ background: 'rgba(109,109,110,0.7)', color: 'white', border: 'none', borderRadius: '0.5vh', padding: '0.8vh 2vh', fontSize: '1.4vh', cursor: 'pointer' }}>⊕ My List</button></div></div>
+                            </div>
+                            {['Continue Watching', 'Trending Now', 'Sci-Fi & Fantasy'].map(cat => (
+                                <div key={cat} style={{ margin: '0 1vh 2vh 1vh' }}>
+                                    <div style={{ color: 'white', fontWeight: '700', fontSize: '1.5vh', marginBottom: '1vh' }}>{cat}</div>
+                                    <div style={{ display: 'flex', gap: '1vh', overflowX: 'auto' }}>
+                                        {['#e50914', '#1a237e', '#1b5e20', '#4a148c', '#b71c1c'].map((bg, i) => (
+                                            <div key={i} style={{ minWidth: '10vh', height: '14vh', background: bg, borderRadius: '0.5vh', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2vh', color: 'rgba(255,255,255,0.5)' }}>▶</div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== GITHUB ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="GitHub" className={styles.App}>
+                        <div id="GitHubtop" className={styles.top}>
+                            <div className={styles.title}>GitHub</div>
+                            <div onClick={() => { hideApp("GitHub"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("GitHub") }} className={styles.minimize}></div>
+                        </div>
+                        <div className={styles.Files} style={{ background: '#0d1117' }}>
+                            <div className={styles.sidebar} style={{ background: '#161b22', borderRight: '1px solid #30363d' }}>
+                                <div style={{ color: '#e6edf3', fontSize: '1.4vh', fontWeight: '700', marginBottom: '2vh' }}>Repositories</div>
+                                {['luminaos', 'rk-ai-assistant', 'arkis-backend', 'portfolio-site', 'neural-engine'].map(r => (
+                                    <div key={r} style={{ padding: '1vh 0.5vh', color: '#58a6ff', fontSize: '1.3vh', cursor: 'pointer', borderBottom: '1px solid #21262d21' }}>{r}</div>
+                                ))}
+                            </div>
+                            <div style={{ flex: 1, padding: '2vh', overflowY: 'auto' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1vh', marginBottom: '2vh' }}>
+                                    <div style={{ width: '4vh', height: '4vh', background: 'linear-gradient(135deg,#58a6ff,#8b949e)', borderRadius: '50%' }}></div>
+                                    <div><div style={{ color: '#e6edf3', fontSize: '1.5vh', fontWeight: '600' }}>robustkaryaai / luminaos</div><div style={{ color: '#8b949e', fontSize: '1.2vh' }}>⭐ 421 · ⑂ 87 · MIT License</div></div>
+                                </div>
+                                <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: '0.8vh', overflow: 'hidden' }}>
+                                    {['feat: multi-desktop mission control', 'fix: activeApps ReferenceError crash', 'feat: full store app icon map', 'fix: add missing CSS tokens, glassmorphism bg', 'feat: sparking store installation delay'].map((commit, i) => (
+                                        <div key={i} style={{ padding: '1.2vh 1.5vh', borderBottom: '1px solid #21262d', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <span style={{ color: '#58a6ff', fontSize: '1.3vh', cursor: 'pointer' }}>{commit}</span>
+                                            <span style={{ color: '#8b949e', fontSize: '1.1vh' }}>{i + 1}h ago</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== GOOGLE DRIVE ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="GoogleDrive" className={styles.App}>
+                        <div id="GoogleDrivetop" className={styles.top}>
+                            <div className={styles.title}>Google Drive</div>
+                            <div onClick={() => { hideApp("GoogleDrive"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("GoogleDrive") }} className={styles.minimize}></div>
+                        </div>
+                        <div className={styles.Files} style={{ background: '#202124' }}>
+                            <div className={styles.sidebar} style={{ background: '#202124', borderRight: '1px solid #3c4043' }}>
+                                <div style={{ background: '#8ab4f8', color: '#202124', borderRadius: '3vh', padding: '1.2vh 2vh', fontSize: '1.4vh', fontWeight: '600', marginBottom: '2vh', textAlign: 'center', cursor: 'pointer' }}>+ New</div>
+                                {['My Drive', 'Shared with me', 'Recent', 'Starred', 'Trash'].map(item => (
+                                    <div key={item} style={{ padding: '1vh', color: '#e8eaed', fontSize: '1.4vh', borderRadius: '0 3vh 3vh 0', cursor: 'pointer', marginBottom: '0.5vh' }}>{item}</div>
+                                ))}
+                            </div>
+                            <div style={{ flex: 1, padding: '2vh', overflowY: 'auto' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1.5vh' }}>
+                                    {[{ name: 'Lumina OS Designs', icon: '📁', color: '#8ab4f8' }, { name: 'RK AI Research.docx', icon: '📄', color: '#4285f4' }, { name: 'Budget 2024.xlsx', icon: '📊', color: '#34a853' }, { name: 'Pitch Deck.pptx', icon: '📑', color: '#fbbc04' }, { name: 'Photos', icon: '📁', color: '#8ab4f8' }, { name: 'Project X', icon: '📁', color: '#8ab4f8' }, { name: 'Resume.pdf', icon: '📄', color: '#ea4335' }, { name: 'Notes.txt', icon: '📝', color: '#8ab4f8' }].map(f => (
+                                        <div key={f.name} style={{ background: '#2d2e30', border: '1px solid #3c4043', borderRadius: '0.8vh', padding: '1.5vh', cursor: 'pointer', textAlign: 'center' }}>
+                                            <div style={{ fontSize: '3vh', marginBottom: '0.5vh' }}>{f.icon}</div>
+                                            <div style={{ color: '#e8eaed', fontSize: '1.2vh' }}>{f.name}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== SLACK ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="Slack" className={styles.App}>
+                        <div id="Slacktop" className={styles.top}>
+                            <div className={styles.title}>Slack</div>
+                            <div onClick={() => { hideApp("Slack"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Slack") }} className={styles.minimize}></div>
+                        </div>
+                        <div className={styles.Files} style={{ background: '#19171d' }}>
+                            <div className={styles.sidebar} style={{ background: '#19171d', borderRight: '1px solid #3f3f3f' }}>
+                                <div style={{ color: 'white', fontWeight: '700', fontSize: '1.4vh', marginBottom: '2vh', padding: '0.5vh' }}>Arkis HQ</div>
+                                <div style={{ color: '#b9b3c4', fontSize: '1.2vh', marginBottom: '1vh' }}>Channels</div>
+                                {['general', 'engineering', 'design', 'ai-research', 'random'].map(ch => (
+                                    <div key={ch} style={{ padding: '0.8vh 0.5vh', color: '#d1c4e9', fontSize: '1.3vh', cursor: 'pointer' }}># {ch}</div>
+                                ))}
+                                <div style={{ color: '#b9b3c4', fontSize: '1.2vh', marginTop: '1.5vh', marginBottom: '1vh' }}>Direct Messages</div>
+                                {['Sarah K.', 'Dev Team', 'RK AI Bot'].map(dm => (
+                                    <div key={dm} style={{ padding: '0.8vh 0.5vh', color: '#d1c4e9', fontSize: '1.3vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
+                                        <div style={{ width: '2vh', height: '2vh', background: '#4CAF50', borderRadius: '50%' }}></div> {dm}
+                                    </div>
+                                ))}
+                            </div>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '0' }}>
+                                <div style={{ padding: '1.5vh 2vh', borderBottom: '1px solid #3f3f3f', color: 'white', fontWeight: '700', fontSize: '1.4vh' }}># general</div>
+                                <div style={{ flex: 1, overflowY: 'auto', padding: '1.5vh 2vh', display: 'flex', flexDirection: 'column', gap: '1.5vh' }}>
+                                    {[{ u: 'Sarah K.', c: 'Hey team! New Lumina OS build is live 🚀', t: '2:30 PM' }, { u: 'Dev Team', c: 'Awesome! The dock indicators look great 👍', t: '2:31 PM' }, { u: 'RK AI Bot', c: 'I have analyzed 847 commits this week. Productivity up 23%.', t: '2:32 PM' }, { u: 'You', c: 'Thanks everyone! Next up: 10 built-in app UIs', t: '2:35 PM' }].map(msg => (
+                                        <div key={msg.u} style={{ display: 'flex', gap: '1vh', alignItems: 'flex-start' }}>
+                                            <div style={{ width: '3.5vh', height: '3.5vh', background: '#4a154b', borderRadius: '0.5vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.4vh', flexShrink: 0 }}>{msg.u[0]}</div>
+                                            <div><div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{msg.u} <span style={{ color: '#616061', fontWeight: '400' }}>{msg.t}</span></div><div style={{ color: '#d1c4e9', fontSize: '1.3vh' }}>{msg.c}</div></div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div style={{ padding: '1.5vh', borderTop: '1px solid #3f3f3f' }}><input placeholder="Message #general" style={{ width: '100%', background: '#222529', border: '1px solid #565856', borderRadius: '0.8vh', padding: '1vh 1.5vh', color: 'white', fontSize: '1.3vh' }} /></div>
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== TRELLO ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="Trello" className={styles.App}>
+                        <div id="Trellotop" className={styles.top}>
+                            <div className={styles.title}>Trello – Lumina OS</div>
+                            <div onClick={() => { hideApp("Trello"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Trello") }} className={styles.minimize}></div>
+                        </div>
+                        <div style={{ background: '#0079bf', height: '100%', padding: '2vh 1vh', paddingTop: '6vh', display: 'flex', gap: '1.5vh', overflowX: 'auto' }}>
+                            {[{ title: 'To Do', color: '#026aa7', cards: ['Fix activeApps crash', 'Add 10 App UIs', 'Redesign Settings', 'Dock indicator dots'] }, { title: 'In Progress', color: '#026aa7', cards: ['Dock context menu', 'Mission Control', 'Theme system'] }, { title: 'Done', color: '#026aa7', cards: ['CSS glass fix', 'Store DragFix', 'Security settings', 'OLED theme'] }].map(col => (
+                                <div key={col.title} style={{ background: '#ebecf0', borderRadius: '0.5vh', padding: '1.2vh', width: '22vh', flexShrink: 0, maxHeight: '100%', overflowY: 'auto' }}>
+                                    <div style={{ fontWeight: '700', fontSize: '1.4vh', color: '#172b4d', marginBottom: '1vh' }}>{col.title}</div>
+                                    {col.cards.map(card => (
+                                        <div key={card} style={{ background: 'white', borderRadius: '0.3vh', padding: '1vh', marginBottom: '0.8vh', fontSize: '1.3vh', color: '#172b4d', cursor: 'pointer', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>{card}</div>
+                                    ))}
+                                    <div style={{ color: '#5e6c84', fontSize: '1.3vh', cursor: 'pointer', padding: '0.8vh', marginTop: '0.5vh' }}>+ Add a card</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== INSTAGRAM ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="Instagram" className={styles.App}>
+                        <div id="Instagramtop" className={styles.top}>
+                            <div className={styles.title}>Instagram</div>
+                            <div onClick={() => { hideApp("Instagram"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Instagram") }} className={styles.minimize}></div>
+                        </div>
+                        <div style={{ background: '#000', height: '100%', display: 'flex', flexDirection: 'column', paddingTop: '4.5vh' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.5vh 2vh', borderBottom: '1px solid #262626' }}>
+                                <span style={{ color: 'white', fontSize: '2vh', fontWeight: '700', fontStyle: 'italic' }}>Instagram</span>
+                                <span style={{ color: 'white', fontSize: '1.8vh' }}>♡ ✉</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '1.5vh', padding: '1.5vh 2vh', overflowX: 'auto', borderBottom: '1px solid #262626' }}>
+                                {[name, 'techgram', 'devlife', 'rkai', 'lumina', 'ai_art', 'codelife'].map((s, i) => (
+                                    <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5vh', cursor: 'pointer' }}>
+                                        <div style={{ width: '6vh', height: '6vh', borderRadius: '50%', background: `linear-gradient(${135 + i * 20}deg, #f9ce34, #ee2a7b, #6228d7)`, padding: '0.3vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: `hsl(${i * 40},60%,20%)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.6vh', fontWeight: '700' }}>{s[0].toUpperCase()}</div>
+                                        </div>
+                                        <span style={{ color: 'white', fontSize: '1.1vh' }}>{s}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div style={{ flex: 1, overflowY: 'auto' }}>
+                                {[{ user: 'rktech', likes: '2,341', caption: 'Building the future of OS 🚀 #LuminaOS', 'bg': 'linear-gradient(135deg, #667eea, #764ba2)' }, { user: 'ailab', likes: '1,892', caption: 'AI at the core, not the edge. 🧠', 'bg': 'linear-gradient(135deg, #f093fb, #f5576c)' }].map(post => (
+                                    <div key={post.user} style={{ borderBottom: '1px solid #262626', marginBottom: '1vh' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', padding: '1vh 1.5vh', gap: '1vh' }}>
+                                            <div style={{ width: '3.5vh', height: '3.5vh', borderRadius: '50%', background: post.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.4vh' }}>{post.user[0].toUpperCase()}</div>
+                                            <span style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{post.user}</span>
+                                        </div>
+                                        <div style={{ width: '100%', height: '18vh', background: post.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4vh' }}>📸</div>
+                                        <div style={{ padding: '1vh 1.5vh' }}>
+                                            <div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '700', marginBottom: '0.5vh' }}>♡ {post.likes} likes</div>
+                                            <div style={{ color: 'white', fontSize: '1.2vh' }}><span style={{ fontWeight: '700' }}>{post.user}</span> {post.caption}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== FACEBOOK ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="Facebook" className={styles.App}>
+                        <div id="Facebooktop" className={styles.top}>
+                            <div className={styles.title}>Facebook</div>
+                            <div onClick={() => { hideApp("Facebook"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Facebook") }} className={styles.minimize}></div>
+                        </div>
+                        <div style={{ background: '#18191a', height: '100%', display: 'flex', paddingTop: '4.5vh' }}>
+                            <div style={{ width: '28%', padding: '1.5vh', overflowY: 'auto', borderRight: '1px solid #3a3b3c' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1vh', padding: '1vh', borderRadius: '0.8vh', cursor: 'pointer', background: '#3a3b3c', marginBottom: '1vh' }}>
+                                    <div style={{ width: '4vh', height: '4vh', borderRadius: '50%', background: 'linear-gradient(135deg,#1877f2,#0a5bc4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '700', fontSize: '1.6vh' }}>{name[0].toUpperCase()}</div>
+                                    <span style={{ color: 'white', fontSize: '1.4vh', fontWeight: '600' }}>{name}</span>
+                                </div>
+                                {['👫 Friends', '⌚ Watch', '🏪 Marketplace', '🎮 Gaming', '📅 Events'].map(item => (
+                                    <div key={item} style={{ padding: '1vh', color: '#e4e6ea', fontSize: '1.3vh', cursor: 'pointer', borderRadius: '0.5vh', marginBottom: '0.5vh' }}>{item}</div>
+                                ))}
+                            </div>
+                            <div style={{ flex: 1, overflowY: 'auto', padding: '1.5vh' }}>
+                                <div style={{ background: '#242526', borderRadius: '1vh', padding: '1.5vh', marginBottom: '1.5vh', border: '1px solid #3a3b3c' }}>
+                                    <div style={{ display: 'flex', gap: '1vh', alignItems: 'center', marginBottom: '1vh' }}>
+                                        <div style={{ width: '4vh', height: '4vh', borderRadius: '50%', background: 'linear-gradient(135deg,#1877f2,#0a5bc4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '700', fontSize: '1.6vh' }}>{name[0].toUpperCase()}</div>
+                                        <input placeholder={`What's on your mind, ${name}?`} style={{ flex: 1, background: '#3a3b3c', border: 'none', borderRadius: '2vh', padding: '1vh 1.5vh', color: '#e4e6ea', fontSize: '1.3vh' }} />
+                                    </div>
+                                </div>
+                                {[{ user: 'RK Tech', time: '2 hours ago', content: 'Just launched Lumina OS v1.1! Built with AI at the core 🚀 #LuminaOS #Privacy', likes: '847', comments: '124' }, { user: 'Arkis Team', time: '5 hours ago', content: 'Mission Control is now live in Lumina OS. Virtual desktops, dock indicators, and much more!', likes: '1.2K', comments: '89' }].map(post => (
+                                    <div key={post.user} style={{ background: '#242526', borderRadius: '1vh', padding: '1.5vh', marginBottom: '1.5vh', border: '1px solid #3a3b3c' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '1vh', marginBottom: '1vh' }}>
+                                            <div style={{ width: '4vh', height: '4vh', borderRadius: '50%', background: 'linear-gradient(135deg,#1877f2,#0a5bc4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '700', fontSize: '1.4vh' }}>{post.user[0]}</div>
+                                            <div><div style={{ color: '#e4e6ea', fontSize: '1.3vh', fontWeight: '600' }}>{post.user}</div><div style={{ color: '#b0b3b8', fontSize: '1.1vh' }}>{post.time}</div></div>
+                                        </div>
+                                        <p style={{ color: '#e4e6ea', fontSize: '1.3vh', marginBottom: '1vh' }}>{post.content}</p>
+                                        <div style={{ borderTop: '1px solid #3a3b3c', paddingTop: '0.8vh', display: 'flex', gap: '2vh' }}>
+                                            <span style={{ color: '#b0b3b8', fontSize: '1.2vh', cursor: 'pointer' }}>👍 {post.likes}</span>
+                                            <span style={{ color: '#b0b3b8', fontSize: '1.2vh', cursor: 'pointer' }}>💬 {post.comments}</span>
+                                            <span style={{ color: '#b0b3b8', fontSize: '1.2vh', cursor: 'pointer' }}>↗ Share</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
+                {/* ===== CANVA ===== */}
+                <Draggable handle={`.${styles.top}`}>
+                    <div id="Canva" className={styles.App}>
+                        <div id="Canvatop" className={styles.top}>
+                            <div className={styles.title}>Canva</div>
+                            <div onClick={() => { hideApp("Canva"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Canva") }} className={styles.minimize}></div>
+                        </div>
+                        <div style={{ background: '#1c1c1c', height: '100%', display: 'flex', flexDirection: 'column', paddingTop: '4.5vh' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.5vh 2vh', background: '#2d2d2d', borderBottom: '1px solid #3d3d3d' }}>
+                                <span style={{ color: '#00c4cc', fontSize: '2vh', fontWeight: '800' }}>Canva</span>
+                                <button style={{ background: '#6d28d9', color: 'white', border: 'none', borderRadius: '0.5vh', padding: '0.8vh 2vh', fontSize: '1.3vh', cursor: 'pointer', fontWeight: '600' }}>+ Create new design</button>
+                            </div>
+                            <div style={{ flex: 1, overflowY: 'auto', padding: '2vh' }}>
+                                <h3 style={{ color: 'white', fontSize: '1.6vh', marginBottom: '1.5vh' }}>Start from a template</h3>
+                                <div style={{ display: 'flex', gap: '1.5vh', marginBottom: '2vh', overflowX: 'auto' }}>
+                                    {['Presentation', 'Social Post', 'Logo', 'Poster', 'Resume', 'Flyer'].map(t => (
+                                        <div key={t} style={{ minWidth: '10vh', padding: '1vh', background: '#2d2d2d', borderRadius: '0.8vh', textAlign: 'center', cursor: 'pointer', border: '1px solid #3d3d3d' }}>
+                                            <div style={{ fontSize: '2.5vh', marginBottom: '0.5vh' }}>🎨</div>
+                                            <span style={{ color: 'white', fontSize: '1.1vh' }}>{t}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <h3 style={{ color: 'white', fontSize: '1.6vh', marginBottom: '1.5vh' }}>Recent designs</h3>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.5vh' }}>
+                                    {[{ title: 'Lumina OS Presentation', bg: 'linear-gradient(135deg,#667eea,#764ba2)' }, { title: 'RK AI Product Deck', bg: 'linear-gradient(135deg,#f093fb,#f5576c)' }, { title: 'Arkis Brand Kit', bg: 'linear-gradient(135deg,#4facfe,#00f2fe)' }, { title: 'Social Media Post', bg: 'linear-gradient(135deg,#43e97b,#38f9d7)' }, { title: 'Product Launch Poster', bg: 'linear-gradient(135deg,#fa709a,#fee140)' }, { title: 'Team Logo', bg: 'linear-gradient(135deg,#a18cd1,#fbc2eb)' }].map(d => (
+                                        <div key={d.title} style={{ borderRadius: '0.8vh', overflow: 'hidden', cursor: 'pointer', border: '1px solid #3d3d3d' }}>
+                                            <div style={{ height: '10vh', background: d.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5vh' }}>🎨</div>
+                                            <div style={{ padding: '0.8vh', background: '#2d2d2d' }}><div style={{ color: 'white', fontSize: '1.2vh' }}>{d.title}</div></div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Draggable>
+
                 <Draggable nodeRef={settingsRef} handle={`.${styles.top}`}>
                     <div id="Settings" ref={settingsRef} className={styles.App}>
                         <div id="Settingstop" className={styles.top}>
                             <div id="title" className={styles.title}>Settings</div>
-                            <div onClick={() => { showApp("Settings"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Settings"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("Settings") }} id="minimize" className={styles.minimize}></div>
                             <div id="maximize" onClick={() => { maximize("Settings", "Settingstop", "SettingsApp", "SettingsSidebar", "SettingsMainWindow") }} className={styles.maximize}></div>
                         </div>
                         <div id="SettingsApp" className={styles.Files}>
-                            <div id="SettingsSidebar" className={styles.sidebar}>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Profile')}>Profile</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Themes</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Updates')}>Updates</div>
-                                <div className={styles.text} onClick={() => setSelectedSettingsSection('HelpSupport')}>Help & Support</div>
+                            <div id="SettingsSidebar" className={styles.sidebar} style={{ padding: '1vh 0', display: 'flex', flexDirection: 'column', gap: '0.3vh' }}>
+                                {[
+                                    { id: 'Profile', icon: '👤', label: 'Profile' },
+                                    { id: 'General', icon: '⚙️', label: 'General' },
+                                    { id: 'Appearance', icon: '🎨', label: 'Themes' },
+                                    { id: 'Security', icon: '🔒', label: 'Security' },
+                                    { id: 'Updates', icon: '🔄', label: 'Updates' },
+                                    { id: 'HelpSupport', icon: '❓', label: 'Help & Support' },
+                                ].map(s => (
+                                    <div key={s.id} onClick={() => setSelectedSettingsSection(s.id)} style={{ padding: '1.4vh 1.8vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1.2vh', background: selectedSettingsSection === s.id ? 'rgba(59,130,246,0.15)' : 'transparent', borderLeft: selectedSettingsSection === s.id ? '3px solid #3b82f6' : '3px solid transparent', margin: '0 0.5vh', borderRadius: selectedSettingsSection === s.id ? '0.5vh' : '0', transition: 'all 0.18s ease', color: selectedSettingsSection === s.id ? '#93c5fd' : '#94a3b8', fontSize: '1.4vh', fontWeight: selectedSettingsSection === s.id ? '600' : '400' }}>
+                                        <span style={{ fontSize: '1.7vh' }}>{s.icon}</span>
+                                        {s.label}
+                                    </div>
+                                ))}
                             </div>
                             <div id="SettingsMainWindow" className={styles.StoreMainWindow}>
                                 {selectedSettingsSection === 'General' && (
@@ -1966,7 +2319,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div id="Chat" ref={chatRef} className={styles.App}>
                         <div id="Chattop" className={styles.top}>
                             <div id="title" className={styles.title}>ChatExpress</div>
-                            <div onClick={() => { showApp("Chat") }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Chat") }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("Chat") }} id="minimize" className={styles.minimize}></div>
                             <div id="maximize" onClick={() => { ChatMaximize("Chat", "Chattop", "ChatApp", "ChatMainWindow", "ChatIFrame") }} className={styles.maximize}></div>
                         </div>
@@ -1981,7 +2334,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div id="Weather" ref={weatherRef} className={styles.App}>
                         <div id="WeatherTop" className={styles.top}>
                             <div id="title" className={styles.title}>Weather</div>
-                            <div onClick={() => { showApp("Weather") }} id="close" className={styles.close}></div>
+                            <div onClick={() => { hideApp("Weather") }} id="close" className={styles.close}></div>
                             <div onClick={() => { minimizeApp("Weather") }} id="minimize" className={styles.minimize}></div>
                             <div id="maximize" onClick={() => { maximize("Weather", "WeatherTop", "WeatherApp", "WeatherSidebar", "WeatherMainWindow") }} className={styles.maximize}></div>
                         </div>
@@ -2310,20 +2663,62 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                         <button onClick={() => setShowTaskView(false)} style={{ marginTop: 'auto', marginBottom: '10vh', padding: '2vh 4vh', background: '#e11d48', color: 'white', border: 'none', borderRadius: '1vh', fontSize: '2vh', cursor: 'pointer' }}>Close Task View</button>
                     </div>
                 )}
+                {dockContextMenu.visible && (
+                    <div onClick={() => setDockContextMenu({ visible: false, app: null, x: 0, y: 0 })} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99998 }} />
+                )}
+                {dockContextMenu.visible && (
+                    <div style={{ position: 'fixed', left: dockContextMenu.x, bottom: '10vh', zIndex: 99999, background: 'rgba(15,23,42,0.95)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '0.8vh', padding: '0.5vh 0', minWidth: '18vh', boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+                        <div style={{ padding: '1vh 1.5vh', color: 'rgba(255,255,255,0.5)', fontSize: '1.3vh', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: '0.5vh', fontWeight: '600' }}>{dockContextMenu.app}</div>
+                        <div onClick={() => { showApp(dockContextMenu.app); setDockContextMenu({ visible: false, app: null, x: 0, y: 0 }); }} style={{ padding: '1vh 1.5vh', color: 'white', fontSize: '1.4vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
+                            <span>▲</span> Bring to Front
+                        </div>
+                        {dockContextMenu.app === 'Spotify' && <div style={{ padding: '1vh 1.5vh', color: 'white', fontSize: '1.4vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }} onClick={() => { showApp('Spotify'); setDockContextMenu({ visible: false, app: null, x: 0, y: 0 }); }}>
+                            <span>♪</span> Now Playing
+                        </div>}
+                        <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', margin: '0.5vh 0' }} />
+                        <div onClick={() => { quitApp(dockContextMenu.app); setDockContextMenu({ visible: false, app: null, x: 0, y: 0 }); }} style={{ padding: '1vh 1.5vh', color: '#ef4444', fontSize: '1.4vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
+                            <span>✕</span> Quit
+                        </div>
+                    </div>
+                )}
                 <div className={styles.TaskDock}>
                     <BsFillLightningChargeFill onClick={() => { if (showStartMenu == false) { setShowStartMenu(true) } else { setShowStartMenu(false) } }} className={styles.TaskList} />
                     <BsSearch onClick={() => { if (showSearchMenu == false) { setShowSearchMenu(true) } else { setShowSearchMenu(false) } }} className={styles.TaskList} />
                     <BsListTask onClick={() => { setShowTaskView(!showTaskView) }} className={styles.TaskList} title="Task View" />
                     <MdWidgets onClick={() => { if (showWidget == false) { setShowWidget(true) } else { setShowWidget(false) } }} className={styles.TaskList} />
                     <div className={styles.Line}></div>
-                    <SiFiles onClick={() => { showApp("LumiNexplorer") }} className={styles.TaskList} />
-                    <BsFillClockFill onClick={() => { showApp("Clock") }} className={styles.TaskList} />
-                    <IoCalculator onClick={() => { showApp("Calculator") }} className={styles.TaskList} />
-                    <SiTorbrowser onClick={() => { showApp("Browser") }} className={styles.TaskList} />
-                    <IoMdAppstore onClick={() => { showApp("Store") }} className={styles.TaskList} />
-                    <TiWeatherCloudy onClick={() => { showApp("Weather") }} className={styles.TaskList} />
-                    <IoMdChatbubbles onClick={() => { showApp("Chat") }} className={styles.TaskList} />
-                    <BsWhatsapp onClick={() => { showApp("WhatsApp") }} className={styles.TaskList} />
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'LumiNexplorer', x: e.clientX, y: e.clientY }); }}>
+                        <SiFiles onClick={() => { showApp("LumiNexplorer") }} className={styles.TaskList} />
+                        {runningApps.includes('LumiNexplorer') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Clock', x: e.clientX, y: e.clientY }); }}>
+                        <BsFillClockFill onClick={() => { showApp("Clock") }} className={styles.TaskList} />
+                        {runningApps.includes('Clock') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Calculator', x: e.clientX, y: e.clientY }); }}>
+                        <IoCalculator onClick={() => { showApp("Calculator") }} className={styles.TaskList} />
+                        {runningApps.includes('Calculator') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Browser', x: e.clientX, y: e.clientY }); }}>
+                        <SiTorbrowser onClick={() => { showApp("Browser") }} className={styles.TaskList} />
+                        {runningApps.includes('Browser') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Store', x: e.clientX, y: e.clientY }); }}>
+                        <IoMdAppstore onClick={() => { showApp("Store") }} className={styles.TaskList} />
+                        {runningApps.includes('Store') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Weather', x: e.clientX, y: e.clientY }); }}>
+                        <TiWeatherCloudy onClick={() => { showApp("Weather") }} className={styles.TaskList} />
+                        {runningApps.includes('Weather') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Chat', x: e.clientX, y: e.clientY }); }}>
+                        <IoMdChatbubbles onClick={() => { showApp("Chat") }} className={styles.TaskList} />
+                        {runningApps.includes('Chat') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
+                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'WhatsApp', x: e.clientX, y: e.clientY }); }}>
+                        <BsWhatsapp onClick={() => { showApp("WhatsApp") }} className={styles.TaskList} />
+                        {runningApps.includes('WhatsApp') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                    </div>
                     <div className={styles.Line}></div>
                     <div onClick={() => { if (notificationDropdown) { setNotificationDropdown(false) } else { setNotificationDropdown(true) } }} className={styles.WeatherDiv}>
                         {cloudPct <= 30 ? (

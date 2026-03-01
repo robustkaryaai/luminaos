@@ -3,7 +3,7 @@ import styles from "../styles/Files.module.css"
 
 const Files = () => {
   return (
-    
+    <div></div>
   )
 }
 
