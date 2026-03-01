@@ -2220,34 +2220,69 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 )}
                                 {selectedSettingsSection === 'Updates' && (
                                     <div className={styles.SettingHomeProfile}>
-                                        <h3>System Updates</h3>
-                                        <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
-                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <label style={{ color: 'white' }}>Current Version:</label>
-                                                <span style={{ color: '#93c5fd', fontWeight: 'bold' }}>v{osVersion}</span>
-                                            </div>
-                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <label style={{ color: 'white' }}>Latest Version:</label>
-                                                <span style={{ color: latestVersion ? '#34d399' : '#fbbf24', fontWeight: 'bold' }}>{latestVersion ? `v${latestVersion}` : 'Unknown'}</span>
-                                            </div>
-                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', gap: '1vh', alignItems: 'center' }}>
-                                                <button onClick={checkForUpdates} disabled={updateChecking || isUpdating} className={styles.btn} style={{ padding: '1vh 2vh' }}>
-                                                    {updateChecking ? 'Checking…' : 'Check for Updates'}
-                                                </button>
-                                                <button onClick={startUpdateDownload} disabled={isUpdating || !latestVersion} className={styles.btn} style={{ padding: '1vh 2vh', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }}>
-                                                    {isUpdating ? 'Downloading…' : 'Download & Install'}
-                                                </button>
-                                            </div>
-                                            {isUpdating && (
-                                                <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', width: '80%' }}>
-                                                    <label style={{ color: 'white' }}>Progress</label>
-                                                    <div style={{ width: '100%', height: '2.5vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
-                                                        <div style={{ width: `${updateProgress}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }} />
-                                                    </div>
-                                                    <span style={{ color: '#94a3b8' }}>{updateProgress}%</span>
+                                        <h3 style={{ fontSize: '2.2vh', fontWeight: '700', color: 'white', marginBottom: '2.5vh' }}>System Updates</h3>
+
+                                        {/* Version Status Card */}
+                                        <div style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.25)', borderRadius: '1.2vh', padding: '2.5vh', marginBottom: '2vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5vh' }}>
+                                                <div style={{ width: '5vh', height: '5vh', background: 'linear-gradient(135deg,#3b82f6,#8b5cf6)', borderRadius: '1vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5vh' }}>🔄</div>
+                                                <div>
+                                                    <div style={{ color: 'white', fontWeight: '600', fontSize: '1.6vh' }}>Lumina OS</div>
+                                                    <div style={{ color: '#94a3b8', fontSize: '1.3vh' }}>Running version <span style={{ color: '#93c5fd', fontWeight: '700' }}>v{osVersion}</span></div>
                                                 </div>
-                                            )}
-                                            <div style={{ color: '#94a3b8' }}>{updateStatus}</div>
+                                            </div>
+                                            <div style={{ textAlign: 'right' }}>
+                                                <div style={{ color: latestVersion ? '#34d399' : '#fbbf24', fontSize: '1.3vh', fontWeight: '600' }}>
+                                                    {latestVersion ? `✓ Latest: v${latestVersion}` : '⚠ Version unknown'}
+                                                </div>
+                                                <div style={{ color: '#64748b', fontSize: '1.1vh' }}>Last checked: just now</div>
+                                            </div>
+                                        </div>
+
+                                        {/* Action Buttons Row */}
+                                        <div style={{ display: 'flex', gap: '1.5vh', marginBottom: '2vh' }}>
+                                            <button
+                                                onClick={checkForUpdates}
+                                                disabled={updateChecking || isUpdating}
+                                                style={{ flex: 1, padding: '1.4vh 2vh', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', color: 'white', borderRadius: '0.8vh', fontSize: '1.4vh', fontWeight: '600', cursor: updateChecking ? 'not-allowed' : 'pointer', opacity: updateChecking ? 0.6 : 1, transition: 'all 0.2s' }}>
+                                                {updateChecking ? '⟳  Checking...' : '🔍  Check for Updates'}
+                                            </button>
+                                            <button
+                                                onClick={startUpdateDownload}
+                                                disabled={isUpdating || !latestVersion}
+                                                style={{ flex: 1, padding: '1.4vh 2vh', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', border: 'none', color: 'white', borderRadius: '0.8vh', fontSize: '1.4vh', fontWeight: '600', cursor: (isUpdating || !latestVersion) ? 'not-allowed' : 'pointer', opacity: (isUpdating || !latestVersion) ? 0.5 : 1, transition: 'all 0.2s' }}>
+                                                {isUpdating ? '⬇  Downloading...' : '⬇  Download & Install'}
+                                            </button>
+                                        </div>
+
+                                        {/* Progress Bar */}
+                                        {isUpdating && (
+                                            <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '1vh', padding: '2vh' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1vh' }}>
+                                                    <span style={{ color: '#94a3b8', fontSize: '1.3vh' }}>Downloading update...</span>
+                                                    <span style={{ color: '#93c5fd', fontSize: '1.3vh', fontWeight: '700' }}>{updateProgress}%</span>
+                                                </div>
+                                                <div style={{ width: '100%', height: '0.8vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
+                                                    <div style={{ width: `${updateProgress}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)', borderRadius: '1vh', transition: 'width 0.3s ease' }} />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Status Text */}
+                                        {updateStatus && <div style={{ color: '#94a3b8', fontSize: '1.3vh', marginTop: '1.5vh', padding: '1vh', background: 'rgba(255,255,255,0.03)', borderRadius: '0.6vh' }}>{updateStatus}</div>}
+
+                                        {/* Update History */}
+                                        <div style={{ marginTop: '2.5vh' }}>
+                                            <div style={{ color: '#64748b', fontSize: '1.3vh', fontWeight: '600', marginBottom: '1vh', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Update History</div>
+                                            {[{ v: '1.1.0', d: 'Mar 1, 2026', n: 'Multi-desktop, 10 built-in apps, dock indicators' }, { v: '1.0.5', d: 'Feb 26, 2026', n: 'Themes system, Settings redesign, Store fix' }, { v: '1.0.0', d: 'Feb 15, 2026', n: 'Initial release of Lumina OS' }].map(item => (
+                                                <div key={item.v} style={{ padding: '1.2vh 1.5vh', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <div>
+                                                        <span style={{ color: '#93c5fd', fontSize: '1.3vh', fontWeight: '700' }}>v{item.v}</span>
+                                                        <span style={{ color: '#94a3b8', fontSize: '1.2vh', marginLeft: '1vh' }}>{item.n}</span>
+                                                    </div>
+                                                    <span style={{ color: '#475569', fontSize: '1.1vh' }}>{item.d}</span>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 )}
