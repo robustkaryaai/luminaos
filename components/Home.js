@@ -96,6 +96,16 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const settingsRef = useRef(null);
     const chatRef = useRef(null);
     const weatherRef = useRef(null);
+    const spotifyRef = useRef(null);
+    const youtubeRef = useRef(null);
+    const netflixRef = useRef(null);
+    const githubRef = useRef(null);
+    const googleDriveRef = useRef(null);
+    const slackRef = useRef(null);
+    const trelloRef = useRef(null);
+    const instagramRef = useRef(null);
+    const facebookRef = useRef(null);
+    const canvaRef = useRef(null);
     const [outputText, setOutputText] = useState('');
     const [selectedSection, setSelectedSection] = useState('Home');
     const [selectedFileURL, setSelectedFileURL] = useState("");
@@ -1802,8 +1812,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== SPOTIFY ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="Spotify" className={styles.App}>
+                <Draggable nodeRef={spotifyRef} handle={`.${styles.top}`}>
+                    <div id="Spotify" ref={spotifyRef} className={styles.App}>
                         <div id="Spotifytop" className={styles.top}>
                             <div className={styles.title}>Spotify</div>
                             <div onClick={() => { hideApp("Spotify"); }} id="close" className={styles.close}></div>
@@ -1843,8 +1853,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== YOUTUBE ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="YouTube" className={styles.App}>
+                <Draggable nodeRef={youtubeRef} handle={`.${styles.top}`}>
+                    <div id="YouTube" ref={youtubeRef} className={styles.App}>
                         <div id="YouTubetop" className={styles.top}>
                             <div className={styles.title}>YouTube</div>
                             <div onClick={() => { hideApp("YouTube"); }} id="close" className={styles.close}></div>
@@ -1874,8 +1884,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== NETFLIX ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="Netflix" className={styles.App}>
+                <Draggable nodeRef={netflixRef} handle={`.${styles.top}`}>
+                    <div id="Netflix" ref={netflixRef} className={styles.App}>
                         <div id="Netflixtop" className={styles.top}>
                             <div className={styles.title}>Netflix</div>
                             <div onClick={() => { hideApp("Netflix"); }} id="close" className={styles.close}></div>
@@ -1900,8 +1910,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== GITHUB ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="GitHub" className={styles.App}>
+                <Draggable nodeRef={githubRef} handle={`.${styles.top}`}>
+                    <div id="GitHub" ref={githubRef} className={styles.App}>
                         <div id="GitHubtop" className={styles.top}>
                             <div className={styles.title}>GitHub</div>
                             <div onClick={() => { hideApp("GitHub"); }} id="close" className={styles.close}></div>
@@ -1933,8 +1943,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== GOOGLE DRIVE ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="GoogleDrive" className={styles.App}>
+                <Draggable nodeRef={googleDriveRef} handle={`.${styles.top}`}>
+                    <div id="GoogleDrive" ref={googleDriveRef} className={styles.App}>
                         <div id="GoogleDrivetop" className={styles.top}>
                             <div className={styles.title}>Google Drive</div>
                             <div onClick={() => { hideApp("GoogleDrive"); }} id="close" className={styles.close}></div>
@@ -1962,8 +1972,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== SLACK ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="Slack" className={styles.App}>
+                <Draggable nodeRef={slackRef} handle={`.${styles.top}`}>
+                    <div id="Slack" ref={slackRef} className={styles.App}>
                         <div id="Slacktop" className={styles.top}>
                             <div className={styles.title}>Slack</div>
                             <div onClick={() => { hideApp("Slack"); }} id="close" className={styles.close}></div>
@@ -2000,8 +2010,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== TRELLO ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="Trello" className={styles.App}>
+                <Draggable nodeRef={trelloRef} handle={`.${styles.top}`}>
+                    <div id="Trello" ref={trelloRef} className={styles.App}>
                         <div id="Trellotop" className={styles.top}>
                             <div className={styles.title}>Trello – Lumina OS</div>
                             <div onClick={() => { hideApp("Trello"); }} id="close" className={styles.close}></div>
@@ -2022,8 +2032,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== INSTAGRAM ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="Instagram" className={styles.App}>
+                <Draggable nodeRef={instagramRef} handle={`.${styles.top}`}>
+                    <div id="Instagram" ref={instagramRef} className={styles.App}>
                         <div id="Instagramtop" className={styles.top}>
                             <div className={styles.title}>Instagram</div>
                             <div onClick={() => { hideApp("Instagram"); }} id="close" className={styles.close}></div>
@@ -2064,8 +2074,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== FACEBOOK ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="Facebook" className={styles.App}>
+                <Draggable nodeRef={facebookRef} handle={`.${styles.top}`}>
+                    <div id="Facebook" ref={facebookRef} className={styles.App}>
                         <div id="Facebooktop" className={styles.top}>
                             <div className={styles.title}>Facebook</div>
                             <div onClick={() => { hideApp("Facebook"); }} id="close" className={styles.close}></div>
@@ -2108,8 +2118,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 </Draggable>
 
                 {/* ===== CANVA ===== */}
-                <Draggable handle={`.${styles.top}`}>
-                    <div id="Canva" className={styles.App}>
+                <Draggable nodeRef={canvaRef} handle={`.${styles.top}`}>
+                    <div id="Canva" ref={canvaRef} className={styles.App}>
                         <div id="Canvatop" className={styles.top}>
                             <div className={styles.title}>Canva</div>
                             <div onClick={() => { hideApp("Canva"); }} id="close" className={styles.close}></div>
