@@ -23,8 +23,9 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [selectedWindow, setSelectedWindow] = useState("Start");
     const [selectedCode, setSelectedCode] = useState("Setup");
     const [lockscreen, setLockscreen] = useState("close")
-    const [text, setText] = useState("Activating LuminaOS by Arkis. Please wait...");
+    const [text, setText] = useState("Activating LuminaOS by Rexycore. Please wait...");
     const [startupProgress, setStartupProgress] = useState(0);
+    const [activateLoad, setActivateLoad] = useState(true);
 
     // Ensure pin state is properly initialized
     useEffect(() => {
@@ -112,7 +113,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
         }
     }, [selectedWindow, lockscreen]);
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (selectedWindow == "Login") {
             try {
                 if (password.length > 10) {
@@ -157,13 +158,19 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     loading.style.margin = "5vh 0vh";
                                     loading.style.borderRadius = "1.5vh";
                                 }, 4000);
-                                const response = databases.listDocuments(
+                                const response = await databases.listDocuments(
                                     process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
                                     process.env.NEXT_PUBLIC_APPWRITE_LOGINPAGE_COLLECTION_ID,
                                     [Query.equal('Email', email)]
                                 );
                                 setAccounts(response.documents);
-                                if (accounts.length > 0 && accounts[0].SCode.length !== 0) {
+                                if (response.documents && response.documents.length > 0) {
+                                    const doc = response.documents[0];
+                                    if (doc.Name) localStorage.setItem('Name', doc.Name);
+                                    if (doc.Theme) localStorage.setItem('Theme', doc.Theme);
+                                    if (doc.city) localStorage.setItem('WallpaperNumber', localStorage.getItem('WallpaperNumber') || 8);
+                                }
+                                if (response.documents && response.documents.length > 0 && response.documents[0].SCode && response.documents[0].SCode.length !== 0) {
                                     localStorage.setItem('OSActivated', 'true');
                                 }
                                 setTimeout(() => {
@@ -171,11 +178,12 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     setSelectedWindow("ActivateOS");
                                 }, 5510);
                                 setTimeout(() => {
-                                    setActivateLoad(false);
-                                    let btn = document.getElementById("btn")
-                                    btn.style.visibility = "visible";
-                                    setText("RK AI Integration Initialized...")
+                                    setActivateLoad(false)
+                                    let btn = document.getElementById('btn');
+                                    btn.style.visibility = "visible"
+                                    setText('RK AI Initialised...')
                                 }, 7000);
+                                
                                 break;
                             }
                         }
@@ -365,13 +373,13 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
         <div className={styles.Div1}>
             {selectedWindow == "Start" && <div>
                 <Head>
-                    <title>Start LuminaOS | Arkis</title>
+                    <title>Start LuminaOS | Rexycore</title>
                 </Head>
                 <main className={styles.main1}>
                     <div className={styles.icon}>
                         <BsFillLightningChargeFill className={styles.light} />
                     </div>
-                    <h2 className={styles.startscreen}>Starting LuminaOS by Arkis</h2>
+                    <h2 className={styles.startscreen}>Starting LuminaOS by Rexycore</h2>
 
                     {/* Stylish Loading Bar */}
                     <div className={styles.startupLoadingContainer}>
@@ -390,7 +398,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
             </div>}
             {selectedCode == "Setup" && <div>
                 <Head>
-                    <title>Setup LuminaOS | Arkis</title>
+                    <title>Setup LuminaOS | Rexycore</title>
                 </Head>
                 <main className={styles.main2}>
                     <img className={styles.img1} src="SetupWallpaper.jpg" />
@@ -430,7 +438,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>}
                     {selectedWindow == "ActivateOS" && <div id='activate' className={styles.Activate}>
                         <h1>{text}</h1>
-                        {activateLoad && <div className={styles.ActivateLoad}></div>}
+                         {activateLoad && <div className={styles.ActivateLoad}></div>}
                         <button id="btn" onClick={handleClick} className={styles.activateBtn}>Next</button>
                     </div>}
                     {selectedWindow == "PinSetup" && <div id='pinsetup' className={styles.Activate}>
@@ -461,7 +469,7 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <option className={styles.option}>Light Theme (Coming Soon)</option>
                         </select>
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" name="ai" id="ai" className={styles.checkbox} />
-                        <label htmlFor="ai">Arkis Core Integration</label>
+                        <label htmlFor="ai">Rexycore Core Integration</label>
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" name="city" id="city" className={styles.SetupInput} placeholder="Enter your city..." />
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="text" name="reason" id="reason" className={styles.SetupInput} placeholder="Why you want to use LuminaOS?" />
                         <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} type="checkbox" name="agree" id="agree" required className={styles.checkbox} />

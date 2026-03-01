@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Learn — LuminaOS by Arkis',
+  title: 'Learn — LuminaOS by Rexycore',
   description: 'Discover the features, AI integrations, and the story behind LuminaOS.',
 }
 
@@ -53,7 +53,7 @@ export default function Learn() {
             Meet the Future of the Web OS
           </h1>
           <p style={{ color: '#64748b', fontSize: '17px', lineHeight: 1.7, maxWidth: '600px', margin: '0 auto' }}>
-            LuminaOS is a browser-based operating system developed by <strong style={{ color: '#a78bfa' }}>Arkis</strong>.
+            LuminaOS is a browser-based operating system developed by <strong style={{ color: '#a78bfa' }}>Rexycore</strong>.
             It gives you a full desktop experience directly in your browser, powered by cutting-edge AI.
           </p>
         </div>

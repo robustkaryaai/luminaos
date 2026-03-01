@@ -19,7 +19,7 @@ const cards = [
     href: '/contact',
     emoji: '💬',
     title: 'Contact Us',
-    desc: 'Reach the Arkis team quickly with any question.',
+    desc: 'Reach the Rexycore team quickly with any question.',
   },
   {
     href: '/signup',
@@ -126,7 +126,7 @@ export default function Home() {
           ))}
         </div>
 
-        <p className="lfooter">LuminaOS v1.1 · Built on Arkis Technology</p>
+        <p className="lfooter">LuminaOS v1.1 · Built on Rexycore Technology</p>
       </main>
     </>
   )

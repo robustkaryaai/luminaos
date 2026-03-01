@@ -82,6 +82,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [wifiStrength, setWifiStrength] = useState(0);
     const [isOnline, setIsOnline] = useState(true);
     const [isCharging, setIsCharging] = useState(false);
+    const [batterySupported, setBatterySupported] = useState(true);
     const [url, setUrl] = useState("https://en.wikipedia.org");
     const [num, setNum] = useState(8);
     const iframeRef = useRef(null);
@@ -190,6 +191,164 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [notificationHistory, setNotificationHistory] = useState([]);
     const [selectedWeatherView, setSelectedWeatherView] = useState("Current");
     const [weatherSearchQuery, setWeatherSearchQuery] = useState("");
+    const [osVersion, setOsVersion] = useState('1.1');
+    const [latestVersion, setLatestVersion] = useState(null);
+    const [updateChecking, setUpdateChecking] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [updateProgress, setUpdateProgress] = useState(0);
+    const [updateStatus, setUpdateStatus] = useState('');
+    const [offlineBundle, setOfflineBundle] = useState(null);
+    const setThemeVars = (vars, name) => {
+        Object.entries(vars).forEach(([k, v]) => {
+            document.documentElement.style.setProperty(k, v);
+        });
+        document.body.style.background = vars['--bg-color'];
+        document.body.style.color = vars['--text-color'];
+        localStorage.setItem('Theme', name);
+    };
+    const getThemeVarsByName = (name) => {
+        if (name === 'Light') {
+            return {
+                '--bg-color': '#f1f5f9',
+                '--text-color': '#1e293b',
+                '--accent-color': '#4f46e5',
+                '--panel-bg': 'rgba(0,0,0,0.03)',
+                '--dock-bg': '#111827',
+                '--border-color': 'rgba(0,0,0,0.12)'
+            };
+        }
+        if (name === 'OLED') {
+            return {
+                '--bg-color': '#000000',
+                '--text-color': '#ffffff',
+                '--accent-color': '#10b981',
+                '--panel-bg': 'rgba(255,255,255,0.06)',
+                '--dock-bg': '#000000f7',
+                '--border-color': 'rgba(255,255,255,0.25)'
+            };
+        }
+        if (name === 'Midnight') {
+            return {
+                '--bg-color': '#0b0b17',
+                '--text-color': '#e9d5ff',
+                '--accent-color': '#9b59f5',
+                '--panel-bg': 'rgba(155,89,245,0.08)',
+                '--dock-bg': '#0b0b17f7',
+                '--border-color': 'rgba(155,89,245,0.3)'
+            };
+        }
+        if (name === 'Ocean') {
+            return {
+                '--bg-color': '#071924',
+                '--text-color': '#d1f4ff',
+                '--accent-color': '#22d3ee',
+                '--panel-bg': 'rgba(34,211,238,0.08)',
+                '--dock-bg': '#0b2433f7',
+                '--border-color': 'rgba(34,211,238,0.3)'
+            };
+        }
+        if (name === 'Solarized') {
+            return {
+                '--bg-color': '#002b36',
+                '--text-color': '#93a1a1',
+                '--accent-color': '#b58900',
+                '--panel-bg': 'rgba(147,161,161,0.08)',
+                '--dock-bg': '#073642f7',
+                '--border-color': 'rgba(147,161,161,0.25)'
+            };
+        }
+        if (name === 'HighContrast') {
+            return {
+                '--bg-color': '#000000',
+                '--text-color': '#ffffff',
+                '--accent-color': '#ffcc00',
+                '--panel-bg': 'rgba(255,255,255,0.12)',
+                '--dock-bg': '#000000f7',
+                '--border-color': 'rgba(255,255,255,0.45)'
+            };
+        }
+        return {
+            '--bg-color': '#06091a',
+            '--text-color': '#f8fafc',
+            '--accent-color': '#9b59f5',
+            '--panel-bg': 'rgba(255,255,255,0.03)',
+            '--dock-bg': '#000000f7',
+            '--border-color': 'rgba(255,255,255,0.08)'
+        };
+    };
+    const checkForUpdates = async () => {
+        try {
+            setUpdateChecking(true);
+            setUpdateStatus('Checking for updates...');
+            await new Promise(res => setTimeout(res, 1500));
+            const simulatedLatest = '1.2';
+            setLatestVersion(simulatedLatest);
+            setUpdateStatus(`Latest version ${simulatedLatest} found`);
+        } finally {
+            setUpdateChecking(false);
+        }
+    };
+    const startUpdateDownload = async () => {
+        if (!latestVersion) {
+            setUpdateStatus('No update available. Please check for updates first.');
+            return;
+        }
+        setIsUpdating(true);
+        setUpdateProgress(0);
+        setUpdateStatus('Downloading update...');
+        const start = Date.now();
+        const durationMs = 2 * 60 * 1000;
+        const interval = setInterval(() => {
+            const elapsed = Date.now() - start;
+            const pct = Math.min(100, Math.round((elapsed / durationMs) * 100));
+            setUpdateProgress(pct);
+            if (pct >= 100) {
+                clearInterval(interval);
+                const bundle = {
+                    version: latestVersion,
+                    timestamp: new Date().toISOString(),
+                    theme: localStorage.getItem('Theme') || 'Dark',
+                    wallpaper: localStorage.getItem('WallpaperNumber') || 8,
+                    appsInstalled: JSON.parse(localStorage.getItem('AppInstalled') || '[]'),
+                };
+                localStorage.setItem('OfflineBundle', JSON.stringify(bundle));
+                localStorage.setItem('OSVersion', latestVersion);
+                setOfflineBundle(bundle);
+                setOsVersion(latestVersion);
+                setUpdateStatus('Update downloaded. Restarting OS...');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                setIsUpdating(false);
+            }
+        }, 500);
+    };
+    useEffect(() => {
+        const saved = localStorage.getItem('Theme');
+        const vars = getThemeVarsByName(saved || 'Dark');
+        setThemeVars(vars, saved || 'Dark');
+    }, []);
+    useEffect(() => {
+        const savedVersion = localStorage.getItem('OSVersion');
+        if (savedVersion) setOsVersion(savedVersion);
+        const savedBundleStr = localStorage.getItem('OfflineBundle');
+        if (!savedBundleStr) {
+            const firstBundle = {
+                version: savedVersion || osVersion,
+                timestamp: new Date().toISOString(),
+                theme: localStorage.getItem('Theme') || 'Dark',
+                wallpaper: localStorage.getItem('WallpaperNumber') || 8,
+                appsInstalled: JSON.parse(localStorage.getItem('AppInstalled') || '[]'),
+            };
+            localStorage.setItem('OfflineBundle', JSON.stringify(firstBundle));
+            setOfflineBundle(firstBundle);
+        } else {
+            try {
+                const bundle = JSON.parse(savedBundleStr);
+                setOfflineBundle(bundle);
+            } catch {}
+        }
+    }, []);
 
     useEffect(() => {
         // Multi-Desktop window visibility manager
@@ -764,13 +923,45 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     }, []);
 
     useEffect(() => {
-        function getBattery() {
-            navigator.getBattery().then((battery) => {
-                setBatteryLevel(battery.level * 100);
-                setIsCharging(battery.charging)
-            });
+        let interval;
+        let batteryRef;
+        const update = () => {
+            if (!batteryRef) return;
+            const lvl = batteryRef.level != null ? Math.round(batteryRef.level * 100) : null;
+            setBatteryLevel(lvl);
+            setIsCharging(!!batteryRef.charging);
         };
-        setInterval(getBattery, 1000);
+        const init = async () => {
+            try {
+                if (typeof navigator !== 'undefined' && typeof navigator.getBattery === 'function') {
+                    batteryRef = await navigator.getBattery();
+                    update();
+                    batteryRef.addEventListener?.('levelchange', update);
+                    batteryRef.addEventListener?.('chargingchange', update);
+                } else if (navigator && (navigator.battery || navigator.webkitBattery || navigator.mozBattery)) {
+                    batteryRef = navigator.battery || navigator.webkitBattery || navigator.mozBattery;
+                    update();
+                    if ('onlevelchange' in batteryRef) batteryRef.onlevelchange = update;
+                    if ('onchargingchange' in batteryRef) batteryRef.onchargingchange = update;
+                } else {
+                    setBatterySupported(false);
+                    return;
+                }
+                if (!batteryRef.addEventListener && !('onlevelchange' in batteryRef)) {
+                    interval = setInterval(update, 30000);
+                }
+            } catch (e) {
+                setBatterySupported(false);
+            }
+        };
+        init();
+        return () => {
+            try {
+                batteryRef?.removeEventListener?.('levelchange', update);
+                batteryRef?.removeEventListener?.('chargingchange', update);
+            } catch {}
+            if (interval) clearInterval(interval);
+        };
     }, []);
 
     useEffect(() => {
@@ -1569,44 +1760,38 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 </Draggable>
                 <Draggable nodeRef={storeRef} handle={`.${styles.top}`}>
-                    <div className={styles.DragFix}>
-                        <div id="Store" ref={storeRef} className={styles.App} style={{ position: 'absolute', top: storePosition.y, left: storePosition.x }}>
-                            <div
-                                id="Storetop"
-                                className={styles.top}
-                                onMouseDown={() => { setStoreDragging(true) }}
-                            >
-                                <div id="title" className={styles.title}>Sparking Store</div>
-                                <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
-                                <div onClick={() => { minimizeApp("Store") }} id="minimize" className={styles.minimize}></div>
-                                <div id="maximize" onClick={() => { maximize("Store", "Storetop", "StoreApp", "StoreSidebar", "StoreMainWindow") }} className={styles.maximize}></div>
+                    <div id="Store" ref={storeRef} className={styles.App}>
+                        <div id="Storetop" className={styles.top}>
+                            <div id="title" className={styles.title}>Sparking Store</div>
+                            <div onClick={() => { showApp("Store"); }} id="close" className={styles.close}></div>
+                            <div onClick={() => { minimizeApp("Store") }} id="minimize" className={styles.minimize}></div>
+                            <div id="maximize" onClick={() => { maximize("Store", "Storetop", "StoreApp", "StoreSidebar", "StoreMainWindow") }} className={styles.maximize}></div>
+                        </div>
+                        <div id="StoreApp" className={styles.Files}>
+                            <div id="StoreSidebar" className={styles.sidebar}>
+                                <div className={styles.text}>All Apps</div>
                             </div>
-                            <div id="StoreApp" className={styles.Files}>
-                                <div id="StoreSidebar" className={styles.sidebar}>
-                                    <div className={styles.text}>All Apps</div>
-                                </div>
-                                <div id="StoreMainWindow" className={styles.StoreMainWindow}>
-                                    {luminaApps.map((app, index) => (
-                                        <div key={index} className={styles.application}>
-                                            {app.icon}
-                                            <span>{app.name}</span>
-                                            <button onClick={() => {
-                                                if (!userInstalledApps.find(a => a.name === app.name) && !installingApps.includes(app.name)) {
-                                                    setInstallingApps(prev => [...prev, app.name]);
-                                                    setTimeout(() => {
-                                                        setInstallingApps(prev => prev.filter(n => n !== app.name));
-                                                        setUserInstalledApps(prev => [...prev, app]);
-                                                        alert(`${app.name} installed! You can launch it from your Desktop Dock.`);
-                                                    }, 3000);
-                                                } else if (userInstalledApps.find(a => a.name === app.name)) {
-                                                    alert(`${app.name} is already installed.`);
-                                                }
-                                            }} className={styles.appDownload}>
-                                                {installingApps.includes(app.name) ? <span style={{ fontSize: "1.2vh" }}>Wait...</span> : (userInstalledApps.find(a => a.name === app.name) ? <span style={{ fontSize: "1.2vh" }}>Done</span> : <AiOutlineDownload />)}
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
+                            <div id="StoreMainWindow" className={styles.StoreMainWindow}>
+                                {luminaApps.map((app, index) => (
+                                    <div key={index} className={styles.application}>
+                                        {app.icon}
+                                        <span>{app.name}</span>
+                                        <button onClick={() => {
+                                            if (!userInstalledApps.find(a => a.name === app.name) && !installingApps.includes(app.name)) {
+                                                setInstallingApps(prev => [...prev, app.name]);
+                                                setTimeout(() => {
+                                                    setInstallingApps(prev => prev.filter(n => n !== app.name));
+                                                    setUserInstalledApps(prev => [...prev, app]);
+                                                    alert(`${app.name} installed! You can launch it from your Desktop Dock.`);
+                                                }, 3000);
+                                            } else if (userInstalledApps.find(a => a.name === app.name)) {
+                                                alert(`${app.name} is already installed.`);
+                                            }
+                                        }} className={styles.appDownload}>
+                                            {installingApps.includes(app.name) ? <span style={{ fontSize: "1.2vh" }}>Wait...</span> : (userInstalledApps.find(a => a.name === app.name) ? <span style={{ fontSize: "1.2vh" }}>Done</span> : <AiOutlineDownload />)}
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -1625,6 +1810,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('General')}>General</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Appearance')}>Themes</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('Security')}>Security</div>
+                                <div className={styles.text} onClick={() => setSelectedSettingsSection('Updates')}>Updates</div>
                                 <div className={styles.text} onClick={() => setSelectedSettingsSection('HelpSupport')}>Help & Support</div>
                             </div>
                             <div id="SettingsMainWindow" className={styles.StoreMainWindow}>
@@ -1649,9 +1835,42 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                         </div>
                                     </div>
                                 )}
+                                {selectedSettingsSection === 'Updates' && (
+                                    <div className={styles.SettingHomeProfile}>
+                                        <h3>System Updates</h3>
+                                        <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Current Version:</label>
+                                                <span style={{ color: '#93c5fd', fontWeight: 'bold' }}>v{osVersion}</span>
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <label style={{ color: 'white' }}>Latest Version:</label>
+                                                <span style={{ color: latestVersion ? '#34d399' : '#fbbf24', fontWeight: 'bold' }}>{latestVersion ? `v${latestVersion}` : 'Unknown'}</span>
+                                            </div>
+                                            <div className={styles.settingOption} style={{ background: 'var(--panel-bg)', border: '1px solid var(--border-color)', padding: '2vh', borderRadius: '1vh', display: 'flex', gap: '1vh', alignItems: 'center' }}>
+                                                <button onClick={checkForUpdates} disabled={updateChecking || isUpdating} className={styles.btn} style={{ padding: '1vh 2vh' }}>
+                                                    {updateChecking ? 'Checking…' : 'Check for Updates'}
+                                                </button>
+                                                <button onClick={startUpdateDownload} disabled={isUpdating || !latestVersion} className={styles.btn} style={{ padding: '1vh 2vh', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }}>
+                                                    {isUpdating ? 'Downloading…' : 'Download & Install'}
+                                                </button>
+                                            </div>
+                                            {isUpdating && (
+                                                <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', width: '80%' }}>
+                                                    <label style={{ color: 'white' }}>Progress</label>
+                                                    <div style={{ width: '100%', height: '2.5vh', background: 'rgba(255,255,255,0.08)', borderRadius: '1vh', overflow: 'hidden' }}>
+                                                        <div style={{ width: `${updateProgress}%`, height: '100%', background: 'linear-gradient(90deg, #3b82f6, #8b5cf6)' }} />
+                                                    </div>
+                                                    <span style={{ color: '#94a3b8' }}>{updateProgress}%</span>
+                                                </div>
+                                            )}
+                                            <div style={{ color: '#94a3b8' }}>{updateStatus}</div>
+                                        </div>
+                                    </div>
+                                )}
                                 {selectedSettingsSection === 'Profile' && (
                                     <div className={styles.SettingHomeProfile}>
-                                        <h3>Arkis User Profile</h3>
+                                        <h3>Rexycore User Profile</h3>
                                         <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
                                             <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <label style={{ color: 'white' }}>Display Name:</label>
@@ -1659,7 +1878,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                             </div>
                                             <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <label style={{ color: 'white' }}>Email Address:</label>
-                                                <input defaultValue="user@arkis.ai" disabled className={styles.input} type="email" style={{ padding: '1vh', borderRadius: '0.5vh', border: '1px solid rgba(255, 255, 255, 0.1)', background: 'rgba(0,0,0,0.2)', color: 'rgba(255,255,255,0.5)', width: '50%' }} />
+                                                <input defaultValue="user@rexycore.ai" disabled className={styles.input} type="email" style={{ padding: '1vh', borderRadius: '0.5vh', border: '1px solid rgba(255, 255, 255, 0.1)', background: 'rgba(0,0,0,0.2)', color: 'rgba(255,255,255,0.5)', width: '50%' }} />
                                             </div>
                                             <div className={styles.settingOption} style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '2vh', borderRadius: '1vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <label style={{ color: 'white' }}>Subscription Plan:</label>
@@ -1677,26 +1896,19 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                         <h3>Themes & Personalization</h3>
                                         <div className={styles.Profile} style={{ display: 'flex', flexDirection: 'column', gap: '2vh', marginBottom: '4vh' }}>
                                             <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold' }}>System Theme</label>
-                                            <div style={{ display: 'flex', gap: '2vh' }}>
-                                                <div onClick={() => {
-                                                    document.documentElement.style.setProperty('--bg-color', '#06091a');
-                                                    document.documentElement.style.setProperty('--text-color', '#f8fafc');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#06091a', border: '2px solid rgba(255,255,255,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#f8fafc' }}>
-                                                    <h4>Dark Mode</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    document.documentElement.style.setProperty('--bg-color', '#f1f5f9');
-                                                    document.documentElement.style.setProperty('--text-color', '#1e293b');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#f1f5f9', border: '2px solid rgba(0,0,0,0.2)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#1e293b' }}>
-                                                    <h4>Light Mode</h4>
-                                                </div>
-                                                <div onClick={() => {
-                                                    document.documentElement.style.setProperty('--bg-color', '#000000');
-                                                    document.documentElement.style.setProperty('--text-color', '#ffffff');
-                                                }} style={{ flex: 1, padding: '3vh', background: '#000000', border: '2px solid rgba(255,255,255,0.4)', borderRadius: '1vh', cursor: 'pointer', textAlign: 'center', color: '#ffffff' }}>
-                                                    <h4>OLED Pitch Black</h4>
-                                                </div>
-                                            </div>
+                                            <select className={styles.select} defaultValue={localStorage.getItem('Theme') || 'Dark'} onChange={(e) => {
+                                                const name = e.target.value;
+                                                const vars = getThemeVarsByName(name);
+                                                setThemeVars(vars, name);
+                                            }}>
+                                                <option className={styles.option} value="Dark">Dark</option>
+                                                <option className={styles.option} value="Light">Light</option>
+                                                <option className={styles.option} value="OLED">OLED</option>
+                                                <option className={styles.option} value="Midnight">Midnight</option>
+                                                <option className={styles.option} value="Ocean">Ocean</option>
+                                                <option className={styles.option} value="Solarized">Solarized</option>
+                                                <option className={styles.option} value="HighContrast">High Contrast</option>
+                                            </select>
                                         </div>
                                         <div className={styles.settingOption} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                                             <label style={{ color: 'white', fontSize: '2vh', fontWeight: 'bold', marginBottom: '2vh' }}>Desktop Wallpapers</label>
@@ -1736,10 +1948,10 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     <div className={styles.Home}>
                                         <h3>Help & Support</h3>
                                         <div className={styles.settingOption}>
-                                            <p>For immediate assistance with LuminaOS, contact the Arkis Team.</p>
+                                            <p>For immediate assistance with LuminaOS, contact the Rexycore Team.</p>
                                         </div>
                                         <div className={styles.settingOption} style={{ marginTop: '2vh' }}>
-                                            <button onClick={() => window.open('/contact', '_blank')} className={styles.btn} style={{ width: 'auto', padding: '0 2vh' }}>Contact Arkis Support</button>
+                                            <button onClick={() => window.open('/contact', '_blank')} className={styles.btn} style={{ width: 'auto', padding: '0 2vh' }}>Contact Rexycore Support</button>
                                         </div>
                                     </div>
                                 )}
@@ -2016,16 +2228,25 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     </div>
                 )}
                 {showTaskView && (
-                    <div className={styles.TaskViewOverlay} style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)', zIndex: 99999, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '5vh' }}>
+                    <div className={styles.TaskViewOverlay}>
                         <h1 style={{ color: 'white', fontWeight: 'bold', fontSize: '4vh', marginBottom: '5vh' }}>Mission Control</h1>
-                        <div style={{ display: 'flex', gap: '3vh', flexWrap: 'wrap', justifyContent: 'center', width: '80%' }}>
+                        <div className={styles.DesktopGrid}>
                             {desktops.map(desk => (
-                                <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} style={{ width: '30vh', height: '20vh', background: currentDesktop === desk.id ? 'rgba(0, 106, 255, 0.4)' : 'rgba(255,255,255,0.1)', border: currentDesktop === desk.id ? '2px solid #006aff' : '2px solid rgba(255,255,255,0.2)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s', flexDirection: 'column', gap: '1vh' }}>
+                                <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} className={`${styles.DesktopCard} ${currentDesktop === desk.id ? styles.DesktopCardActive : ''}`} style={{ position: 'relative' }}>
                                     <h2 style={{ color: 'white' }}>{desk.name}</h2>
                                     <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && document.getElementById(app) && document.getElementById(app).style.height !== "0vh").length} Apps Open</span>
+                                    <button className={styles.DeleteDesktopBtn} onClick={(e) => {
+                                        e.stopPropagation();
+                                        const remaining = desktops.filter(d => d.id !== desk.id);
+                                        if (remaining.length === 0) return;
+                                        setDesktops(remaining);
+                                        if (currentDesktop === desk.id) {
+                                            setCurrentDesktop(remaining[0].id);
+                                        }
+                                    }}>×</button>
                                 </div>
                             ))}
-                            <div onClick={() => setDesktops([...desktops, { id: desktops.length + 1, name: `Desktop ${desktops.length + 1}` }])} style={{ width: '30vh', height: '20vh', background: 'rgba(255,255,255,0.05)', border: '2px dashed rgba(255,255,255,0.3)', borderRadius: '2vh', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s' }}>
+                            <div onClick={() => setDesktops([...desktops, { id: desktops.length + 1, name: `Desktop ${desktops.length + 1}` }])} className={styles.AddDesktopCard}>
                                 <h1 style={{ color: 'white', fontSize: '6vh' }}>+</h1>
                             </div>
                         </div>
@@ -2068,38 +2289,42 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     ) : (
                         <BsWifiOff className={styles.TaskList} />
                     )}
-                    {isCharging ? (
-                        batteryLevel > 90 ? (
-                            <MdBatteryChargingFull className={styles.TaskList} />
-                        ) : batteryLevel > 80 ? (
-                            <MdBatteryCharging90 className={styles.TaskList} />
-                        ) : batteryLevel > 60 ? (
-                            <MdBatteryCharging80 className={styles.TaskList} />
-                        ) : batteryLevel > 50 ? (
-                            <MdBatteryCharging60 className={styles.TaskList} />
-                        ) : batteryLevel > 30 ? (
-                            <MdBatteryCharging50 className={styles.TaskList} />
-                        ) : batteryLevel > 20 ? (
-                            <MdBatteryCharging30 className={styles.TaskList} />
+                    {batterySupported ? (
+                        isCharging ? (
+                            batteryLevel > 90 ? (
+                                <MdBatteryChargingFull className={styles.TaskList} />
+                            ) : batteryLevel > 80 ? (
+                                <MdBatteryCharging90 className={styles.TaskList} />
+                            ) : batteryLevel > 60 ? (
+                                <MdBatteryCharging80 className={styles.TaskList} />
+                            ) : batteryLevel > 50 ? (
+                                <MdBatteryCharging60 className={styles.TaskList} />
+                            ) : batteryLevel > 30 ? (
+                                <MdBatteryCharging50 className={styles.TaskList} />
+                            ) : batteryLevel > 20 ? (
+                                <MdBatteryCharging30 className={styles.TaskList} />
+                            ) : (
+                                <MdBatteryAlert className={styles.TaskList} />
+                            )
                         ) : (
-                            <MdBatteryAlert className={styles.TaskList} />
+                            batteryLevel > 90 ? (
+                                <MdBatteryFull className={styles.TaskList} />
+                            ) : batteryLevel > 80 ? (
+                                <MdBattery90 className={styles.TaskList} />
+                            ) : batteryLevel > 60 ? (
+                                <MdBattery80 className={styles.TaskList} />
+                            ) : batteryLevel > 50 ? (
+                                <MdBattery60 className={styles.TaskList} />
+                            ) : batteryLevel > 30 ? (
+                                <MdBattery50 className={styles.TaskList} />
+                            ) : batteryLevel > 20 ? (
+                                <MdBattery30 className={styles.TaskList} />
+                            ) : (
+                                <MdBattery20 className={styles.TaskList} />
+                            )
                         )
                     ) : (
-                        batteryLevel > 90 ? (
-                            <MdBatteryFull className={styles.TaskList} />
-                        ) : batteryLevel > 80 ? (
-                            <MdBattery90 className={styles.TaskList} />
-                        ) : batteryLevel > 60 ? (
-                            <MdBattery80 className={styles.TaskList} />
-                        ) : batteryLevel > 50 ? (
-                            <MdBattery60 className={styles.TaskList} />
-                        ) : batteryLevel > 30 ? (
-                            <MdBattery50 className={styles.TaskList} />
-                        ) : batteryLevel > 20 ? (
-                            <MdBattery30 className={styles.TaskList} />
-                        ) : (
-                            <MdBattery20 className={styles.TaskList} />
-                        )
+                        <MdBatteryAlert className={styles.TaskList} />
                     )}
                     {isMuted ? (
                         <BiVolumeMute className={styles.TaskList} />
