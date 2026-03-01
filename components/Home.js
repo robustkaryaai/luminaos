@@ -2695,7 +2695,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div onClick={() => setDockContextMenu({ visible: false, app: null, x: 0, y: 0 })} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99998 }} />
                 )}
                 {dockContextMenu.visible && (
-                    <div style={{ position: 'fixed', left: dockContextMenu.x, bottom: '10vh', zIndex: 99999, background: 'rgba(15,23,42,0.95)', backdropFilter: 'blur(20px)', borderRadius: '0.8vh', padding: '0.5vh 0', minWidth: '18vh', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)' }}>
+                    <div style={{ position: 'fixed', left: dockContextMenu.x, bottom: '10vh', zIndex: 99999, background: 'rgba(0, 0, 0, 0.71)', backdropFilter: 'blur(20px)', borderRadius: '0.8vh', padding: '0.5vh 0', minWidth: '18vh', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)' }}>
                         <div style={{ padding: '1vh 1.5vh', color: 'rgba(255,255,255,0.5)', fontSize: '1.3vh', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: '0.5vh', fontWeight: '600' }}>{dockContextMenu.app}</div>
                         <div onClick={() => { showApp(dockContextMenu.app); setDockContextMenu({ visible: false, app: null, x: 0, y: 0 }); }} style={{ padding: '1vh 1.5vh', color: 'white', fontSize: '1.4vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
                             <span>▲</span> Bring to Front
