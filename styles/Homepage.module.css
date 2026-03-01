@@ -90,7 +90,7 @@
     align-items: center;
     padding: 6rem;
     min-height: 100vh;
-    background: radial-gradient(circle at center, #0F172A 0%, #020617 100%);
+    background: var(--lock-bg);
     overflow: hidden;
     height: 100vh;
     width: 100vw;
@@ -200,7 +200,7 @@
     font-family: 'Inter', sans-serif;
     width: 35vh;
     border-radius: 1vh;
-    background: rgb(38 38 38 / 71%);
+    background: var(--input-bg);
     outline: none;
     height: 5vh;
     padding: 0vh 1vh;
@@ -211,7 +211,7 @@
     font-family: 'Inter', sans-serif;
     width: 11vh;
     border-radius: 1vh;
-    background: rgb(38 38 38 / 77%);
+    background: var(--input-bg-hover);
     outline: none;
     height: 5vh;
     padding: 0vh 1vh;
@@ -222,11 +222,11 @@
 }
 
 .btnlock:hover {
-    background: rgb(38 38 38 / 83%);
+    background: var(--input-bg-hover);
 }
 
 .btnlock:active {
-    background: rgb(38 38 38 / 89%);
+    background: var(--input-bg-active);
 }
 
 .mainlock .Timelock {
@@ -277,7 +277,7 @@
 }
 
 .main2 {
-    background: linear-gradient(rgb(0, 6, 30), rgb(0, 5, 26), rgb(0, 1, 6));
+    background: var(--setup-bg);
     min-width: 100vw;
     min-height: 100vh;
     text-align: center;
@@ -438,7 +438,7 @@
 }
 
 .option {
-    background: #02182d;
+    background: var(--widget-bg);
     color: #cfcfcf;
 }
 
@@ -548,7 +548,7 @@
     position: absolute;
     top: 8vh;
     text-align: center;
-    background: rgba(38, 38, 38, .71);
+    background: var(--result-bg);
     border-radius: 2vh;
     font-family: 'Inter', sans-serif;
     padding: 0;
@@ -649,7 +649,7 @@
     position: absolute;
     bottom: 0;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--dock-bg);
     backdrop-filter: blur(1px);
     min-width: 80%;
     max-width: 99.5%;
@@ -672,7 +672,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--overlay-bg);
     backdrop-filter: blur(10px);
     z-index: 99999;
     display: flex;
@@ -693,7 +693,7 @@
 .DesktopCard {
     width: 30vh;
     height: 20vh;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--desktop-card-bg);
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 2vh;
     display: flex;
@@ -708,11 +708,11 @@
 .DesktopCard:hover {
     transform: scale(1.04);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-    background: rgba(255, 255, 255, 0.14);
+    background: var(--desktop-card-hover-bg);
 }
 
 .DesktopCardActive {
-    background: rgba(0, 106, 255, 0.4);
+    background: var(--card-active-bg);
     border: 2px solid #006aff;
 }
 
@@ -723,7 +723,7 @@
     width: 3vh;
     height: 3vh;
     border-radius: 50%;
-    background: #ef4444;
+    background: var(--btn-close);
     border: none;
     color: #fff;
     font-size: 2vh;
@@ -735,13 +735,13 @@
 
 .DeleteDesktopBtn:hover {
     transform: scale(1.1);
-    background: #dc2626;
+    background: var(--btn-close-hover);
 }
 
 .AddDesktopCard {
     width: 30vh;
     height: 20vh;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-hover-bg);
     border: 2px dashed rgba(255, 255, 255, 0.3);
     border-radius: 2vh;
     display: flex;
@@ -754,7 +754,7 @@
 .AddDesktopCard:hover {
     transform: scale(1.04);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--desktop-card-hover2-bg);
 }
 
 @keyframes taskFadeIn {
@@ -1060,7 +1060,7 @@
     align-items: center;
     margin-right: 20px;
     width: 5vw;
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border: 1px solid rgba(var(--card-border-rgb), 0.15);
     outline: none;
     border-radius: 1vh;
@@ -1075,7 +1075,7 @@
 }
 
 .copyHistory {
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border: 1px solid rgba(var(--card-border-rgb), 0.15);
     outline: none;
     border-radius: 1vh;
@@ -1086,7 +1086,7 @@
 }
 
 .copyButton {
-    background-color: #007bff;
+    background-color: var(--btn-accent);
     color: #fff;
     border: none;
     padding: 8px 12px;
@@ -1098,7 +1098,7 @@
 }
 
 .Widget1 {
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border: 1px solid rgba(var(--card-border-rgb), 0.15);
     outline: none;
     width: 28%;
@@ -1111,7 +1111,7 @@
 }
 
 .Widget2 {
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border: 1px solid rgba(var(--card-border-rgb), 0.15);
     outline: none;
     width: 28%;
@@ -1124,7 +1124,7 @@
 }
 
 .Widget3 {
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border: 1px solid rgba(var(--card-border-rgb), 0.15);
     outline: none;
     width: 28%;
@@ -1137,7 +1137,7 @@
 }
 
 .Widget4 {
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border: 1px solid rgba(var(--card-border-rgb), 0.15);
     outline: none;
     width: 28%;
@@ -1158,7 +1158,7 @@
     width: 14vh;
     border: 1px solid rgba(var(--card-border-rgb), 0.15);
     outline: none;
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border-radius: 0.5vh;
 }
 
@@ -1207,7 +1207,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    background: rgb(0 0 0 / 26%);
+    background: var(--app-window-bg);
     transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1), height 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
     top: 14vh;
     left: 60vh;
@@ -1219,7 +1219,7 @@
     overflow: hidden;
     height: 67vh;
     border-radius: 1.2vh;
-    background: rgb(0 0 0 / 26%);
+    background: var(--app-window-bg);
     transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1), height 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
     top: 14vh;
     left: 60vh;
@@ -1230,7 +1230,7 @@
     top: 0vh;
     width: 116vh;
     height: 4.2vh;
-    background: #000000f7;
+    background: var(--titlebar-bg);
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -1243,7 +1243,7 @@
     top: 0vh;
     width: 116vh;
     height: 9.1vh;
-    background: #000000f7;
+    background: var(--titlebar-bg);
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -1363,7 +1363,7 @@
 }
 
 .QuickDropDown {
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     color: #fff;
     position: absolute;
     top: 5vh;
@@ -1446,7 +1446,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border-radius: 0.5rem;
     padding: 0vh 1vh;
     font-family: 'Inter', sans-serif;
@@ -1464,7 +1464,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    background: rgb(0 0 0 / 65%);
+    background: var(--sidebar-app-bg);
     border-radius: 0.5rem;
     padding: 1vh;
     font-family: 'Inter', sans-serif;
@@ -1532,7 +1532,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--desktop-card-bg);
     border-radius: .5rem;
     z-index: -1;
     animation: click-effect .4s ease-out;
@@ -1779,7 +1779,7 @@
 
 .Badge {
     font-size: 2.5vh;
-    background: radial-gradient(circle at center, #0F172A 0%, #020617 100%);
+    background: var(--lock-bg);
     border-radius: 0.5vh;
     padding: 0.2vh 1vh;
 }
@@ -1944,7 +1944,7 @@
 }
 
 .option {
-    background: #02182d;
+    background: var(--widget-bg);
     color: #cfcfcf;
 }
 
@@ -1994,7 +1994,7 @@
 .startupLoadingBar {
     width: 100%;
     height: 8px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--desktop-card-bg);
     border-radius: 4px;
     overflow: hidden;
     position: relative;
