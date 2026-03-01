@@ -13,21 +13,21 @@
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
 
-  --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
+  --primary-glow: radial-gradient(#0141FF66, #0141FF00);
   --secondary-glow: linear-gradient(to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3));
+      #0141FF00,
+      #0141FF00,
+      #0141FF4D);
 
   --tile-start-rgb: 2, 13, 46;
   --tile-end-rgb: 2, 5, 19;
-  --tile-border: conic-gradient(#ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80);
+  --tile-border: conic-gradient(#FFFFFF80,
+      #FFFFFF40,
+      #FFFFFF30,
+      #FFFFFF20,
+      #FFFFFF1A,
+      #FFFFFF1A,
+      #FFFFFF80);
 
   --callout-rgb: 20, 20, 20;
   --callout-border-rgb: 108, 108, 108;
@@ -36,30 +36,35 @@
   --card-border-rgb: 200, 200, 200;
 
   /* Lumina OS system design tokens */
-  --panel-bg: rgba(18, 24, 48, 0.72);
-  --border-color: rgba(255, 255, 255, 0.09);
+  --panel-bg: #121830B8;
+  --border-color: #FFFFFF17;
   --text-color: #f8fafc;
   --accent-color: #3b82f6;
   --bg-color: #06091a;
 
-  /* ===== Lumina OS Background Tokens (for Themes System) ===== */
+  /* ===== Lumina OS Background Tokens ===== */
   --lock-bg: radial-gradient(circle at center, #0F172A 0%, #020617 100%);
   --setup-bg: linear-gradient(rgb(0, 6, 30), rgb(0, 5, 26), rgb(0, 1, 6));
   --widget-bg: #02182d;
-  --input-bg: rgba(38, 38, 38, 0.71);
-  --input-bg-hover: rgba(38, 38, 38, 0.77);
-  --input-bg-active: rgba(38, 38, 38, 0.89);
-  --result-bg: rgba(38, 38, 38, 0.71);
-  --dock-bg: rgba(0, 0, 0, 0.6);
-  --app-window-bg: rgb(0 0 0 / 26%);
-  --titlebar-bg: #000000f7;
-  --sidebar-app-bg: rgb(0 0 0 / 65%);
-  --overlay-bg: rgba(0, 0, 0, 0.7);
-  --card-hover-bg: rgba(255, 255, 255, 0.05);
-  --card-active-bg: rgba(0, 106, 255, 0.4);
-  --desktop-card-bg: rgba(255, 255, 255, 0.1);
-  --desktop-card-hover-bg: rgba(255, 255, 255, 0.14);
-  --desktop-card-hover2-bg: rgba(255, 255, 255, 0.08);
+
+  --input-bg: #262626B5;
+  --input-bg-hover: #262626C4;
+  --input-bg-active: #262626E3;
+
+  --result-bg: #262626B5;
+  --dock-bg: #00000099;
+  --app-window-bg: #00000042;
+  --titlebar-bg: #000000F7;
+  --sidebar-app-bg: #000000A6;
+  --overlay-bg: #000000B3;
+
+  --card-hover-bg: #FFFFFF0D;
+  --card-active-bg: #006AFF66;
+
+  --desktop-card-bg: #FFFFFF1A;
+  --desktop-card-hover-bg: #FFFFFF24;
+  --desktop-card-hover2-bg: #FFFFFF14;
+
   --btn-accent: #007bff;
   --btn-close: #ef4444;
   --btn-close-hover: #dc2626;
