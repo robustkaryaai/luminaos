@@ -1782,6 +1782,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                 setTimeout(() => {
                                                     setInstallingApps(prev => prev.filter(n => n !== app.name));
                                                     setUserInstalledApps(prev => [...prev, app]);
+                                                    const storedApps = JSON.parse(localStorage.getItem("AppInstalled"));
+                                                    localStorage.setItem("AppInstalled", JSON.stringify([...storedApps, app]));
                                                     alert(`${app.name} installed! You can launch it from your Desktop Dock.`);
                                                 }, 3000);
                                             } else if (userInstalledApps.find(a => a.name === app.name)) {
