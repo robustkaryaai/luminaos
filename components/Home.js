@@ -283,9 +283,21 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             '--bg-color': '#06091a',
             '--text-color': '#f8fafc',
             '--accent-color': '#9b59f5',
-            '--panel-bg': 'rgba(255,255,255,0.03)',
-            '--dock-bg': '#000000f7',
-            '--border-color': 'rgba(255,255,255,0.08)'
+            '--panel-bg': '#121830b8',
+            '--border-color': '#ffffff17',
+            '--dock-bg': '#00000099',
+            '--app-window-bg': '#00000042',
+            '--titlebar-bg': '#000000f7',
+            '--sidebar-app-bg': '#000000a6',
+            '--overlay-bg': '#000000b3',
+            '--result-bg': '#262626b5',
+            '--input-bg': '#262626b5',
+            '--card-hover-bg': '#ffffff0d',
+            '--desktop-card-bg': '#ffffff1a',
+            '--desktop-card-hover-bg': '#ffffff24',
+            '--desktop-card-hover2-bg': '#ffffff14',
+            '--btn-close': '#ef4444',
+            '--btn-close-hover': '#dc2626',
         };
     };
     const checkForUpdates = async () => {
@@ -1556,7 +1568,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     {getAppIcon(app.icon)}
                                     <p>{app.name}</p>
                                 </div>
-                            ))}
+                            );
+                             })}
                         </div>
                     </div>
                 </div>}
@@ -2549,11 +2562,10 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div className={styles.Top}>
                         <p>All Apps:</p>
                         <div className={styles.AllDesktopApps}>
-                            {appInstalled.map(item => (
-                                <div onClick={() => {
-                                    // Native OS apps open directly; web-based store apps open in Vertice Browser
-                                    const appId = item.Name || item.name;
-                                    const nativeApps = ["Calculator", "LumiNexplorer", "Clock", "Browser", "Weather", "ChatExpress", "Store", "PDFViewer", "Vertice", "Settings", "Chat", "Chat1", "WhatsApp", "Spotify", "YouTube", "Netflix", "GitHub", "GoogleDrive", "Slack", "Trello", "Instagram", "Facebook", "Canva"];
+                            {appInstalled.map(item => {
+                                const appId = item.Name || item.name;
+                                const nativeApps = ["Calculator", "LumiNexplorer", "Clock", "Browser", "Weather", "ChatExpress", "Store", "PDFViewer", "Vertice", "Settings", "Chat", "Chat1", "WhatsApp", "Spotify", "YouTube", "Netflix", "GitHub", "GoogleDrive", "Slack", "Trello", "Instagram", "Facebook", "Canva"];
+                                return (<div onClick={() => {
                                     if (nativeApps.includes(appId)) {
                                         showApp(appId);
                                     } else {
@@ -2634,7 +2646,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                                                                                                                                                                 : <BsFillLightningChargeFill className={styles.startBtn} />}
                                     <p>{appId}</p>
                                 </div>
-                            ))}
+                                ); })}
                         </div>
                     </div>
                     <div className={styles.Bottom}>
