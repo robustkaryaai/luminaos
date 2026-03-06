@@ -218,7 +218,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             tag.id = 'lumina-theme';
             document.head.appendChild(tag);
         }
-        const css = ':root {\n' + Object.entries(vars).map(([k,v]) => \`  \${k}: \${v};\`).join('\n') + '\n}';
+        const css = ':root {\n' + Object.entries(vars).map(([k,v]) => '  ' + k + ': ' + v + ';').join('\n') + '\n}';
         tag.textContent = css;
         // Also clear any leftover inline vars from old code
         Object.keys(vars).forEach(k => document.documentElement.style.removeProperty(k));
@@ -229,40 +229,96 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
             return {
                 '--bg-color': '#f1f5f9',
                 '--text-color': '#1e293b',
+                '--sidebar-text': '#374151',
                 '--accent-color': '#4f46e5',
-                '--panel-bg': 'rgba(0,0,0,0.03)',
-                '--dock-bg': '#111827',
-                '--border-color': 'rgba(0,0,0,0.12)'
+                '--panel-bg': 'rgba(255,255,255,0.6)',
+                '--dock-bg': 'rgba(255,255,255,0.85)',
+                '--border-color': 'rgba(0,0,0,0.12)',
+                '--app-window-bg': '#ffffff',
+                '--app-window-border': 'rgba(0,0,0,0.1)',
+                '--taskbar-bg': 'rgba(255,255,255,0.8)',
+                '--notification-bg': 'rgba(255,255,255,0.9)',
+                '--context-menu-bg': 'rgba(255,255,255,0.95)',
+                '--input-bg': 'rgba(0,0,0,0.05)',
+                '--card-hover-bg': 'rgba(0,0,0,0.04)',
+                '--card-active-bg': '#4f46e566',
+                '--desktop-card-bg': 'rgba(0,0,0,0.08)',
+                '--desktop-card-hover-bg': 'rgba(0,0,0,0.12)',
+                '--btn-accent': '#4f46e5',
+                '--btn-close': '#ef4444',
+                '--btn-close-hover': '#dc2626'
             };
         }
         if (name === 'OLED') {
             return {
                 '--bg-color': '#000000',
                 '--text-color': '#ffffff',
+                '--sidebar-text': '#e5e7eb',
                 '--accent-color': '#10b981',
                 '--panel-bg': 'rgba(255,255,255,0.06)',
                 '--dock-bg': '#000000f7',
-                '--border-color': 'rgba(255,255,255,0.25)'
+                '--border-color': 'rgba(255,255,255,0.25)',
+                '--app-window-bg': '#000000',
+                '--app-window-border': 'rgba(255,255,255,0.15)',
+                '--taskbar-bg': 'rgba(0,0,0,0.95)',
+                '--notification-bg': 'rgba(10,10,10,0.95)',
+                '--context-menu-bg': 'rgba(0,0,0,0.92)',
+                '--input-bg': 'rgba(255,255,255,0.06)',
+                '--card-hover-bg': 'rgba(255,255,255,0.05)',
+                '--card-active-bg': '#10b98166',
+                '--desktop-card-bg': 'rgba(255,255,255,0.06)',
+                '--desktop-card-hover-bg': 'rgba(255,255,255,0.1)',
+                '--btn-accent': '#10b981',
+                '--btn-close': '#ef4444',
+                '--btn-close-hover': '#dc2626'
             };
         }
         if (name === 'Midnight') {
             return {
                 '--bg-color': '#0b0b17',
                 '--text-color': '#e9d5ff',
+                '--sidebar-text': '#c4b5fd',
                 '--accent-color': '#9b59f5',
                 '--panel-bg': 'rgba(155,89,245,0.08)',
                 '--dock-bg': '#0b0b17f7',
-                '--border-color': 'rgba(155,89,245,0.3)'
+                '--border-color': 'rgba(155,89,245,0.3)',
+                '--app-window-bg': '#100b1f',
+                '--app-window-border': 'rgba(155,89,245,0.25)',
+                '--taskbar-bg': 'rgba(11,11,23,0.9)',
+                '--notification-bg': 'rgba(16,11,31,0.95)',
+                '--context-menu-bg': 'rgba(11,11,23,0.92)',
+                '--input-bg': 'rgba(155,89,245,0.08)',
+                '--card-hover-bg': 'rgba(155,89,245,0.08)',
+                '--card-active-bg': '#9b59f566',
+                '--desktop-card-bg': 'rgba(155,89,245,0.1)',
+                '--desktop-card-hover-bg': 'rgba(155,89,245,0.15)',
+                '--btn-accent': '#9b59f5',
+                '--btn-close': '#ef4444',
+                '--btn-close-hover': '#dc2626'
             };
         }
         if (name === 'Ocean') {
             return {
                 '--bg-color': '#071924',
                 '--text-color': '#d1f4ff',
+                '--sidebar-text': '#a5f3fc',
                 '--accent-color': '#22d3ee',
                 '--panel-bg': 'rgba(34,211,238,0.08)',
                 '--dock-bg': '#0b2433f7',
-                '--border-color': 'rgba(34,211,238,0.3)'
+                '--border-color': 'rgba(34,211,238,0.3)',
+                '--app-window-bg': '#071924',
+                '--app-window-border': 'rgba(34,211,238,0.2)',
+                '--taskbar-bg': 'rgba(7,25,36,0.9)',
+                '--notification-bg': 'rgba(7,25,36,0.95)',
+                '--context-menu-bg': 'rgba(7,25,36,0.92)',
+                '--input-bg': 'rgba(34,211,238,0.08)',
+                '--card-hover-bg': 'rgba(34,211,238,0.08)',
+                '--card-active-bg': '#22d3ee66',
+                '--desktop-card-bg': 'rgba(34,211,238,0.08)',
+                '--desktop-card-hover-bg': 'rgba(34,211,238,0.14)',
+                '--btn-accent': '#22d3ee',
+                '--btn-close': '#ef4444',
+                '--btn-close-hover': '#dc2626'
             };
         }
         if (name === 'Solarized') {
@@ -675,16 +731,19 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     }
 
     const handleSearch = async (e) => {
-        const query = document.getElementById("SearchBar").value;
+        const query = e.target.value;
         if (AIValue == false) {
             if (query.length > 0) {
                 setSearchQuery(query);
-
-                const filteredApps = appInstalled.filter(app =>
+                // Search both installed store apps AND built-in native apps
+                const nativeAppNames = ['Files','Clock','Calculator','Browser','Store','Weather','Chat','Settings','WhatsApp','Vertice'];
+                const nativeResults = nativeAppNames
+                    .filter(n => n.toLowerCase().includes(query.toLowerCase()))
+                    .map(n => ({ Name: n, icon: n }));
+                const storeResults = appInstalled.filter(app =>
                     app.Name.toLowerCase().includes(query.toLowerCase())
                 );
-
-                setSearchResults(filteredApps);
+                setSearchResults([...nativeResults, ...storeResults]);
             } else {
                 setSearchQuery('');
                 setSearchResults([]);
@@ -2806,7 +2865,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     {runningApps.filter(app => !['LumiNexplorer', 'Clock', 'Calculator', 'Browser', 'Store', 'Weather', 'Chat', 'Chat1', 'WhatsApp', 'Settings', 'PDFViewer', 'Vertice', 'ChatExpress'].includes(app)).map(app => (
                         <div key={app} style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app, x: e.clientX, y: e.clientY }); }}>
                             <div onClick={() => showApp(app)} className={styles.TaskList} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5vh', cursor: 'pointer', width: '4vh', height: '4vh', background: 'rgba(255,255,255,0.1)', borderRadius: '0.8vh' }}>
-                                {app === 'Spotify' ? '🎵' : app === 'YouTube' ? '▶' : app === 'Netflix' ? 'N' : app === 'GitHub' ? '🐙' : app === 'GoogleDrive' ? '☁️' : app === 'Slack' ? '💬' : app === 'Trello' ? '🗂' : app === 'Instagram' ? '📸' : app === 'Facebook' ? 'f' : app === 'Canva' ? '✦' : app.charAt(0)}
+                                {app === 'Spotify' ? '🎵' : app === 'YouTube' ? '▶️' : app === 'Netflix' ? '🎬' : app === 'GitHub' ? '🐙' : app === 'GoogleDrive' ? '☁️' : app === 'Slack' ? '💬' : app === 'Trello' ? '🗂️' : app === 'Instagram' ? '📸' : app === 'Facebook' ? '👤' : app === 'Canva' ? '✦' : app.charAt(0)}
                             </div>
                             <div className={styles.DockDot} />
                         </div>
