@@ -573,7 +573,7 @@
     gap: 1.2vh;
     padding: 0vh 1.5vh;
     border-radius: 1.5vh;
-    border: 1px solid var(--border-color);
+    border: 0.5px solid var(--border-color);
 }
 
 .WeatherDiv:hover {

@@ -37,7 +37,7 @@
 
   /* Lumina OS system design tokens */
   --panel-bg: #00000099;
-  --border-color: #FFFFFF17;
+  --border-color: #ffffff24;
   --text-color: #f8fafc;
   --accent-color: #3b82f6;
   --bg-color: #06091a;
@@ -84,6 +84,30 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  /* Base font-size scales with viewport so rem units adapt */
+  font-size: clamp(8px, 1.2vw, 14px);
+}
+
+/* Responsive scaling — OS was designed for desktop, scale it on small viewports */
+@media (max-width: 768px) {
+
+  .Div1,
+  [class*="main"] {
+    font-size: 0.7em;
+  }
+
+  /* Scale the entire OS UI uniformly on phones */
+  body {
+    zoom: 0.55;
+    transform-origin: top left;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  body {
+    zoom: 0.75;
+    transform-origin: top left;
+  }
 }
 
 body {

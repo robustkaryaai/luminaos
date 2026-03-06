@@ -1848,37 +1848,30 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Spotify</div>
                             <div onClick={() => { hideApp("Spotify"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("Spotify") }} className={styles.minimize}></div>
+                    <div style={{display:'flex',height:'calc(100% - 4.5vh)',background:'#121212',paddingTop:'0'}}>
+                      <div style={{width:'22%',background:'#000',padding:'1.5vh 1vh',display:'flex',flexDirection:'column',gap:'0.5vh',overflowY:'auto',flexShrink:0}}>
+                        <div style={{color:'white',fontWeight:'800',fontSize:'2vh',padding:'1vh',letterSpacing:'-0.05em',marginBottom:'0.5vh'}}>Spotify</div>
+                        {[['🏠','Home'],['🔍','Search'],['📚','Library']].map(([ic,lb])=>(<div key={lb} style={{display:'flex',alignItems:'center',gap:'1.2vh',padding:'1.2vh 1vh',color:'#b3b3b3',fontSize:'1.4vh',borderRadius:'0.5vh',cursor:'pointer'}}><span style={{fontSize:'1.6vh'}}>{ic}</span>{lb}</div>))}
+                        <div style={{height:'1px',background:'#282828',margin:'0.8vh 0'}}/>
+                        {['Liked Songs','Daily Mix 1','Lo-Fi Beats','RK AI Vibes','Top Hits 2024','Workout Mix'].map(p=>(<div key={p} style={{color:'#b3b3b3',fontSize:'1.3vh',padding:'0.8vh 1vh',cursor:'pointer',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{p}</div>))}
+                      </div>
+                      <div style={{flex:1,overflowY:'auto',padding:'2vh',background:'linear-gradient(180deg,#1a1a2e 0%,#121212 30%)'}}>
+                        <div style={{color:'white',fontSize:'2vh',fontWeight:'800',marginBottom:'1.5vh'}}>Good evening 🌙</div>
+                        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1.2vh',marginBottom:'2.5vh'}}>
+                          {[{t:'Blinding Lights',a:'The Weeknd',c:'#e8175d'},{t:'Levitating',a:'Dua Lipa',c:'#1db954'},{t:'Peaches',a:'J. Bieber',c:'#ff5500'},{t:'Montero',a:'Lil Nas X',c:'#0ea5e9'},{t:'Good 4 U',a:'Olivia R.',c:'#ec4899'},{t:'As It Was',a:'Harry S.',c:'#7c3aed'}].map(s=>(<div key={s.t} style={{background:s.c+'22',border:'1px solid '+s.c+'44',borderRadius:'1vh',padding:'1.2vh',cursor:'pointer',display:'flex',alignItems:'center',gap:'1vh'}}><div style={{width:'5vh',height:'5vh',background:s.c,borderRadius:'0.5vh',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'2vh',flexShrink:0}}>♪</div><div><div style={{color:'white',fontSize:'1.2vh',fontWeight:'700'}}>{s.t}</div><div style={{color:'#b3b3b3',fontSize:'1.1vh'}}>{s.a}</div></div></div>))}
                         </div>
-                        <div className={styles.Files} style={{ background: '#121212', display: 'flex', flexDirection: 'row', height: '100%' }}>
-                            <div style={{ width: '22%', background: '#000', padding: '2vh', display: 'flex', flexDirection: 'column', gap: '1.5vh', height: '100%', overflowY: 'auto' }}>
-                                <h4 style={{ color: 'white', fontSize: '1.6vh', marginBottom: '1vh' }}>Your Library</h4>
-                                {['Liked Songs', 'Discover Weekly', 'Daily Mix 1', 'Daily Mix 2', 'RK AI Vibes', 'Lo-Fi Beats', 'Top Hits 2024'].map(p => (
-                                    <div key={p} style={{ color: '#b3b3b3', fontSize: '1.4vh', padding: '0.8vh', borderRadius: '0.5vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }} onMouseEnter={e => e.target.style.color = 'white'} onMouseLeave={e => e.target.style.color = '#b3b3b3'}>
-                                        🎵 {p}
-                                    </div>
-                                ))}
-                            </div>
-                            <div style={{ flex: 1, padding: '2vh', overflowY: 'auto' }}>
-                                <h2 style={{ color: 'white', fontSize: '2vh', marginBottom: '2vh' }}>Good Evening, {name}</h2>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.5vh' }}>
-                                    {[{ title: 'Blinding Lights', artist: 'The Weeknd', bg: '#e8175d' }, { title: 'Levitating', artist: 'Dua Lipa', bg: '#1db954' }, { title: 'Stay', artist: 'Justin Bieber', bg: '#ff5500' }, { title: 'Peaches', artist: 'Justin Bieber', bg: '#7c3aed' }, { title: 'Montero', artist: 'Lil Nas X', bg: '#0ea5e9' }, { title: 'Good 4 U', artist: 'Olivia Rodrigo', bg: '#ec4899' }].map(s => (
-                                        <div key={s.title} style={{ background: s.bg + '33', border: `1px solid ${s.bg}44`, borderRadius: '1vh', padding: '1.5vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }} onClick={() => { }}>
-                                            <div style={{ width: '5vh', height: '5vh', background: s.bg, borderRadius: '0.5vh', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2vh' }}>♪</div>
-                                            <div>
-                                                <div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{s.title}</div>
-                                                <div style={{ color: '#b3b3b3', fontSize: '1.2vh' }}>{s.artist}</div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div style={{ marginTop: '5vh', background: 'rgba(255,255,255,0.05)', borderRadius: '1vh', padding: '1.5vh', display: 'flex', alignItems: 'center', gap: '2vh', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                    <div style={{ width: '6vh', height: '6vh', background: '#1db954', borderRadius: '0.5vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5vh' }}>♪</div>
-                                    <div style={{ flex: 1 }}><div style={{ color: 'white', fontSize: '1.4vh', fontWeight: '600' }}>Blinding Lights</div><div style={{ color: '#b3b3b3', fontSize: '1.2vh' }}>The Weeknd</div></div>
-                                    <div style={{ display: 'flex', gap: '2vh', color: 'white', fontSize: '2vh' }}>⏮ ▶ ⏭</div>
-                                    <div style={{ width: '20vh', background: 'rgba(255,255,255,0.2)', height: '0.4vh', borderRadius: '1vh' }}><div style={{ width: '40%', height: '100%', background: '#1db954', borderRadius: '1vh' }}></div></div>
-                                </div>
-                            </div>
+                        <div style={{color:'white',fontSize:'1.5vh',fontWeight:'700',marginBottom:'1vh'}}>Recently Played</div>
+                        <div style={{display:'flex',gap:'1.5vh',overflowX:'auto',paddingBottom:'1vh'}}>
+                          {[{n:'Daily Mix 1',c:'#1db954'},{n:'Top 50 Global',c:'#e8175d'},{n:'Lo-Fi Beats',c:'#0ea5e9'},{n:'Mood Booster',c:'#ff5500'}].map(p=>(<div key={p.n} style={{minWidth:'10vh',cursor:'pointer'}}><div style={{width:'10vh',height:'10vh',background:'linear-gradient(135deg,'+p.c+','+p.c+'88)',borderRadius:'1vh',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'3vh',marginBottom:'0.8vh'}}>🎵</div><div style={{color:'white',fontSize:'1.2vh',textAlign:'center'}}>{p.n}</div></div>))}
                         </div>
+                      </div>
+                    </div>
+                    <div style={{position:'absolute',bottom:0,left:0,right:0,height:'8vh',background:'#181818',borderTop:'1px solid #282828',display:'flex',alignItems:'center',padding:'0 2vh',gap:'2vh'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:'1.2vh',width:'25%'}}><div style={{width:'5vh',height:'5vh',background:'linear-gradient(135deg,#e8175d,#7c3aed)',borderRadius:'0.5vh',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'2vh'}}>♪</div><div><div style={{color:'white',fontSize:'1.2vh',fontWeight:'600'}}>Blinding Lights</div><div style={{color:'#b3b3b3',fontSize:'1.1vh'}}>The Weeknd</div></div></div>
+                      <div style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:'0.8vh'}}><div style={{display:'flex',gap:'2vh',color:'white',fontSize:'1.8vh'}}><span>⏮</span><div style={{width:'3.5vh',height:'3.5vh',background:'white',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'}}><span style={{color:'black',fontSize:'1.4vh'}}>▶</span></div><span>⏭</span></div><div style={{display:'flex',alignItems:'center',gap:'1vh',width:'80%'}}><span style={{color:'#b3b3b3',fontSize:'1.1vh'}}>1:23</span><div style={{flex:1,height:'0.4vh',background:'#535353',borderRadius:'1vh'}}><div style={{width:'35%',height:'100%',background:'#1db954',borderRadius:'1vh'}}></div></div><span style={{color:'#b3b3b3',fontSize:'1.1vh'}}>3:20</span></div></div>
+                      <div style={{display:'flex',alignItems:'center',gap:'1vh',width:'20%',justifyContent:'flex-end'}}><span style={{color:'#b3b3b3',fontSize:'1.4vh'}}>🔊</span><div style={{width:'10vh',height:'0.4vh',background:'#535353',borderRadius:'1vh'}}><div style={{width:'70%',height:'100%',background:'#b3b3b3',borderRadius:'1vh'}}></div></div></div>
+                    </div>
+
                     </div>
                 </Draggable>
 
@@ -1889,27 +1882,28 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>YouTube</div>
                             <div onClick={() => { hideApp("YouTube"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("YouTube") }} className={styles.minimize}></div>
+                    <div style={{background:'#0f0f0f',height:'100%',display:'flex',flexDirection:'column'}}>
+                      <div style={{display:'flex',alignItems:'center',padding:'1vh 2vh',background:'#212121',gap:'1.5vh',borderBottom:'1px solid #3d3d3d',flexShrink:0}}>
+                        <span style={{color:'#ff0000',fontSize:'2.2vh',fontWeight:'900'}}>▶ YouTube</span>
+                        <div style={{flex:1,display:'flex',background:'#121212',border:'1px solid #3d3d3d',borderRadius:'2vh',overflow:'hidden',maxWidth:'45%'}}><input style={{flex:1,background:'transparent',border:'none',padding:'0.8vh 1.5vh',color:'white',fontSize:'1.2vh',outline:'none'}} placeholder="Search" /><div style={{background:'#2a2a2a',padding:'0 1.2vh',display:'flex',alignItems:'center',color:'#aaa',borderLeft:'1px solid #3d3d3d'}}>🔍</div></div>
+                        <div style={{marginLeft:'auto',color:'white',fontSize:'1.5vh'}}>🔔 &nbsp; 👤</div>
+                      </div>
+                      <div style={{display:'flex',flex:1,overflow:'hidden'}}>
+                        <div style={{width:'15%',background:'#0f0f0f',padding:'1vh 0',overflowY:'auto',flexShrink:0}}>
+                          {[['🏠','Home'],['🔥','Shorts'],['📺','Subs'],['📚','Library'],['🕐','History']].map(([ic,lb])=>(<div key={lb} style={{display:'flex',alignItems:'center',gap:'1vh',padding:'1vh 1.5vh',color:'#f1f1f1',fontSize:'1.2vh',cursor:'pointer'}}><span style={{fontSize:'1.5vh'}}>{ic}</span>{lb}</div>))}
                         </div>
-                        <div style={{ background: '#0f0f0f', height: '100%', overflowY: 'auto', paddingTop: '4.5vh' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', padding: '1.5vh 2vh', background: '#212121', gap: '1vh', borderBottom: '1px solid #333' }}>
-                                <span style={{ color: '#ff0000', fontSize: '2.5vh', fontWeight: '900' }}>▶</span>
-                                <span style={{ color: 'white', fontSize: '1.8vh', fontWeight: '700' }}>YouTube</span>
-                                <div style={{ flex: 1, margin: '0 2vh' }}>
-                                    <input style={{ width: '100%', background: '#121212', border: '1px solid #333', borderRadius: '2vh', padding: '0.6vh 1.5vh', color: 'white', fontSize: '1.4vh' }} placeholder="Search" />
-                                </div>
-                            </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.5vh', padding: '1.5vh' }}>
-                                {[{ t: '10 Things About AI You Must Know', ch: 'TechBurst', v: '2.1M', bg: '#1a1a2e' }, { t: 'Top 10 Coding Projects 2024', ch: 'DevZone', v: '980K', bg: '#16213e' }, { t: 'Lumina OS First Look!', ch: 'RK Tech', v: '421K', bg: '#0f3460' }, { t: 'Best Music 2024 Mix', ch: 'VibesMix', v: '5.3M', bg: '#533483' }, { t: 'Build a Full Stack App', ch: 'CodeWithMe', v: '1.8M', bg: '#1a1a2e' }, { t: 'Science Behind Sleep', ch: 'Curiosity', v: '3.2M', bg: '#16213e' }].map(v => (
-                                    <div key={v.t} style={{ cursor: 'pointer', borderRadius: '0.8vh', overflow: 'hidden' }}>
-                                        <div style={{ width: '100%', height: '9vh', background: v.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3vh' }}>▶</div>
-                                        <div style={{ padding: '0.8vh 0' }}>
-                                            <div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{v.t}</div>
-                                            <div style={{ color: '#aaa', fontSize: '1.1vh' }}>{v.ch} · {v.v} views</div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                        <div style={{flex:1,overflowY:'auto',padding:'1.5vh'}}>
+                          <div style={{display:'flex',gap:'0.8vh',marginBottom:'1.2vh',overflowX:'auto'}}>
+                            {['All','Gaming','Music','AI','Coding','Finance','Travel'].map(c=>(<div key={c} style={{background:c==='All'?'white':'#272727',color:c==='All'?'black':'white',padding:'0.5vh 1.2vh',borderRadius:'2vh',fontSize:'1.1vh',whiteSpace:'nowrap',cursor:'pointer',flexShrink:0}}>{c}</div>))}
+                          </div>
+                          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1.2vh'}}>
+                            {[{t:'Building a Full OS in JavaScript',ch:'RK Tech',v:'421K',c:'#1a237e'},{t:'Top 10 AI Tools in 2025',ch:'TechBurst',v:'2.1M',c:'#0d47a1'},{t:'Learn React in 1 Hour',ch:'CodeWithMe',v:'1.8M',c:'#1b5e20'},{t:'Best Lo-Fi Mix 2024',ch:'VibesMix',v:'5.3M',c:'#4a148c'},{t:'How AI Will Rule in 2025',ch:'FutureTalk',v:'980K',c:'#b71c1c'},{t:'Science of Sleep Doc',ch:'Curiosity',v:'3.2M',c:'#f57f17'}].map(v=>(<div key={v.t} style={{cursor:'pointer'}}><div style={{width:'100%',height:'10vh',background:v.c,borderRadius:'1vh',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'2.5vh',marginBottom:'0.8vh',position:'relative'}}>▶<div style={{position:'absolute',bottom:'0.5vh',right:'0.5vh',background:'rgba(0,0,0,0.8)',color:'white',fontSize:'1vh',padding:'0.2vh 0.4vh',borderRadius:'0.3vh'}}>4:20</div></div><div style={{color:'white',fontSize:'1.2vh',fontWeight:'600',marginBottom:'0.3vh'}}>{v.t}</div><div style={{color:'#aaa',fontSize:'1.1vh'}}>{v.ch} · {v.v} views</div></div>))}
+                          </div>
                         </div>
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -1920,22 +1914,22 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Netflix</div>
                             <div onClick={() => { hideApp("Netflix"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("Netflix") }} className={styles.minimize}></div>
+                    <div style={{background:'#141414',height:'100%',display:'flex',flexDirection:'column',overflow:'hidden'}}>
+                      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'1vh 2vh',background:'rgba(0,0,0,0.6)',flexShrink:0}}>
+                        <div style={{display:'flex',alignItems:'center',gap:'2vh'}}>
+                          <span style={{color:'#e50914',fontSize:'2vh',fontWeight:'900',letterSpacing:'-0.05em'}}>NETFLIX</span>
+                          {['Home','TV Shows','Movies','New & Popular','My List'].map(n=>(<span key={n} style={{color:'rgba(255,255,255,0.8)',fontSize:'1.2vh',cursor:'pointer'}}>{n}</span>))}
                         </div>
-                        <div style={{ background: '#141414', height: '100%', overflowY: 'auto', paddingTop: '4.5vh' }}>
-                            <div style={{ height: '22vh', background: 'linear-gradient(to bottom, #141414 0%, transparent 100%), linear-gradient(135deg, #e50914 0%, #830000 100%)', display: 'flex', alignItems: 'flex-end', padding: '2vh', borderRadius: '0.8vh', margin: '0 1vh 1.5vh 1vh' }}>
-                                <div><div style={{ color: 'white', fontSize: '3.5vh', fontWeight: '900' }}>Stranger Things</div><div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.4vh', margin: '0.5vh 0' }}>◆ 98% Match · Season 4</div><div style={{ display: 'flex', gap: '1vh', marginTop: '1vh' }}><button style={{ background: 'white', color: 'black', border: 'none', borderRadius: '0.5vh', padding: '0.8vh 2vh', fontSize: '1.4vh', fontWeight: '700', cursor: 'pointer' }}>▶ Play</button><button style={{ background: 'rgba(109,109,110,0.7)', color: 'white', border: 'none', borderRadius: '0.5vh', padding: '0.8vh 2vh', fontSize: '1.4vh', cursor: 'pointer' }}>⊕ My List</button></div></div>
-                            </div>
-                            {['Continue Watching', 'Trending Now', 'Sci-Fi & Fantasy'].map(cat => (
-                                <div key={cat} style={{ margin: '0 1vh 2vh 1vh' }}>
-                                    <div style={{ color: 'white', fontWeight: '700', fontSize: '1.5vh', marginBottom: '1vh' }}>{cat}</div>
-                                    <div style={{ display: 'flex', gap: '1vh', overflowX: 'auto' }}>
-                                        {['#e50914', '#1a237e', '#1b5e20', '#4a148c', '#b71c1c'].map((bg, i) => (
-                                            <div key={i} style={{ minWidth: '10vh', height: '14vh', background: bg, borderRadius: '0.5vh', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2vh', color: 'rgba(255,255,255,0.5)' }}>▶</div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
+                        <div style={{color:'white',fontSize:'1.4vh'}}>🔍 &nbsp; 🔔 &nbsp; 👤</div>
+                      </div>
+                      <div style={{flex:1,overflowY:'auto'}}>
+                        <div style={{height:'25vh',background:'linear-gradient(to bottom,rgba(20,20,20,0) 50%,#141414),linear-gradient(135deg,#8b0000,#e50914,#ff6b35)',display:'flex',alignItems:'flex-end',padding:'2vh'}}>
+                          <div><div style={{color:'white',fontSize:'2.8vh',fontWeight:'900'}}>Stranger Things</div><div style={{color:'rgba(255,255,255,0.8)',fontSize:'1.2vh',margin:'0.4vh 0'}}>◆ 98% Match · Season 4 · 2022</div><div style={{display:'flex',gap:'1vh',marginTop:'0.8vh'}}><button style={{background:'white',color:'black',border:'none',borderRadius:'0.5vh',padding:'0.8vh 2vh',fontSize:'1.3vh',fontWeight:'800',cursor:'pointer'}}>▶ Play</button><button style={{background:'rgba(109,109,110,0.7)',color:'white',border:'none',borderRadius:'0.5vh',padding:'0.8vh 1.5vh',fontSize:'1.3vh',cursor:'pointer'}}>ⓘ More Info</button></div></div>
                         </div>
+                        {[{cat:'Continue Watching',bgList:['#8b0000','#1a237e','#1b5e20','#4a148c','#e65100']},{cat:'Trending Now',bgList:['#880e4f','#006064','#33691e','#b71c1c','#1a237e']},{cat:'Sci-Fi & Fantasy',bgList:['#311b92','#01579b','#004d40','#1b5e20','#37474f']}].map(row=>(<div key={row.cat} style={{margin:'0 1.5vh 2vh'}}><div style={{color:'white',fontWeight:'700',fontSize:'1.5vh',marginBottom:'0.8vh'}}>{row.cat}</div><div style={{display:'flex',gap:'0.8vh',overflowX:'auto',paddingBottom:'0.5vh'}}>{row.bgList.map((bg,i)=>(<div key={i} style={{minWidth:'10vh',height:'14vh',background:bg,borderRadius:'0.5vh',cursor:'pointer',flexShrink:0}}></div>))}</div></div>))}
+                      </div>
+                    </div>
+
                     </div>
                 </Draggable>
 
@@ -1946,29 +1940,36 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>GitHub</div>
                             <div onClick={() => { hideApp("GitHub"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("GitHub") }} className={styles.minimize}></div>
+                    <div style={{background:'#0d1117',height:'100%',display:'flex',flexDirection:'column'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:'1.5vh',padding:'1vh 2vh',background:'#161b22',borderBottom:'1px solid #30363d',flexShrink:0}}>
+                        <span style={{fontSize:'1.8vh'}}>🐙</span>
+                        <div style={{flex:1,background:'#0d1117',border:'1px solid #30363d',borderRadius:'0.5vh',padding:'0.5vh 1vh',color:'#8b949e',fontSize:'1.2vh'}}>⌕ Search or jump to...</div>
+                        <div style={{display:'flex',gap:'1.5vh',color:'#e6edf3',fontSize:'1.2vh'}}>{['Pull requests','Issues','Explore'].map(i=>(<span key={i} style={{cursor:'pointer'}}>{i}</span>))}</div>
+                        <div style={{width:'2.5vh',height:'2.5vh',background:'linear-gradient(135deg,#58a6ff,#7ee787)',borderRadius:'50%'}}></div>
+                      </div>
+                      <div style={{flex:1,display:'flex',overflow:'hidden'}}>
+                        <div style={{width:'30%',padding:'1.5vh',borderRight:'1px solid #21262d',overflowY:'auto'}}>
+                          <div style={{color:'#e6edf3',fontSize:'1.3vh',fontWeight:'700',marginBottom:'1vh'}}>Repositories</div>
+                          {[{n:'luminaos',l:'JS',s:'421'},{n:'rk-ai-assistant',l:'Python',s:'284'},{n:'arkis-backend',l:'Node',s:'156'},{n:'neural-engine',l:'Python',s:'634'}].map(r=>(<div key={r.n} style={{padding:'1vh',marginBottom:'0.5vh',cursor:'pointer',borderRadius:'0.5vh',border:'1px solid transparent'}}><span style={{color:'#58a6ff',fontSize:'1.2vh',fontWeight:'600'}}>{r.n}</span><div style={{display:'flex',gap:'1vh',marginTop:'0.5vh',color:'#8b949e',fontSize:'1.1vh'}}><span>{r.l}</span><span>⭐{r.s}</span></div></div>))}
                         </div>
-                        <div className={styles.Files} style={{ background: '#0d1117' }}>
-                            <div className={styles.sidebar} style={{ background: '#161b22', borderRight: '1px solid #30363d' }}>
-                                <div style={{ color: '#e6edf3', fontSize: '1.4vh', fontWeight: '700', marginBottom: '2vh' }}>Repositories</div>
-                                {['luminaos', 'rk-ai-assistant', 'arkis-backend', 'portfolio-site', 'neural-engine'].map(r => (
-                                    <div key={r} style={{ padding: '1vh 0.5vh', color: '#58a6ff', fontSize: '1.3vh', cursor: 'pointer', borderBottom: '1px solid #21262d21' }}>{r}</div>
-                                ))}
-                            </div>
-                            <div style={{ flex: 1, padding: '2vh', overflowY: 'auto' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1vh', marginBottom: '2vh' }}>
-                                    <div style={{ width: '4vh', height: '4vh', background: 'linear-gradient(135deg,#58a6ff,#8b949e)', borderRadius: '50%' }}></div>
-                                    <div><div style={{ color: '#e6edf3', fontSize: '1.5vh', fontWeight: '600' }}>robustkaryaai / luminaos</div><div style={{ color: '#8b949e', fontSize: '1.2vh' }}>⭐ 421 · ⑂ 87 · MIT License</div></div>
-                                </div>
-                                <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: '0.8vh', overflow: 'hidden' }}>
-                                    {['feat: multi-desktop mission control', 'fix: activeApps ReferenceError crash', 'feat: full store app icon map', 'fix: add missing CSS tokens, glassmorphism bg', 'feat: sparking store installation delay'].map((commit, i) => (
-                                        <div key={i} style={{ padding: '1.2vh 1.5vh', borderBottom: '1px solid #21262d', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <span style={{ color: '#58a6ff', fontSize: '1.3vh', cursor: 'pointer' }}>{commit}</span>
-                                            <span style={{ color: '#8b949e', fontSize: '1.1vh' }}>{i + 1}h ago</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                        <div style={{flex:1,padding:'1.5vh',overflowY:'auto'}}>
+                          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1.5vh'}}>
+                            <span style={{color:'#e6edf3',fontSize:'1.4vh',fontWeight:'700'}}>robustkaryaai/luminaos</span>
+                            <div style={{display:'flex',gap:'0.8vh'}}>{['Watch','Fork','⭐ 421'].map(b=>(<button key={b} style={{background:'#21262d',border:'1px solid #30363d',color:'#e6edf3',padding:'0.5vh 1vh',borderRadius:'0.5vh',fontSize:'1.1vh',cursor:'pointer'}}>{b}</button>))}</div>
+                          </div>
+                          <div style={{background:'#161b22',border:'1px solid #30363d',borderRadius:'0.8vh',overflow:'hidden',marginBottom:'1.5vh'}}>
+                            <div style={{padding:'0.8vh 1.2vh',background:'#1c2128',borderBottom:'1px solid #30363d',color:'#e6edf3',fontSize:'1.2vh'}}>🕐 Recent Commits</div>
+                            {['fix: hoist appId to map scope','feat: 10 built-in app UIs, dock indicators','fix: add nodeRef to all Draggable windows','feat: full store app icon map'].map((msg,i)=>(<div key={i} style={{padding:'1vh 1.2vh',borderBottom:'1px solid #21262d',display:'flex',justifyContent:'space-between'}}><span style={{color:'#58a6ff',fontSize:'1.1vh'}}>{msg}</span><span style={{color:'#8b949e',fontSize:'1vh',flexShrink:0}}>{i+1}h ago</span></div>))}
+                          </div>
+                          <div style={{color:'#e6edf3',fontSize:'1.2vh',fontWeight:'700',marginBottom:'0.8vh'}}>Contribution Graph</div>
+                          <div style={{display:'flex',gap:'0.3vh',flexWrap:'wrap',maxHeight:'12vh',overflow:'hidden'}}>
+                            {Array.from({length:260}).map((_,i)=>{const v=Math.random();const c=v>0.8?'#39d353':v>0.6?'#26a641':v>0.35?'#006d32':v>0.15?'#0e4429':'#161b22';return <div key={i} style={{width:'1.2vh',height:'1.2vh',background:c,borderRadius:'0.2vh'}}></div>})}
+                          </div>
                         </div>
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -1979,25 +1980,32 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Google Drive</div>
                             <div onClick={() => { hideApp("GoogleDrive"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("GoogleDrive") }} className={styles.minimize}></div>
+                    <div style={{background:'#202124',height:'100%',display:'flex',flexDirection:'column'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:'1.2vh',padding:'1vh 2vh',background:'#2d2e30',borderBottom:'1px solid #3c4043',flexShrink:0}}>
+                        <span style={{fontSize:'1.8vh'}}>☁️</span><span style={{color:'#e8eaed',fontSize:'1.5vh',fontWeight:'500'}}>Drive</span>
+                        <div style={{flex:1,background:'#3c4043',borderRadius:'3vh',padding:'0.6vh 1.2vh',display:'flex',gap:'0.8vh',alignItems:'center',maxWidth:'45%'}}><span style={{color:'#9aa0a6',fontSize:'1.2vh'}}>🔍</span><input style={{background:'transparent',border:'none',color:'#e8eaed',fontSize:'1.2vh',outline:'none',flex:1}} placeholder="Search in Drive" /></div>
+                        <div style={{color:'#e8eaed',fontSize:'1.3vh',marginLeft:'auto'}}>⊞ &nbsp; ⚙️</div>
+                      </div>
+                      <div style={{flex:1,display:'flex',overflow:'hidden'}}>
+                        <div style={{width:'22%',padding:'1.2vh',borderRight:'1px solid #3c4043',overflowY:'auto'}}>
+                          <button style={{background:'#8ab4f8',color:'#202124',border:'none',borderRadius:'3vh',padding:'1vh 2vh',fontSize:'1.2vh',fontWeight:'700',cursor:'pointer',marginBottom:'1.5vh',width:'85%'}}>+ New</button>
+                          {[['🏠','My Drive'],['👥','Shared'],['🕐','Recent'],['⭐','Starred'],['🗑️','Trash']].map(([ic,lb])=>(<div key={lb} style={{display:'flex',alignItems:'center',gap:'1vh',padding:'0.8vh 1vh',color:'#e8eaed',fontSize:'1.2vh',borderRadius:'3vh',cursor:'pointer',marginBottom:'0.3vh'}}><span>{ic}</span>{lb}</div>))}
+                          <div style={{marginTop:'1.5vh',padding:'0.8vh'}}>
+                            <div style={{color:'#9aa0a6',fontSize:'1.1vh',marginBottom:'0.6vh'}}>Storage</div>
+                            <div style={{background:'#3c4043',borderRadius:'1vh',height:'0.5vh',marginBottom:'0.6vh'}}><div style={{width:'42%',height:'100%',background:'#8ab4f8',borderRadius:'1vh'}}></div></div>
+                            <div style={{color:'#9aa0a6',fontSize:'1vh'}}>6.3 GB of 15 GB used</div>
+                          </div>
                         </div>
-                        <div className={styles.Files} style={{ background: '#202124' }}>
-                            <div className={styles.sidebar} style={{ background: '#202124', borderRight: '1px solid #3c4043' }}>
-                                <div style={{ background: '#8ab4f8', color: '#202124', borderRadius: '3vh', padding: '1.2vh 2vh', fontSize: '1.4vh', fontWeight: '600', marginBottom: '2vh', textAlign: 'center', cursor: 'pointer' }}>+ New</div>
-                                {['My Drive', 'Shared with me', 'Recent', 'Starred', 'Trash'].map(item => (
-                                    <div key={item} style={{ padding: '1vh', color: '#e8eaed', fontSize: '1.4vh', borderRadius: '0 3vh 3vh 0', cursor: 'pointer', marginBottom: '0.5vh' }}>{item}</div>
-                                ))}
-                            </div>
-                            <div style={{ flex: 1, padding: '2vh', overflowY: 'auto' }}>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1.5vh' }}>
-                                    {[{ name: 'Lumina OS Designs', icon: '📁', color: '#8ab4f8' }, { name: 'RK AI Research.docx', icon: '📄', color: '#4285f4' }, { name: 'Budget 2024.xlsx', icon: '📊', color: '#34a853' }, { name: 'Pitch Deck.pptx', icon: '📑', color: '#fbbc04' }, { name: 'Photos', icon: '📁', color: '#8ab4f8' }, { name: 'Project X', icon: '📁', color: '#8ab4f8' }, { name: 'Resume.pdf', icon: '📄', color: '#ea4335' }, { name: 'Notes.txt', icon: '📝', color: '#8ab4f8' }].map(f => (
-                                        <div key={f.name} style={{ background: '#2d2e30', border: '1px solid #3c4043', borderRadius: '0.8vh', padding: '1.5vh', cursor: 'pointer', textAlign: 'center' }}>
-                                            <div style={{ fontSize: '3vh', marginBottom: '0.5vh' }}>{f.icon}</div>
-                                            <div style={{ color: '#e8eaed', fontSize: '1.2vh' }}>{f.name}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                        <div style={{flex:1,padding:'1.5vh',overflowY:'auto'}}>
+                          <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1vh',marginBottom:'2vh'}}>
+                            {['Lumina OS','Design Assets','Research','Video Drafts'].map(f=>(<div key={f} style={{background:'#2d2e30',border:'1px solid #3c4043',borderRadius:'0.8vh',padding:'1.2vh',cursor:'pointer'}}><span style={{fontSize:'2vh'}}>📁</span><div style={{color:'#e8eaed',fontSize:'1.1vh',marginTop:'0.5vh'}}>{f}</div></div>))}
+                          </div>
+                          {[{n:'Pitch Deck v3.pptx',ic:'📑',s:'4.2 MB',d:'Mar 1'},{n:'RK AI Notes.docx',ic:'📄',s:'1.8 MB',d:'Feb 28'},{n:'Budget 2024.xlsx',ic:'📊',s:'890 KB',d:'Feb 26'},{n:'Resume_Final.pdf',ic:'📕',s:'340 KB',d:'Feb 20'},{n:'LuminaOS_Demo.mp4',ic:'🎬',s:'124 MB',d:'Feb 15'}].map(file=>(<div key={file.n} style={{display:'flex',alignItems:'center',gap:'1.2vh',padding:'0.8vh 1vh',borderRadius:'0.5vh',cursor:'pointer'}}><span style={{fontSize:'1.6vh'}}>{file.ic}</span><div style={{flex:1,color:'#e8eaed',fontSize:'1.2vh'}}>{file.n}</div><span style={{color:'#9aa0a6',fontSize:'1.1vh'}}>{file.s}</span><span style={{color:'#9aa0a6',fontSize:'1.1vh',marginLeft:'1vh'}}>{file.d}</span></div>))}
                         </div>
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -2008,34 +2016,35 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Slack</div>
                             <div onClick={() => { hideApp("Slack"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("Slack") }} className={styles.minimize}></div>
+                    <div style={{background:'#1a1d21',height:'100%',display:'flex',overflow:'hidden'}}>
+                      <div style={{width:'5vh',background:'#4a154b',display:'flex',flexDirection:'column',alignItems:'center',paddingTop:'1vh',gap:'1.5vh',flexShrink:0}}>
+                        <div style={{width:'3.5vh',height:'3.5vh',background:'white',borderRadius:'0.8vh',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.5vh',fontWeight:'900',color:'#4a154b'}}>L</div>
+                        {['🏠','📣','💬','⚡'].map((ic,i)=>(<div key={i} style={{color:'rgba(255,255,255,0.7)',fontSize:'1.8vh',cursor:'pointer',padding:'0.5vh',borderRadius:'0.5vh'}}>{ic}</div>))}
+                      </div>
+                      <div style={{width:'28%',background:'#19171d',padding:'0',overflowY:'auto',borderRight:'1px solid #2d2d2d',flexShrink:0}}>
+                        <div style={{padding:'1.2vh 1.5vh',borderBottom:'1px solid #2d2d2d'}}><span style={{color:'white',fontSize:'1.4vh',fontWeight:'800'}}>Lumina OS</span><span style={{color:'#72c5c8',fontSize:'1.1vh',marginLeft:'1vh'}}>▾</span></div>
+                        <div style={{padding:'0.5vh 0'}}>
+                          <div style={{color:'rgba(255,255,255,0.5)',fontSize:'1.1vh',padding:'0.8vh 1.5vh',textTransform:'uppercase',letterSpacing:'0.05em'}}>Channels</div>
+                          {['# general','# dev-chat','# design','# announcements','# random'].map(ch=>(<div key={ch} style={{padding:'0.6vh 1.5vh',color:'rgba(255,255,255,0.8)',fontSize:'1.3vh',cursor:'pointer',borderRadius:'0.3vh',margin:'0 0.5vh'}}>{ch}</div>))}
+                          <div style={{color:'rgba(255,255,255,0.5)',fontSize:'1.1vh',padding:'0.8vh 1.5vh',textTransform:'uppercase',letterSpacing:'0.05em'}}>Direct Messages</div>
+                          {['🟢 RK AI','⚫ Robustkarya','🟡 Design Bot','🟢 DevHelper'].map(dm=>(<div key={dm} style={{padding:'0.6vh 1.5vh',color:'rgba(255,255,255,0.8)',fontSize:'1.3vh',cursor:'pointer',margin:'0 0.5vh'}}>{dm}</div>))}
                         </div>
-                        <div className={styles.Files} style={{ background: '#19171d' }}>
-                            <div className={styles.sidebar} style={{ background: '#19171d', borderRight: '1px solid #3f3f3f' }}>
-                                <div style={{ color: 'white', fontWeight: '700', fontSize: '1.4vh', marginBottom: '2vh', padding: '0.5vh' }}>Arkis HQ</div>
-                                <div style={{ color: '#b9b3c4', fontSize: '1.2vh', marginBottom: '1vh' }}>Channels</div>
-                                {['general', 'engineering', 'design', 'ai-research', 'random'].map(ch => (
-                                    <div key={ch} style={{ padding: '0.8vh 0.5vh', color: '#d1c4e9', fontSize: '1.3vh', cursor: 'pointer' }}># {ch}</div>
-                                ))}
-                                <div style={{ color: '#b9b3c4', fontSize: '1.2vh', marginTop: '1.5vh', marginBottom: '1vh' }}>Direct Messages</div>
-                                {['Sarah K.', 'Dev Team', 'RK AI Bot'].map(dm => (
-                                    <div key={dm} style={{ padding: '0.8vh 0.5vh', color: '#d1c4e9', fontSize: '1.3vh', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '1vh' }}>
-                                        <div style={{ width: '2vh', height: '2vh', background: '#4CAF50', borderRadius: '50%' }}></div> {dm}
-                                    </div>
-                                ))}
-                            </div>
-                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '0' }}>
-                                <div style={{ padding: '1.5vh 2vh', borderBottom: '1px solid #3f3f3f', color: 'white', fontWeight: '700', fontSize: '1.4vh' }}># general</div>
-                                <div style={{ flex: 1, overflowY: 'auto', padding: '1.5vh 2vh', display: 'flex', flexDirection: 'column', gap: '1.5vh' }}>
-                                    {[{ u: 'Sarah K.', c: 'Hey team! New Lumina OS build is live 🚀', t: '2:30 PM' }, { u: 'Dev Team', c: 'Awesome! The dock indicators look great 👍', t: '2:31 PM' }, { u: 'RK AI Bot', c: 'I have analyzed 847 commits this week. Productivity up 23%.', t: '2:32 PM' }, { u: 'You', c: 'Thanks everyone! Next up: 10 built-in app UIs', t: '2:35 PM' }].map(msg => (
-                                        <div key={msg.u} style={{ display: 'flex', gap: '1vh', alignItems: 'flex-start' }}>
-                                            <div style={{ width: '3.5vh', height: '3.5vh', background: '#4a154b', borderRadius: '0.5vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.4vh', flexShrink: 0 }}>{msg.u[0]}</div>
-                                            <div><div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{msg.u} <span style={{ color: '#616061', fontWeight: '400' }}>{msg.t}</span></div><div style={{ color: '#d1c4e9', fontSize: '1.3vh' }}>{msg.c}</div></div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div style={{ padding: '1.5vh', borderTop: '1px solid #3f3f3f' }}><input placeholder="Message #general" style={{ width: '100%', background: '#222529', border: '1px solid #565856', borderRadius: '0.8vh', padding: '1vh 1.5vh', color: 'white', fontSize: '1.3vh' }} /></div>
-                            </div>
+                      </div>
+                      <div style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden'}}>
+                        <div style={{padding:'1.2vh 2vh',borderBottom:'1px solid #2d2d2d',display:'flex',alignItems:'center',justifyContent:'space-between',flexShrink:0}}>
+                          <div><span style={{color:'white',fontWeight:'800',fontSize:'1.4vh'}}># general</span><span style={{color:'rgba(255,255,255,0.5)',fontSize:'1.1vh',marginLeft:'1vh'}}>42 members</span></div>
+                          <div style={{display:'flex',gap:'1.5vh',color:'rgba(255,255,255,0.6)',fontSize:'1.3vh'}}>🔍 📎 ...</div>
                         </div>
+                        <div style={{flex:1,overflowY:'auto',padding:'1.5vh 2vh',display:'flex',flexDirection:'column',gap:'1.5vh'}}>
+                          {[{u:'RK AI',t:'Hey team! Lumina OS v1.1 is live 🎉',time:'10:32 AM',av:'🤖'},{u:'robustkarya',t:'Amazing work! The new app UIs look incredible',time:'10:34 AM',av:'👨‍💻'},{u:'Design Bot',t:'Themes system is looking great too! 🎨',time:'10:36 AM',av:'🎨'},{u:'RK AI',t:'Thanks! Working on widgets next 🚀',time:'10:38 AM',av:'🤖'}].map((msg,i)=>(<div key={i} style={{display:'flex',gap:'1vh'}}><div style={{width:'3.5vh',height:'3.5vh',background:'linear-gradient(135deg,#e91e63,#9c27b0)',borderRadius:'0.5vh',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.5vh',flexShrink:0}}>{msg.av}</div><div><div style={{display:'flex',alignItems:'center',gap:'1vh'}}><span style={{color:'white',fontWeight:'700',fontSize:'1.3vh'}}>{msg.u}</span><span style={{color:'rgba(255,255,255,0.4)',fontSize:'1.1vh'}}>{msg.time}</span></div><div style={{color:'rgba(255,255,255,0.85)',fontSize:'1.3vh',marginTop:'0.3vh'}}>{msg.t}</div></div></div>))}
+                        </div>
+                        <div style={{padding:'1vh 2vh',borderTop:'1px solid #2d2d2d',flexShrink:0}}>
+                          <div style={{background:'#2d2d2d',borderRadius:'0.8vh',padding:'1vh 1.5vh',display:'flex',alignItems:'center',gap:'1vh'}}><input style={{flex:1,background:'transparent',border:'none',color:'white',fontSize:'1.3vh',outline:'none'}} placeholder="Message #general" /><div style={{display:'flex',gap:'1vh',color:'rgba(255,255,255,0.5)',fontSize:'1.3vh'}}>😊 📎 ✉️</div></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -2046,18 +2055,24 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Trello – Lumina OS</div>
                             <div onClick={() => { hideApp("Trello"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("Trello") }} className={styles.minimize}></div>
+                    <div style={{background:'#0052cc',height:'100%',display:'flex',flexDirection:'column'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:'1.5vh',padding:'1vh 2vh',background:'rgba(0,0,0,0.15)',flexShrink:0}}>
+                        <span style={{color:'white',fontSize:'1.8vh',fontWeight:'900'}}>🗂 Trello</span>
+                        <div style={{display:'flex',gap:'1vh',marginLeft:'auto',color:'rgba(255,255,255,0.8)',fontSize:'1.2vh'}}>{['Boards','Recent','Starred','Templates'].map(i=>(<span key={i} style={{cursor:'pointer'}}>{i}</span>))}</div>
+                      </div>
+                      <div style={{flex:1,display:'flex',gap:'1.5vh',padding:'1.5vh',overflowX:'auto',alignItems:'flex-start'}}>
+                        {[{title:'To Do',color:'#eb5a46',cards:['Design new app icons','Fix drag & drop bug','Write API docs','Add offline mode']},{title:'In Progress',color:'#f2d600',cards:['Themes system','Widget panel','Lock screen redesign']},{title:'Done ✓',color:'#61bd4f',cards:['10 built-in app UIs','Dock __ indicator','Search Enter fix','nodeRef fix']}].map(col=>(<div key={col.title} style={{minWidth:'20vh',background:'rgba(0,0,0,0.2)',borderRadius:'1vh',padding:'1.2vh',flexShrink:0}}>
+                          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1vh'}}><span style={{color:'white',fontSize:'1.3vh',fontWeight:'700'}}>{col.title}</span><span style={{color:'rgba(255,255,255,0.7)',fontSize:'1.5vh',cursor:'pointer'}}>+</span></div>
+                          {col.cards.map(card=>(<div key={card} style={{background:'white',borderRadius:'0.6vh',padding:'1vh',marginBottom:'0.8vh',cursor:'pointer',boxShadow:'0 1px 3px rgba(0,0,0,0.2)'}}><div style={{color:'#172b4d',fontSize:'1.2vh'}}>{card}</div><div style={{display:'flex',gap:'0.5vh',marginTop:'0.6vh'}}><span style={{background:col.color,borderRadius:'0.3vh',width:'3vh',height:'0.6vh',display:'block'}}></span></div></div>))}
+                          <div style={{color:'rgba(255,255,255,0.7)',fontSize:'1.2vh',cursor:'pointer',padding:'0.8vh',borderRadius:'0.5vh',marginTop:'0.5vh'}}>+ Add a card</div>
+                        </div>))}
+                        <div style={{minWidth:'20vh',background:'rgba(255,255,255,0.1)',borderRadius:'1vh',padding:'1.2vh',flexShrink:0,cursor:'pointer'}}>
+                          <span style={{color:'rgba(255,255,255,0.8)',fontSize:'1.3vh'}}>+ Add another list</span>
                         </div>
-                        <div style={{ background: '#0079bf', height: '100%', padding: '2vh 1vh', paddingTop: '6vh', display: 'flex', gap: '1.5vh', overflowX: 'auto' }}>
-                            {[{ title: 'To Do', color: '#026aa7', cards: ['Fix activeApps crash', 'Add 10 App UIs', 'Redesign Settings', 'Dock indicator dots'] }, { title: 'In Progress', color: '#026aa7', cards: ['Dock context menu', 'Mission Control', 'Theme system'] }, { title: 'Done', color: '#026aa7', cards: ['CSS glass fix', 'Store DragFix', 'Security settings', 'OLED theme'] }].map(col => (
-                                <div key={col.title} style={{ background: '#ebecf0', borderRadius: '0.5vh', padding: '1.2vh', width: '22vh', flexShrink: 0, maxHeight: '100%', overflowY: 'auto' }}>
-                                    <div style={{ fontWeight: '700', fontSize: '1.4vh', color: '#172b4d', marginBottom: '1vh' }}>{col.title}</div>
-                                    {col.cards.map(card => (
-                                        <div key={card} style={{ background: 'white', borderRadius: '0.3vh', padding: '1vh', marginBottom: '0.8vh', fontSize: '1.3vh', color: '#172b4d', cursor: 'pointer', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>{card}</div>
-                                    ))}
-                                    <div style={{ color: '#5e6c84', fontSize: '1.3vh', cursor: 'pointer', padding: '0.8vh', marginTop: '0.5vh' }}>+ Add a card</div>
-                                </div>
-                            ))}
-                        </div>
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -2068,38 +2083,31 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Instagram</div>
                             <div onClick={() => { hideApp("Instagram"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("Instagram") }} className={styles.minimize}></div>
+                    <div style={{background:'#000',height:'100%',display:'flex',overflow:'hidden'}}>
+                      <div style={{width:'25%',borderRight:'1px solid #262626',padding:'2vh 1.5vh',display:'flex',flexDirection:'column',flexShrink:0}}>
+                        <div style={{fontSize:'2vh',fontWeight:'900',color:'white',marginBottom:'2vh',fontFamily:'cursive',letterSpacing:'-0.05em'}}>Instagram</div>
+                        {[['🏠','Home'],['🔍','Explore'],['🎬','Reels'],['💬','Messages'],['🔔','Notifications'],['👤','Profile']].map(([ic,lb])=>(<div key={lb} style={{display:'flex',alignItems:'center',gap:'1.2vh',padding:'1vh 0.8vh',color:'white',fontSize:'1.4vh',cursor:'pointer',borderRadius:'1vh',marginBottom:'0.3vh'}}><span style={{fontSize:'1.8vh'}}>{ic}</span>{lb}</div>))}
+                        <div style={{marginTop:'auto',padding:'1vh'}}>
+                          <button style={{width:'100%',background:'linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)',color:'white',border:'none',borderRadius:'1vh',padding:'1vh',fontSize:'1.3vh',fontWeight:'700',cursor:'pointer'}}>✦ Create Post</button>
                         </div>
-                        <div style={{ background: '#000', height: '100%', display: 'flex', flexDirection: 'column', paddingTop: '4.5vh' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.5vh 2vh', borderBottom: '1px solid #262626' }}>
-                                <span style={{ color: 'white', fontSize: '2vh', fontWeight: '700', fontStyle: 'italic' }}>Instagram</span>
-                                <span style={{ color: 'white', fontSize: '1.8vh' }}>♡ ✉</span>
-                            </div>
-                            <div style={{ display: 'flex', gap: '1.5vh', padding: '1.5vh 2vh', overflowX: 'auto', borderBottom: '1px solid #262626' }}>
-                                {[name, 'techgram', 'devlife', 'rkai', 'lumina', 'ai_art', 'codelife'].map((s, i) => (
-                                    <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5vh', cursor: 'pointer' }}>
-                                        <div style={{ width: '6vh', height: '6vh', borderRadius: '50%', background: `linear-gradient(${135 + i * 20}deg, #f9ce34, #ee2a7b, #6228d7)`, padding: '0.3vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: `hsl(${i * 40},60%,20%)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.6vh', fontWeight: '700' }}>{s[0].toUpperCase()}</div>
-                                        </div>
-                                        <span style={{ color: 'white', fontSize: '1.1vh' }}>{s}</span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div style={{ flex: 1, overflowY: 'auto' }}>
-                                {[{ user: 'rktech', likes: '2,341', caption: 'Building the future of OS 🚀 #LuminaOS', 'bg': 'linear-gradient(135deg, #667eea, #764ba2)' }, { user: 'ailab', likes: '1,892', caption: 'AI at the core, not the edge. 🧠', 'bg': 'linear-gradient(135deg, #f093fb, #f5576c)' }].map(post => (
-                                    <div key={post.user} style={{ borderBottom: '1px solid #262626', marginBottom: '1vh' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', padding: '1vh 1.5vh', gap: '1vh' }}>
-                                            <div style={{ width: '3.5vh', height: '3.5vh', borderRadius: '50%', background: post.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.4vh' }}>{post.user[0].toUpperCase()}</div>
-                                            <span style={{ color: 'white', fontSize: '1.3vh', fontWeight: '600' }}>{post.user}</span>
-                                        </div>
-                                        <div style={{ width: '100%', height: '18vh', background: post.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4vh' }}>📸</div>
-                                        <div style={{ padding: '1vh 1.5vh' }}>
-                                            <div style={{ color: 'white', fontSize: '1.3vh', fontWeight: '700', marginBottom: '0.5vh' }}>♡ {post.likes} likes</div>
-                                            <div style={{ color: 'white', fontSize: '1.2vh' }}><span style={{ fontWeight: '700' }}>{post.user}</span> {post.caption}</div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                      </div>
+                      <div style={{flex:1,overflowY:'auto',padding:'1.5vh'}}>
+                        <div style={{display:'flex',gap:'1.5vh',marginBottom:'2vh',overflowX:'auto',paddingBottom:'0.5vh'}}>
+                          {[{n:'Your Story',av:'➕',gradient:'none'},{n:'rktech_official',av:'🤖',gradient:'linear-gradient(45deg,#f09433,#dc2743)'},{n:'design.guru',av:'🎨',gradient:'linear-gradient(45deg,#cc2366,#bc1888)'},{n:'code.daily',av:'💻',gradient:'linear-gradient(45deg,#f09433,#e6683c)'},{n:'lumina.os',av:'🖥',gradient:'linear-gradient(45deg,#dc2743,#bc1888)'}].map(s=>(<div key={s.n} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'0.5vh',flexShrink:0,cursor:'pointer'}}><div style={{width:'5vh',height:'5vh',borderRadius:'50%',background:s.gradient==='none'?'#262626':s.gradient,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'2vh'}}>{s.av}</div><span style={{color:'white',fontSize:'1vh',textAlign:'center',maxWidth:'7vh',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{s.n}</span></div>))}
                         </div>
+                        {[{user:'rktech_official',av:'🤖',caption:'Lumina OS v1.1 is now live! 10 new built-in apps, themes system, and more 🚀',likes:'4.2K',bg:'linear-gradient(135deg,#1a1a2e,#7c3aed)'},{user:'design.guru',av:'🎨',caption:'Color theory crash course: Understanding hue, saturation, and value ✨',likes:'8.7K',bg:'linear-gradient(135deg,#0f172a,#1d4ed8)'},{user:'code.daily',av:'💻',caption:'30 React tips every developer needs to know in 2025 🔥',likes:'12.1K',bg:'linear-gradient(135deg,#064e3b,#10b981)'}].map((post,i)=>(<div key={i} style={{background:'#111',borderRadius:'1vh',marginBottom:'2vh',border:'1px solid #262626'}}>
+                          <div style={{display:'flex',alignItems:'center',gap:'1vh',padding:'1vh 1.2vh'}}><div style={{width:'3.5vh',height:'3.5vh',borderRadius:'50%',background:'linear-gradient(45deg,#f09433,#dc2743)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.5vh'}}>{post.av}</div><span style={{color:'white',fontSize:'1.3vh',fontWeight:'700'}}>{post.user}</span><span style={{color:'rgba(255,255,255,0.5)',fontSize:'1.1vh',marginLeft:'auto'}}>Follow</span></div>
+                          <div style={{height:'18vh',background:post.bg,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'5vh'}}>📸</div>
+                          <div style={{padding:'1vh 1.2vh'}}><div style={{display:'flex',gap:'1.5vh',color:'white',fontSize:'1.8vh',marginBottom:'0.8vh'}}>❤️ 💬 📤 &nbsp;&nbsp;&nbsp;&nbsp; 🔖</div><div style={{color:'white',fontSize:'1.2vh',fontWeight:'700',marginBottom:'0.3vh'}}>{post.likes} likes</div><div style={{color:'white',fontSize:'1.2vh'}}><span style={{fontWeight:'700'}}>{post.user}</span> {post.caption}</div></div>
+                        </div>))}
+                      </div>
+                      <div style={{width:'22%',padding:'1.5vh',borderLeft:'1px solid #262626',flexShrink:0}}>
+                        <div style={{color:'rgba(255,255,255,0.6)',fontSize:'1.2vh',marginBottom:'1.5vh'}}>Suggested for you</div>
+                        {['lumina.os','rk_robotics','ai.everyday','webdev.daily'].map(u=>(<div key={u} style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1.2vh'}}><div style={{display:'flex',alignItems:'center',gap:'0.8vh'}}><div style={{width:'3.5vh',height:'3.5vh',borderRadius:'50%',background:'#262626'}}></div><span style={{color:'white',fontSize:'1.2vh'}}>{u}</span></div><span style={{color:'#0095f6',fontSize:'1.2vh',cursor:'pointer',fontWeight:'700'}}>Follow</span></div>))}
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -2110,40 +2118,32 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Facebook</div>
                             <div onClick={() => { hideApp("Facebook"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("Facebook") }} className={styles.minimize}></div>
+                    <div style={{background:'#18191a',height:'100%',display:'flex',overflow:'hidden'}}>
+                      <div style={{width:'25%',padding:'1.5vh',overflowY:'auto',borderRight:'1px solid #2d2d2d',flexShrink:0}}>
+                        <div style={{color:'#2374e1',fontSize:'2.5vh',fontWeight:'900',marginBottom:'1.5vh'}}>f</div>
+                        <div style={{display:'flex',alignItems:'center',gap:'1vh',padding:'0.8vh 1vh',borderRadius:'1vh',cursor:'pointer',marginBottom:'0.5vh'}}><div style={{width:'3.5vh',height:'3.5vh',background:'#3a3b3c',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.5vh'}}>👤</div><span style={{color:'#e4e6eb',fontSize:'1.3vh',fontWeight:'700'}}>Your Name</span></div>
+                        {[['👥','Friends'],['📺','Watch'],['🏪','Marketplace'],['📣','Groups'],['🎮','Gaming'],['📅','Events']].map(([ic,lb])=>(<div key={lb} style={{display:'flex',alignItems:'center',gap:'1vh',padding:'0.8vh 1vh',color:'#e4e6eb',fontSize:'1.3vh',borderRadius:'1vh',cursor:'pointer',marginBottom:'0.3vh'}}><span style={{fontSize:'1.6vh'}}>{ic}</span>{lb}</div>))}
+                      </div>
+                      <div style={{flex:1,overflowY:'auto',padding:'1vh 2vh'}}>
+                        <div style={{background:'#242526',borderRadius:'1vh',padding:'1.2vh',marginBottom:'1.5vh'}}>
+                          <div style={{display:'flex',gap:'1vh',marginBottom:'1vh',alignItems:'center'}}><div style={{width:'4vh',height:'4vh',background:'#3a3b3c',borderRadius:'50%'}}></div><div style={{flex:1,background:'#3a3b3c',borderRadius:'3vh',padding:'1vh 1.5vh',color:'rgba(255,255,255,0.5)',fontSize:'1.3vh',cursor:'pointer'}}>What's on your mind?</div></div>
+                          <div style={{borderTop:'1px solid #3a3b3c',paddingTop:'0.8vh',display:'flex',justifyContent:'space-around'}}>{['🎬 Live','📸 Photo','😀 Feeling'].map(action=>(<span key={action} style={{color:'rgba(255,255,255,0.6)',fontSize:'1.2vh',cursor:'pointer'}}>{action}</span>))}</div>
                         </div>
-                        <div style={{ background: '#18191a', height: '100%', display: 'flex', paddingTop: '4.5vh' }}>
-                            <div style={{ width: '28%', padding: '1.5vh', overflowY: 'auto', borderRight: '1px solid #3a3b3c' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1vh', padding: '1vh', borderRadius: '0.8vh', cursor: 'pointer', background: '#3a3b3c', marginBottom: '1vh' }}>
-                                    <div style={{ width: '4vh', height: '4vh', borderRadius: '50%', background: 'linear-gradient(135deg,#1877f2,#0a5bc4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '700', fontSize: '1.6vh' }}>{name[0].toUpperCase()}</div>
-                                    <span style={{ color: 'white', fontSize: '1.4vh', fontWeight: '600' }}>{name}</span>
-                                </div>
-                                {['👫 Friends', '⌚ Watch', '🏪 Marketplace', '🎮 Gaming', '📅 Events'].map(item => (
-                                    <div key={item} style={{ padding: '1vh', color: '#e4e6ea', fontSize: '1.3vh', cursor: 'pointer', borderRadius: '0.5vh', marginBottom: '0.5vh' }}>{item}</div>
-                                ))}
-                            </div>
-                            <div style={{ flex: 1, overflowY: 'auto', padding: '1.5vh' }}>
-                                <div style={{ background: '#242526', borderRadius: '1vh', padding: '1.5vh', marginBottom: '1.5vh', border: '1px solid #3a3b3c' }}>
-                                    <div style={{ display: 'flex', gap: '1vh', alignItems: 'center', marginBottom: '1vh' }}>
-                                        <div style={{ width: '4vh', height: '4vh', borderRadius: '50%', background: 'linear-gradient(135deg,#1877f2,#0a5bc4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '700', fontSize: '1.6vh' }}>{name[0].toUpperCase()}</div>
-                                        <input placeholder={`What's on your mind, ${name}?`} style={{ flex: 1, background: '#3a3b3c', border: 'none', borderRadius: '2vh', padding: '1vh 1.5vh', color: '#e4e6ea', fontSize: '1.3vh' }} />
-                                    </div>
-                                </div>
-                                {[{ user: 'RK Tech', time: '2 hours ago', content: 'Just launched Lumina OS v1.1! Built with AI at the core 🚀 #LuminaOS #Privacy', likes: '847', comments: '124' }, { user: 'Arkis Team', time: '5 hours ago', content: 'Mission Control is now live in Lumina OS. Virtual desktops, dock indicators, and much more!', likes: '1.2K', comments: '89' }].map(post => (
-                                    <div key={post.user} style={{ background: '#242526', borderRadius: '1vh', padding: '1.5vh', marginBottom: '1.5vh', border: '1px solid #3a3b3c' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '1vh', marginBottom: '1vh' }}>
-                                            <div style={{ width: '4vh', height: '4vh', borderRadius: '50%', background: 'linear-gradient(135deg,#1877f2,#0a5bc4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '700', fontSize: '1.4vh' }}>{post.user[0]}</div>
-                                            <div><div style={{ color: '#e4e6ea', fontSize: '1.3vh', fontWeight: '600' }}>{post.user}</div><div style={{ color: '#b0b3b8', fontSize: '1.1vh' }}>{post.time}</div></div>
-                                        </div>
-                                        <p style={{ color: '#e4e6ea', fontSize: '1.3vh', marginBottom: '1vh' }}>{post.content}</p>
-                                        <div style={{ borderTop: '1px solid #3a3b3c', paddingTop: '0.8vh', display: 'flex', gap: '2vh' }}>
-                                            <span style={{ color: '#b0b3b8', fontSize: '1.2vh', cursor: 'pointer' }}>👍 {post.likes}</span>
-                                            <span style={{ color: '#b0b3b8', fontSize: '1.2vh', cursor: 'pointer' }}>💬 {post.comments}</span>
-                                            <span style={{ color: '#b0b3b8', fontSize: '1.2vh', cursor: 'pointer' }}>↗ Share</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        {[{u:'Lumina OS',av:'🖥',t:'v1.1 just dropped! 10 new built-in apps, full theme system, and widgets coming soon 🚀 #LuminaOS #Tech',likes:842,comments:94,bg:'linear-gradient(135deg,#1a1a2e,#7c3aed)'},{u:'RK Tech',av:'🤖',t:'Just shipped a major update to the OS UI layer. Real-time search, close animations, and more! Check it out 🔥',likes:1203,comments:156},{u:'Dev Community',av:'💻',t:'PSA: React 18 removed findDOMNode. Always use nodeRef with react-draggable or your app will crash 🛑',likes:3891,comments:412}].map((post,i)=>(<div key={i} style={{background:'#242526',borderRadius:'1vh',marginBottom:'1.5vh',overflow:'hidden'}}>
+                          <div style={{display:'flex',gap:'1vh',padding:'1.2vh'}}><div style={{width:'4vh',height:'4vh',background:'linear-gradient(135deg,#2374e1,#42b0ff)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.8vh',flexShrink:0}}>{post.av}</div><div><div style={{color:'#e4e6eb',fontSize:'1.3vh',fontWeight:'700'}}>{post.u}</div><div style={{color:'rgba(255,255,255,0.4)',fontSize:'1.1vh'}}>Just now · 🌐</div></div></div>
+                          <div style={{color:'#e4e6eb',fontSize:'1.3vh',padding:'0 1.2vh 1.2vh',lineHeight:'1.8'}}>{post.t}</div>
+                          {post.bg && <div style={{height:'12vh',background:post.bg,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'3vh'}}>🖥️</div>}
+                          <div style={{padding:'0.8vh 1.2vh',borderTop:'1px solid #3a3b3c',display:'flex',justifyContent:'space-between',color:'rgba(255,255,255,0.5)',fontSize:'1.2vh'}}><span>👍 {post.likes.toLocaleString()}</span><span>💬 {post.comments} comments</span></div>
+                          <div style={{borderTop:'1px solid #3a3b3c',display:'flex'}}>{['👍 Like','💬 Comment','📤 Share'].map(action=>(<div key={action} style={{flex:1,padding:'0.8vh',textAlign:'center',color:'rgba(255,255,255,0.5)',fontSize:'1.2vh',cursor:'pointer'}}>{action}</div>))}</div>
+                        </div>))}
+                      </div>
+                      <div style={{width:'22%',padding:'1.5vh',borderLeft:'1px solid #2d2d2d',overflowY:'auto',flexShrink:0}}>
+                        <div style={{color:'rgba(255,255,255,0.5)',fontSize:'1.2vh',marginBottom:'1vh'}}>Contacts</div>
+                        {['🟢 RK AI','🟢 Design Studio','⚫ Code Academy','🟡 TechBro'].map(c=>(<div key={c} style={{color:'#e4e6eb',fontSize:'1.3vh',padding:'0.6vh',cursor:'pointer',marginBottom:'0.3vh'}}>{c}</div>))}
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -2154,33 +2154,32 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             <div className={styles.title}>Canva</div>
                             <div onClick={() => { hideApp("Canva"); }} id="close" className={styles.close}></div>
                             <div onClick={() => { hideApp("Canva") }} className={styles.minimize}></div>
+                    <div style={{background:'#1c1c1c',height:'100%',display:'flex',flexDirection:'column'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:'1.5vh',padding:'1vh 2vh',background:'#2d2d2d',borderBottom:'1px solid #3a3a3a',flexShrink:0}}>
+                        <span style={{color:'#00c4cc',fontSize:'2vh',fontWeight:'900'}}>✦ Canva</span>
+                        <div style={{flex:1,background:'#1c1c1c',border:'1px solid #3a3a3a',borderRadius:'0.5vh',padding:'0.6vh 1.2vh',display:'flex',gap:'0.8vh',alignItems:'center',maxWidth:'40%'}}><span style={{color:'#888',fontSize:'1.2vh'}}>🔍</span><input style={{background:'transparent',border:'none',color:'white',fontSize:'1.2vh',outline:'none',flex:1}} placeholder="Search templates" /></div>
+                        <div style={{marginLeft:'auto',display:'flex',gap:'1vh'}}><button style={{background:'#00c4cc',color:'white',border:'none',borderRadius:'0.5vh',padding:'0.7vh 1.5vh',fontSize:'1.2vh',fontWeight:'700',cursor:'pointer'}}>Create design</button></div>
+                      </div>
+                      <div style={{flex:1,display:'flex',overflow:'hidden'}}>
+                        <div style={{width:'22%',padding:'1.2vh',borderRight:'1px solid #2a2a2a',overflowY:'auto'}}>
+                          <div style={{color:'rgba(255,255,255,0.5)',fontSize:'1.1vh',marginBottom:'0.8vh',textTransform:'uppercase',letterSpacing:'0.05em'}}>Create</div>
+                          {[['🖼','Social Media'],['📺','Presentation'],['📱','Story'],['📄','Document'],['📧','Email'],['📌','Poster']].map(([ic,lb])=>(<div key={lb} style={{display:'flex',alignItems:'center',gap:'1vh',padding:'0.8vh 1vh',color:'rgba(255,255,255,0.8)',fontSize:'1.2vh',borderRadius:'0.5vh',cursor:'pointer',marginBottom:'0.3vh'}}><span>{ic}</span>{lb}</div>))}
+                          <div style={{color:'rgba(255,255,255,0.5)',fontSize:'1.1vh',margin:'1.5vh 0 0.8vh',textTransform:'uppercase',letterSpacing:'0.05em'}}>Your Designs</div>
+                          {['Lumina OS Poster','App Icon Set','Pitch Deck','Social Kit'].map(d=>(<div key={d} style={{padding:'0.8vh 1vh',color:'rgba(255,255,255,0.7)',fontSize:'1.2vh',cursor:'pointer',borderRadius:'0.5vh'}}>{d}</div>))}
                         </div>
-                        <div style={{ background: '#1c1c1c', height: '100%', display: 'flex', flexDirection: 'column', paddingTop: '4.5vh' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.5vh 2vh', background: '#2d2d2d', borderBottom: '1px solid #3d3d3d' }}>
-                                <span style={{ color: '#00c4cc', fontSize: '2vh', fontWeight: '800' }}>Canva</span>
-                                <button style={{ background: '#6d28d9', color: 'white', border: 'none', borderRadius: '0.5vh', padding: '0.8vh 2vh', fontSize: '1.3vh', cursor: 'pointer', fontWeight: '600' }}>+ Create new design</button>
-                            </div>
-                            <div style={{ flex: 1, overflowY: 'auto', padding: '2vh' }}>
-                                <h3 style={{ color: 'white', fontSize: '1.6vh', marginBottom: '1.5vh' }}>Start from a template</h3>
-                                <div style={{ display: 'flex', gap: '1.5vh', marginBottom: '2vh', overflowX: 'auto' }}>
-                                    {['Presentation', 'Social Post', 'Logo', 'Poster', 'Resume', 'Flyer'].map(t => (
-                                        <div key={t} style={{ minWidth: '10vh', padding: '1vh', background: '#2d2d2d', borderRadius: '0.8vh', textAlign: 'center', cursor: 'pointer', border: '1px solid #3d3d3d' }}>
-                                            <div style={{ fontSize: '2.5vh', marginBottom: '0.5vh' }}>🎨</div>
-                                            <span style={{ color: 'white', fontSize: '1.1vh' }}>{t}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                                <h3 style={{ color: 'white', fontSize: '1.6vh', marginBottom: '1.5vh' }}>Recent designs</h3>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.5vh' }}>
-                                    {[{ title: 'Lumina OS Presentation', bg: 'linear-gradient(135deg,#667eea,#764ba2)' }, { title: 'RK AI Product Deck', bg: 'linear-gradient(135deg,#f093fb,#f5576c)' }, { title: 'Arkis Brand Kit', bg: 'linear-gradient(135deg,#4facfe,#00f2fe)' }, { title: 'Social Media Post', bg: 'linear-gradient(135deg,#43e97b,#38f9d7)' }, { title: 'Product Launch Poster', bg: 'linear-gradient(135deg,#fa709a,#fee140)' }, { title: 'Team Logo', bg: 'linear-gradient(135deg,#a18cd1,#fbc2eb)' }].map(d => (
-                                        <div key={d.title} style={{ borderRadius: '0.8vh', overflow: 'hidden', cursor: 'pointer', border: '1px solid #3d3d3d' }}>
-                                            <div style={{ height: '10vh', background: d.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5vh' }}>🎨</div>
-                                            <div style={{ padding: '0.8vh', background: '#2d2d2d' }}><div style={{ color: 'white', fontSize: '1.2vh' }}>{d.title}</div></div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                        <div style={{flex:1,overflowY:'auto',padding:'2vh'}}>
+                          <div style={{color:'white',fontSize:'1.6vh',fontWeight:'700',marginBottom:'1.5vh'}}>Templates for you</div>
+                          <div style={{display:'flex',gap:'1vh',marginBottom:'1.5vh',flexWrap:'wrap'}}>
+                            {['All','Social Media','Presentations','Marketing','Print','Video'].map(cat=>(<button key={cat} style={{background:cat==='All'?'#00c4cc':'transparent',color:cat==='All'?'white':'rgba(255,255,255,0.6)',border:'1px solid '+(cat==='All'?'#00c4cc':'#3a3a3a'),borderRadius:'3vh',padding:'0.5vh 1.2vh',fontSize:'1.1vh',cursor:'pointer'}}>{cat}</button>))}
+                          </div>
+                          <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1.2vh'}}>
+                            {[{n:'Modern Portfolio',c:'linear-gradient(135deg,#667eea,#764ba2)'},{n:'Tech Startup',c:'linear-gradient(135deg,#00c4cc,#00b89c)'},{n:'Dark Resume',c:'linear-gradient(135deg,#1a1a2e,#16213e)'},{n:'Gradient Poster',c:'linear-gradient(135deg,#f093fb,#f5576c)'},{n:'Business Card',c:'linear-gradient(135deg,#4facfe,#00f2fe)'},{n:'Instagram Story',c:'linear-gradient(135deg,#f09433,#bc1888)'},{n:'YouTube Thumb',c:'linear-gradient(135deg,#ff0000,#b71c1c)'},{n:'App UI Kit',c:'linear-gradient(135deg,#2d2d2d,#7c3aed)'}].map(tmpl=>(<div key={tmpl.n} style={{cursor:'pointer'}}><div style={{height:'12vh',background:tmpl.c,borderRadius:'0.8vh',marginBottom:'0.6vh',display:'flex',alignItems:'flex-end',justifyContent:'flex-end',padding:'0.5vh'}}><div style={{background:'rgba(0,0,0,0.4)',borderRadius:'50%',width:'2.5vh',height:'2.5vh',display:'flex',alignItems:'center',justifyContent:'center',color:'white',fontSize:'1vh'}}>✦</div></div><div style={{color:'rgba(255,255,255,0.8)',fontSize:'1.1vh',textAlign:'center'}}>{tmpl.n}</div></div>))}
+                          </div>
                         </div>
+                      </div>
+                    </div>
+
+                    </div>
                     </div>
                 </Draggable>
 
@@ -2664,9 +2663,9 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                 {showSearchMenu && (
                     <div id="StartMenu" className={styles.StartMenu}>
                         <div className={styles.SearchBarCSS}>
-                            <form onSubmit={handleSearch}>
+                            <form onSubmit={(e) => e.preventDefault()}>
                                 <BsSearch className={styles.SearchIcon} />
-                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={searchQuery} onChange={AIValue === false ? handleSearch : handleChange} type="search" id="SearchBar" onSubmit={handleSearch} className={styles.SearchBarInputCSS} placeholder={searchPlaceholder} />
+                                <input onMouseEnter={onTextBoxHover} onMouseLeave={onTextBoxLeave} value={searchQuery} onChange={AIValue === false ? handleSearch : handleChange} type="text" id="SearchBar" onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }} className={styles.SearchBarInputCSS} placeholder={searchPlaceholder} />
                             </form>
                         </div>
                         {(searchResults.length <= 0 && (
@@ -2720,7 +2719,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                             {desktops.map(desk => (
                                 <div key={desk.id} onClick={() => { setCurrentDesktop(desk.id); setShowTaskView(false); }} className={`${styles.DesktopCard} ${currentDesktop === desk.id ? styles.DesktopCardActive : ''}`} style={{ position: 'relative' }}>
                                     <h2 style={{ color: 'white' }}>{desk.name}</h2>
-                                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && document.getElementById(app) && document.getElementById(app).style.height !== "0vh").length} Apps Open</span>
+                                    <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.5vh' }}>{Object.keys(appToDesktopMap).filter(app => appToDesktopMap[app] === desk.id && document.getElementById(app) && document.getElementById(app).style.width !== "0vh" && document.getElementById(app).style.width !== "0vw" && document.getElementById(app).style.width !== "").length} Apps Open</span>
                                     <button className={styles.DeleteDesktopBtn} onClick={(e) => {
                                         e.stopPropagation();
                                         const remaining = desktops.filter(d => d.id !== desk.id);
@@ -2765,36 +2764,45 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                     <div className={styles.Line}></div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'LumiNexplorer', x: e.clientX, y: e.clientY }); }}>
                         <SiFiles onClick={() => { showApp("LumiNexplorer") }} className={styles.TaskList} />
-                        {runningApps.includes('LumiNexplorer') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('LumiNexplorer') && <div className={styles.DockDot} />}
                     </div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Clock', x: e.clientX, y: e.clientY }); }}>
                         <BsFillClockFill onClick={() => { showApp("Clock") }} className={styles.TaskList} />
-                        {runningApps.includes('Clock') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('Clock') && <div className={styles.DockDot} />}
                     </div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Calculator', x: e.clientX, y: e.clientY }); }}>
                         <IoCalculator onClick={() => { showApp("Calculator") }} className={styles.TaskList} />
-                        {runningApps.includes('Calculator') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('Calculator') && <div className={styles.DockDot} />}
                     </div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Browser', x: e.clientX, y: e.clientY }); }}>
                         <SiTorbrowser onClick={() => { showApp("Browser") }} className={styles.TaskList} />
-                        {runningApps.includes('Browser') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('Browser') && <div className={styles.DockDot} />}
                     </div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Store', x: e.clientX, y: e.clientY }); }}>
                         <IoMdAppstore onClick={() => { showApp("Store") }} className={styles.TaskList} />
-                        {runningApps.includes('Store') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('Store') && <div className={styles.DockDot} />}
                     </div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Weather', x: e.clientX, y: e.clientY }); }}>
                         <TiWeatherCloudy onClick={() => { showApp("Weather") }} className={styles.TaskList} />
-                        {runningApps.includes('Weather') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('Weather') && <div className={styles.DockDot} />}
                     </div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'Chat', x: e.clientX, y: e.clientY }); }}>
                         <IoMdChatbubbles onClick={() => { showApp("Chat") }} className={styles.TaskList} />
-                        {runningApps.includes('Chat') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('Chat') && <div className={styles.DockDot} />}
                     </div>
                     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app: 'WhatsApp', x: e.clientX, y: e.clientY }); }}>
                         <BsWhatsapp onClick={() => { showApp("WhatsApp") }} className={styles.TaskList} />
-                        {runningApps.includes('WhatsApp') && <div style={{ width: '5px', height: '5px', background: 'white', borderRadius: '50%', marginTop: '2px', boxShadow: '0 0 4px rgba(255,255,255,0.8)' }} />}
+                        {runningApps.includes('WhatsApp') && <div className={styles.DockDot} />}
                     </div>
+                    {/* Dynamic dock section for running store apps */}
+                    {runningApps.filter(app => !['LumiNexplorer','Clock','Calculator','Browser','Store','Weather','Chat','Chat1','WhatsApp','Settings','PDFViewer','Vertice','ChatExpress'].includes(app)).map(app => (
+                        <div key={app} style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }} onContextMenu={(e) => { e.preventDefault(); setDockContextMenu({ visible: true, app, x: e.clientX, y: e.clientY }); }}>
+                            <div onClick={() => showApp(app)} className={styles.TaskList} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5vh', cursor: 'pointer', width: '4vh', height: '4vh', background: 'rgba(255,255,255,0.1)', borderRadius: '0.8vh' }}>
+                                {app === 'Spotify' ? '🎵' : app === 'YouTube' ? '▶' : app === 'Netflix' ? 'N' : app === 'GitHub' ? '🐙' : app === 'GoogleDrive' ? '☁️' : app === 'Slack' ? '💬' : app === 'Trello' ? '🗂' : app === 'Instagram' ? '📸' : app === 'Facebook' ? 'f' : app === 'Canva' ? '✦' : app.charAt(0)}
+                            </div>
+                            <div className={styles.DockDot} />
+                        </div>
+                    ))}
                     <div className={styles.Line}></div>
                     <div onClick={() => { if (notificationDropdown) { setNotificationDropdown(false) } else { setNotificationDropdown(true) } }} className={styles.WeatherDiv}>
                         {cloudPct <= 30 ? (
