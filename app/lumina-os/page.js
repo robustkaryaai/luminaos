@@ -2,7 +2,7 @@
 
 import { BsFillLightningChargeFill } from 'react-icons/bs'
 import Head from 'next/head'
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Client, Databases, Query } from 'appwrite';
 import styles from '../../styles/Homepage.module.css'
 import CustomCursor from '@/components/CustomCursor';
@@ -369,33 +369,8 @@ const LuminaOS = ({ onTextBoxHover, onTextBoxLeave }) => {
         }
     };
 
-    // ── Responsive OS Scale ──────────────────────────────────
-    const osRootRef = useRef(null);
-    useEffect(() => {
-        const DESIGN_W = 1280;
-        const DESIGN_H = 720;
-        const applyScale = () => {
-            const el = osRootRef.current;
-            if (!el) return;
-            const scaleX = window.innerWidth / DESIGN_W;
-            const scaleY = window.innerHeight / DESIGN_H;
-            const scale = Math.min(scaleX, scaleY);   // uniform — no stretch
-            el.style.transform = `scale(${scale})`;
-            el.style.transformOrigin = 'top left';
-            el.style.width = DESIGN_W + 'px';
-            el.style.height = DESIGN_H + 'px';
-            // Keep the page-scroll area the actual viewport size
-            el.parentElement && (el.parentElement.style.cssText =
-                `width:${window.innerWidth}px;height:${window.innerHeight}px;overflow:hidden;position:fixed;top:0;left:0`);
-        };
-        applyScale();
-        window.addEventListener('resize', applyScale);
-        return () => window.removeEventListener('resize', applyScale);
-    }, []);
-    // ─────────────────────────────────────────────────────────
-
     return (
-        <div ref={osRootRef} className={styles.Div1}>
+        <div className={styles.Div1}>
             {selectedWindow == "Start" && <div>
                 <Head>
                     <title>Start LuminaOS | Rexycore</title>
