@@ -211,11 +211,17 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
     const [updateStatus, setUpdateStatus] = useState('');
     const [offlineBundle, setOfflineBundle] = useState(null);
     const setThemeVars = (vars, name) => {
-        Object.entries(vars).forEach(([k, v]) => {
-            document.documentElement.style.setProperty(k, v);
-        });
-        document.body.style.background = vars['--bg-color'];
-        document.body.style.color = vars['--text-color'];
+        // Inject via <style> tag so CSS :root rules can override — not inline styles
+        let tag = document.getElementById('lumina-theme');
+        if (!tag) {
+            tag = document.createElement('style');
+            tag.id = 'lumina-theme';
+            document.head.appendChild(tag);
+        }
+        const css = ':root {\n' + Object.entries(vars).map(([k,v]) => \`  \${k}: \${v};\`).join('\n') + '\n}';
+        tag.textContent = css;
+        // Also clear any leftover inline vars from old code
+        Object.keys(vars).forEach(k => document.documentElement.style.removeProperty(k));
         localStorage.setItem('Theme', name);
     };
     const getThemeVarsByName = (name) => {
