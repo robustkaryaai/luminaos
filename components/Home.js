@@ -1568,8 +1568,7 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                     {getAppIcon(app.icon)}
                                     <p>{app.name}</p>
                                 </div>
-                            );
-                             })}
+                            ))}
                         </div>
                     </div>
                 </div>}
@@ -2646,7 +2645,8 @@ const Home = ({ onTextBoxHover, onTextBoxLeave }) => {
                                                                                                                                                                                                 : <BsFillLightningChargeFill className={styles.startBtn} />}
                                     <p>{appId}</p>
                                 </div>
-                                ); })}
+                                );
+                            })}
                         </div>
                     </div>
                     <div className={styles.Bottom}>
